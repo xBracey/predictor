@@ -41,9 +41,18 @@ router.get("/me", passport.authenticate("jwt", { session: false }), function(
   });
 });
 
-router.get("/", (req, res) => {
-  getAllUsers().then(users => {
-    return res.json(users);
+router.get("/", passport.authenticate("jwt", { session: false }), function(
+  req,
+  res
+) {
+  req.user.then(user => {
+    if (user.admin) {
+      getAllUsers(user.username).then(user => {
+        return res.json(user);
+      });
+    } else {
+      return res.json({});
+    }
   });
 });
 
