@@ -8,7 +8,7 @@ import seeds from "./seeds";
 import { getUser } from "./routes/user";
 
 const app = express();
-const force = false;
+const force = process.env.FORCE === "true";
 
 import bodyParser from "body-parser"; // import passport and passport-jwt modules
 import passport from "passport";
@@ -32,6 +32,8 @@ let strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
 
 // use the strategy
 passport.use(strategy);
+
+console.log(force);
 
 app.use(passport.initialize());
 app.use(cors());
