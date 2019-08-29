@@ -1,0 +1,2 @@
+(window["webpackJsonpeuro-predictor"]=window["webpackJsonpeuro-predictor"]||[]).push([[0],{3:function(e,n,t){e.exports=t(8)},8:function(e,n,t){"use strict";t.r(n);var r=t(0),o=t.n(r),a=t(2),c=function(e){return o.a.createElement("h1",null,"Hello ",e.name,"!")};t.n(a).a.hydrate(o.a.createElement(function(){return o.a.createElement(c,{name:"Alligator"})},null),document.getElementById("root"))}},[[3,1,2]]]);
+//# sourceMappingURL=main.40f75391.chunk.js.map
