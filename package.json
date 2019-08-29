@@ -4,7 +4,7 @@
   "scripts": {
     "start-api": "nodemon --exec babel-node src/api/index.js",
     "start-web": "react-scripts start",
-    "react-build": "react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev:build-server": "NODE_ENV=development webpack --config webpack.server.js --mode=development -w",
@@ -12,7 +12,7 @@
     "dev": "npm-run-all --parallel build dev:*",
     "production:build-server": "NODE_ENV=production webpack --config webpack.server.js --mode=production",
     "production:start": "node ./server-build/index.js",
-    "build": "yarn run production:build-server; yarn production:start"
+    "heroku-postbuild": "yarn run production:build-server; yarn production:start"
   },
   "license": "MIT",
   "dependencies": {
