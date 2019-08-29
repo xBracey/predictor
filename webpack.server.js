@@ -9,11 +9,6 @@ module.exports = {
 
   externals: [nodeExternals()],
 
-  output: {
-    path: path.resolve("server-build"),
-    filename: "index.js"
-  },
-
   module: {
     rules: [
       {
