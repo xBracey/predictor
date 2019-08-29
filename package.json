@@ -8,11 +8,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev:build-server": "NODE_ENV=development webpack --config webpack.server.js --mode=development -w",
-    "dev:start": "nodemon ./server-build/index.js",
-    "dev": "npm-run-all --parallel build dev:*",
+    "dev:start": "nodemon ./src/api/index.js",
+    "dev": "nodemon --exec NODE_ENV=development babel-node ./src/api/index.js",
     "production:build-server": "NODE_ENV=production webpack --config webpack.server.js --mode=production",
-    "production:start": "node ./server-build/index.js",
-    "heroku-postbuild": "yarn run production:build-server; yarn production:start"
+    "production:start": "nodemon --exec NODE_ENV=production babel-node ./src/api/index.js",
+    "heroku-postbuild": "yarn production:start"
   },
   "license": "MIT",
   "dependencies": {
