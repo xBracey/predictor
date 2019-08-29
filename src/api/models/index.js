@@ -1,7 +1,7 @@
 import Sequelize from "sequelize";
 
 const sequelize =
-  process.env.NODE_ENV !== "development"
+  process.env.NODE_ENV === "development"
     ? new Sequelize(
         process.env.DATABASE,
         process.env.DATABASE_USER,
