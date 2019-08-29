@@ -3,11 +3,9 @@ const nodeExternals = require("webpack-node-externals");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = {
-  entry: "./src/api/index.js",
+  entry: "./src/index.js",
 
   target: "node",
-
-  plugins: [new Dotenv()],
 
   externals: [nodeExternals()],
 

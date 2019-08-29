@@ -81,19 +81,66 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/api/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/api/index.js":
-/*!**************************!*\
-  !*** ./src/api/index.js ***!
-  \**************************/
+/***/ "./src/App.js":
+/*!********************!*\
+  !*** ./src/App.js ***!
+  \********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Home */ \"./src/Home.js\");\nvar _jsxFileName = \"/Users/tom/euro-predictor/src/App.js\";\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (() => {\n  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Home__WEBPACK_IMPORTED_MODULE_1__[\"default\"], {\n    name: \"Alligator\",\n    __source: {\n      fileName: _jsxFileName,\n      lineNumber: 5\n    },\n    __self: undefined\n  });\n});\n\n//# sourceURL=webpack:///./src/App.js?");
+
+/***/ }),
+
+/***/ "./src/Home.js":
+/*!*********************!*\
+  !*** ./src/Home.js ***!
+  \*********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\nvar _jsxFileName = \"/Users/tom/euro-predictor/src/Home.js\";\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (props => {\n  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"h1\", {\n    __source: {\n      fileName: _jsxFileName,\n      lineNumber: 4\n    },\n    __self: undefined\n  }, \"Hello \", props.name, \"!\");\n});\n\n//# sourceURL=webpack:///./src/Home.js?");
+
+/***/ }),
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ \"react-dom\");\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App */ \"./src/App.js\");\nvar _jsxFileName = \"/Users/tom/euro-predictor/src/index.js\";\n\n\n\nreact_dom__WEBPACK_IMPORTED_MODULE_1___default.a.hydrate(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_App__WEBPACK_IMPORTED_MODULE_2__[\"default\"], {\n  __source: {\n    fileName: _jsxFileName,\n    lineNumber: 5\n  },\n  __self: undefined\n}), document.getElementById(\"root\"));\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "react":
+/*!************************!*\
+  !*** external "react" ***!
+  \************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("throw new Error(\"Module build failed (from ./node_modules/babel-loader/lib/index.js):\\nReferenceError: [BABEL] /Users/tom/euro-predictor/src/api/index.js: Using removed Babel 5 option: .modules - Use the corresponding module transform plugin in the `plugins` option. Check out http://babeljs.io/docs/plugins/#modules\\n    at throwUnknownError (/Users/tom/euro-predictor/node_modules/@babel/core/lib/config/validation/options.js:120:11)\\n    at Object.keys.forEach.key (/Users/tom/euro-predictor/node_modules/@babel/core/lib/config/validation/options.js:107:5)\\n    at Array.forEach (<anonymous>)\\n    at validateNested (/Users/tom/euro-predictor/node_modules/@babel/core/lib/config/validation/options.js:83:21)\\n    at validate (/Users/tom/euro-predictor/node_modules/@babel/core/lib/config/validation/options.js:74:10)\\n    at instantiatePreset (/Users/tom/euro-predictor/node_modules/@babel/core/lib/config/full.js:244:36)\\n    at cachedFunction (/Users/tom/euro-predictor/node_modules/@babel/core/lib/config/caching.js:33:19)\\n    at loadPresetDescriptor (/Users/tom/euro-predictor/node_modules/@babel/core/lib/config/full.js:235:45)\\n    at config.presets.reduce (/Users/tom/euro-predictor/node_modules/@babel/core/lib/config/full.js:77:21)\\n    at Array.reduce (<anonymous>)\\n    at recurseDescriptors (/Users/tom/euro-predictor/node_modules/@babel/core/lib/config/full.js:74:38)\\n    at loadFullConfig (/Users/tom/euro-predictor/node_modules/@babel/core/lib/config/full.js:108:6)\\n    at process.nextTick (/Users/tom/euro-predictor/node_modules/@babel/core/lib/transform.js:28:33)\\n    at process._tickCallback (internal/process/next_tick.js:61:11)\");\n\n//# sourceURL=webpack:///./src/api/index.js?");
+eval("module.exports = require(\"react\");\n\n//# sourceURL=webpack:///external_%22react%22?");
+
+/***/ }),
+
+/***/ "react-dom":
+/*!****************************!*\
+  !*** external "react-dom" ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"react-dom\");\n\n//# sourceURL=webpack:///external_%22react-dom%22?");
 
 /***/ })
 
