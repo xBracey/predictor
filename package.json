@@ -12,7 +12,8 @@
     "dev": "npm-run-all --parallel build dev:*",
     "production:build-server": "NODE_ENV=production webpack --config webpack.server.js --mode=production",
     "production:start": "nodemon --exec NODE_ENV=production babel-node ./src/api/index.js",
-    "heroku-postbuild": "yarn production:build-server; yarn production:start"
+    "start": "yarn production:build-server; yarn production:start",
+    "heroku-postbuild": "echo Skip build on Heroku"
   },
   "license": "MIT",
   "dependencies": {
