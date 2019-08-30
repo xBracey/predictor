@@ -3,6 +3,7 @@ import cors from "cors";
 import express from "express";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
+import { StaticRouter } from "react-router-dom";
 import path from "path";
 import fs from "fs";
 import bodyParser from "body-parser"; // import passport and passport-jwt modules
@@ -44,10 +45,15 @@ app.use(passport.initialize());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/user", routes.user);
+app.use("/api/user", routes.user);
 
 app.get("/*", (req, res) => {
-  const app = ReactDOMServer.renderToString(<App />);
+  const context = {};
+  const app = ReactDOMServer.renderToString(
+    <StaticRouter location={req.url} context={context}>
+      <App />
+    </StaticRouter>
+  );
 
   const indexFile = path.resolve("./build/index.html");
   fs.readFile(indexFile, "utf8", (err, data) => {

@@ -4,15 +4,14 @@
   "scripts": {
     "start-api": "nodemon --exec babel-node src/api/index.js",
     "start-web": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "node-sass ./src/main.scss -o ./src; react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev:build-server": "NODE_ENV=development webpack --config webpack.server.js --mode=development -w",
     "dev:start": "nodemon --exec NODE_ENV=development babel-node ./src/api/index.js",
+    "dev:scss": "node-sass --watch ./src/main.scss -o ./src",
     "dev": "npm-run-all --parallel build dev:*",
-    "production:start": "nodemon --exec NODE_ENV=production babel-node ./src/api/index.js",
-    "start": "yarn build; yarn production:start",
-    "heroku-postbuild": "echo Skip build on Heroku"
+    "start": "nodemon --exec NODE_ENV=production babel-node ./src/api/index.js"
   },
   "license": "MIT",
   "dependencies": {
@@ -34,6 +33,7 @@
     "pg": "^7.12.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
     "sequelize": "^5.12.3",
     "webpack": "4.39.1",
