@@ -1,58 +1,26 @@
 {
   "name": "euro-predictor",
   "version": "1.0.0",
+  "main": "index.js",
   "scripts": {
-    "start-api": "nodemon --exec babel-node src/api/index.js",
-    "start-web": "react-scripts start",
-    "build": "node-sass ./src/main.scss -o ./src; react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "dev:build-server": "NODE_ENV=development webpack --config webpack.server.js --mode=development -w",
-    "dev:start": "nodemon --exec NODE_ENV=development babel-node ./src/api/index.js",
-    "dev:scss": "node-sass --watch ./src/main.scss -o ./src",
-    "dev": "npm-run-all --parallel build dev:*",
-    "start": "nodemon --exec NODE_ENV=production babel-node ./src/api/index.js"
+    "production": "babel-node src/index.js",
+    "start": "nodemon --exec babel-node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.5.5",
     "@babel/node": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
-    "babel-loader": "^8.0.6",
-    "babel-preset-react-app": "^9.0.1",
     "bcrypt": "^3.0.6",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
-    "dotenv-webpack": "^1.7.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^1.19.1",
-    "npm-run-all": "^4.1.5",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "pg": "^7.12.0",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-router-dom": "^5.0.1",
-    "react-scripts": "3.1.1",
-    "sequelize": "^5.12.3",
-    "webpack": "4.39.1",
-    "webpack-cli": "^3.3.7",
-    "webpack-node-externals": "^1.7.2"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "sequelize": "^5.12.3"
   }
 }

@@ -1,23 +1,19 @@
 import Sequelize from "sequelize";
 
-const sequelize =
-  process.env.NODE_ENV === "development"
-    ? new Sequelize(
-        process.env.DATABASE,
-        process.env.DATABASE_USER,
-        process.env.DATABASE_PASSWORD,
-        {
-          dialect: "postgres",
-          host: process.env.DATABASE_HOST
-        }
-      )
-    : new Sequelize(process.env.DATABASE_URL, {
+const sequelize = process.env.DATABASE_HOST
+  ? new Sequelize(
+      process.env.DATABASE,
+      process.env.DATABASE_USER,
+      process.env.DATABASE_PASSWORD,
+      {
         dialect: "postgres",
-        protocol: "postgres",
-        dialectOptions: {
-          ssl: true
-        }
-      });
+        host: process.env.DATABASE_HOST
+      }
+    )
+  : new Sequelize(process.env.DATABASE_URL, {
+      dialect: "postgres",
+      protocol: "postgres"
+    });
 
 const models = {
   Group: sequelize.import("./group"),
