@@ -4,23 +4,34 @@
   "main": "index.js",
   "scripts": {
     "production": "babel-node src/index.js",
-    "start": "nodemon --exec babel-node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "yarn web-build; yarn export; nodemon --exec babel-node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "web-dev": "next dev",
+    "web-build": "next build",
+    "web-start": "next start",
+    "export": "next export",
+    "web-dev:scss": "node-sass --watch ./styles/main.scss -o ./styles",
+    "web-scss": "node-sass ./styles/main.scss -o ./styles"
   },
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.5.5",
     "@babel/node": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
+    "@zeit/next-css": "^1.0.1",
     "bcrypt": "^3.0.6",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "next": "9.0.5",
+    "node-sass": "^4.12.0",
     "nodemon": "^1.19.1",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "pg": "^7.12.0",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
     "sequelize": "^5.12.3"
   }
 }

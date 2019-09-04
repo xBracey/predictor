@@ -1,6 +1,7 @@
 import "dotenv/config";
 import cors from "cors";
 import express from "express";
+const path = require("path");
 
 import models, { sequelize } from "./models";
 import routes from "./routes";
@@ -33,13 +34,20 @@ let strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
 // use the strategy
 passport.use(strategy);
 
-console.log(force);
-
 app.use(passport.initialize());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/user", routes.user);
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, "/../out")));
+
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/../out/index.html"));
+});
 
 sequelize.sync({ force }).then(() => {
   if (force) {
