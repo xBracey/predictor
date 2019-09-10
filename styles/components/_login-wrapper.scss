@@ -23,19 +23,53 @@
       align-items: center;
 
       h1 {
-        font-size: 40px;
+        font-size: 36px;
       }
 
-      input {
-        border-radius: 5px;
-        height: 50px;
-        width: 500px;
-        margin: 20px;
-        background-color: $light-grey;
-        color: $navy;
-        font-size: 24px;
-        text-align: center;
-        border: none;
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        input[type="text"],
+        input[type="password"] {
+          border-radius: 10px;
+          height: 50px;
+          width: 500px;
+          margin: 20px;
+          background-color: $light-grey;
+          color: $navy;
+          font-size: 20px;
+          text-align: center;
+          border: 2px solid $white;
+        }
+
+        input[type="submit"] {
+          padding: 20px 100px;
+          margin: 25px;
+          background-color: $green;
+          color: $white;
+          border-radius: 20px;
+          border: none;
+          font-size: 20px;
+        }
+
+        .input-wrapper {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          p.error {
+            position: absolute;
+            color: $red;
+            top: 65px;
+          }
+
+          input.error {
+            border-color: $red;
+          }
+        }
       }
 
       .break {
@@ -67,7 +101,7 @@
       }
 
       p {
-        font-size: 24px;
+        font-size: 20px;
         text-align: center;
         color: $white;
       }

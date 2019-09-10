@@ -38,17 +38,41 @@ body {
       flex-direction: column;
       align-items: center; }
       .login-main .login-container .login-content h1 {
-        font-size: 40px; }
-      .login-main .login-container .login-content input {
-        border-radius: 5px;
-        height: 50px;
-        width: 500px;
-        margin: 20px;
-        background-color: #e2e2e2;
-        color: #454d66;
-        font-size: 24px;
-        text-align: center;
-        border: none; }
+        font-size: 36px; }
+      .login-main .login-container .login-content form {
+        display: flex;
+        flex-direction: column;
+        align-items: center; }
+        .login-main .login-container .login-content form input[type="text"],
+        .login-main .login-container .login-content form input[type="password"] {
+          border-radius: 10px;
+          height: 50px;
+          width: 500px;
+          margin: 20px;
+          background-color: #e2e2e2;
+          color: #454d66;
+          font-size: 20px;
+          text-align: center;
+          border: 2px solid #ffffff; }
+        .login-main .login-container .login-content form input[type="submit"] {
+          padding: 20px 100px;
+          margin: 25px;
+          background-color: #58b368;
+          color: #ffffff;
+          border-radius: 20px;
+          border: none;
+          font-size: 20px; }
+        .login-main .login-container .login-content form .input-wrapper {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center; }
+          .login-main .login-container .login-content form .input-wrapper p.error {
+            position: absolute;
+            color: #ff0000;
+            top: 65px; }
+          .login-main .login-container .login-content form .input-wrapper input.error {
+            border-color: #ff0000; }
       .login-main .login-container .login-content .break {
         width: 100%;
         margin: 25px 0px;
@@ -70,7 +94,7 @@ body {
         text-decoration: underline;
         text-decoration-color: #ffffff; }
       .login-main .login-container .bottom p {
-        font-size: 24px;
+        font-size: 20px;
         text-align: center;
         color: #ffffff; }
 

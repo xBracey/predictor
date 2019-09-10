@@ -6,9 +6,8 @@
     "production": "babel-node src/index.js",
     "start": "yarn web-build; yarn export; nodemon --exec babel-node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "web-dev": "concurrently --kill-others \"next dev\" \"yarn web-dev:scss\"",
+    "web-dev": "concurrently --kill-others \"nodemon --exec babel-node src/index.js\" \"yarn web-dev:scss\" \"next dev\"",
     "web-build": "next build",
-    "web-start": "next start",
     "export": "next export",
     "web-dev:scss": "node-sass --watch ./styles/main.scss -o ./styles",
     "web-scss": "node-sass ./styles/main.scss -o ./styles"
