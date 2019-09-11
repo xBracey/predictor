@@ -1,7 +1,10 @@
 import "dotenv/config";
 import cors from "cors";
 import express from "express";
-const path = require("path");
+import path from "path";
+import bcrypt from "bcrypt";
+import { Strategy } from "passport-local";
+import session from "express-session";
 
 import models, { sequelize } from "./models";
 import routes from "./routes";
@@ -13,28 +16,39 @@ const force = process.env.FORCE === "true";
 
 import bodyParser from "body-parser"; // import passport and passport-jwt modules
 import passport from "passport";
-import passportJWT from "passport-jwt"; // ExtractJwt to help extract the token
-let ExtractJwt = passportJWT.ExtractJwt; // JwtStrategy which is the strategy for the authentication
-let JwtStrategy = passportJWT.Strategy;
 
-export const jwtOptions = {};
-jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-jwtOptions.secretOrKey = "pooliecrazy";
+passport.use(
+  new Strategy(async function(username, password, next) {
+    const user = await getUser(username);
+    if (!user) {
+      return next(null, false);
+    }
 
-// lets create our strategy for web token
-let strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
-  let user = getUser(jwt_payload.username);
-  if (user) {
-    next(null, user);
+    const result = await bcrypt.compare(password, user.password);
+    if (result) {
+      return next(null, user);
+    } else {
+      return next(null, false);
+    }
+  })
+);
+
+passport.serializeUser(function(user, next) {
+  next(null, user.username);
+});
+
+passport.deserializeUser(async function(username, next) {
+  const user = await getUser(username);
+  if (!user) {
+    return next(null, false);
   } else {
-    next(null, false);
+    return next(null, user);
   }
 });
 
-// use the strategy
-passport.use(strategy);
-
+app.use(session({ secret: "pooliecrazy22" }));
 app.use(passport.initialize());
+app.use(passport.session());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -51,6 +65,19 @@ app.get("/", (req, res) => {
 
 app.get("/register", (req, res) => {
   res.sendFile(path.join(__dirname + "/../out/register.html"));
+});
+
+app.get("/logout", function(req, res) {
+  req.logout();
+  res.redirect("/");
+});
+
+app.get("/buzz", (req, res) => {
+  if (req.user) {
+    res.sendFile(path.join(__dirname + "/../out/buzz.html"));
+  } else {
+    res.redirect("/");
+  }
 });
 
 app.get("*", (req, res) => {

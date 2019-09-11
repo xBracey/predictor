@@ -15,43 +15,38 @@ class Home extends React.Component {
       }
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.validateResponse = this.validateResponse.bind(this);
     this.readResponseAsJSON = this.readResponseAsJSON.bind(this);
-    this.logResult = this.logResult.bind(this);
-    this.logError = this.logError.bind(this);
+    this.loginSuccessful = this.loginSuccessful.bind(this);
+    this.loginfail = this.loginfail.bind(this);
   }
 
-  logResult(result) {
-    console.log(result);
+  loginSuccessful(result) {
+    window.location = "/buzz";
   }
 
-  logError(error) {
-    console.log("Looks like there was a problem: \n", error);
-  }
-
-  validateResponse(response) {
-    if (!response.ok) {
-      console.log(response);
-    }
-    return response;
+  loginfail(response) {
+    console.log(response);
   }
 
   readResponseAsJSON(response) {
-    return response.json();
+    if (response.ok) {
+      return response;
+    } else {
+      throw response;
+    }
   }
 
   login(username, password) {
-    fetch("http://localhost:8080/api/user/login", {
+    fetch("api/user/login", {
       method: "POST",
       body: JSON.stringify({ username, password }),
       headers: {
         "Content-Type": "application/json"
       }
     })
-      .then(this.validateResponse) // 2
-      .then(this.readResponseAsJSON) // 3
-      .then(this.logResult) // 4
-      .catch(this.logError);
+      .then(this.readResponseAsJSON)
+      .then(this.loginSuccessful)
+      .catch(this.loginfail);
   }
 
   handleError(name, value) {
