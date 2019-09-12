@@ -1,14 +1,25 @@
 .login-sidebar {
-  background-color: $yellow;
-  width: 500px;
-  height: 100vh;
+  background-color: $navy;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
 
+  @include desktop {
+    background-color: $yellow;
+    max-width: 500px;
+  }
+
   .logo {
-    height: 150px;
-    width: 150px;
-    padding: 50px;
+    height: 100px;
+    width: 100px;
+    padding: 20px;
+    margin: 0;
+
+    @include desktop {
+      height: 150px;
+      width: 150px;
+      padding: 50px 100px;
+    }
   }
 }

@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "production": "babel-node src/index.js",
-    "start": "yarn web-build; yarn export; nodemon --exec babel-node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "web-dev": "concurrently --kill-others \"nodemon --exec babel-node src/index.js\" \"yarn web-dev:scss\" \"next dev\"",
-    "web-build": "next build",
-    "export": "next export",
-    "web-dev:scss": "node-sass --watch ./styles/main.scss -o ./styles",
-    "web-scss": "node-sass ./styles/main.scss -o ./styles"
+    "server-dev": "nodemon --exec babel-node src/index.js",
+    "server": "babel-node src/index.js",
+    "build": "next build; next export",
+    "start": "yarn web-scss; yarn build; yarn server",
+    "web-dev": "concurrently --kill-others \"yarn scss\" \"next dev\"",
+    "scss": "node-sass --watch ./styles/main.scss -o ./styles",
+    "web-scss": "node-sass ./styles/main.scss -o ./styles",
+    "dev": "concurrently --kill-others \"yarn scss\" \"nodemon --exec 'yarn build'\" \"yarn server\""
   },
   "license": "MIT",
   "dependencies": {
@@ -36,5 +36,12 @@
     "react-dom": "16.9.0",
     "sequelize": "^5.12.3",
     "uuid": "^3.3.3"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "pages",
+      "components",
+      "styles"
+    ]
   }
 }

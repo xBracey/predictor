@@ -4,3 +4,23 @@ body {
   margin: 0;
   font-family: "Roboto";
 }
+
+input {
+  -webkit-appearance: none;
+}
+
+@mixin mobile {
+  @media (max-width: 599px) {
+    @content;
+  }
+}
+@mixin tablet {
+  @media (min-width: 900px) {
+    @content;
+  }
+}
+@mixin desktop {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}

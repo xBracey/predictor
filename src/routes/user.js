@@ -23,6 +23,14 @@ export const getUser = async username => {
   });
 };
 
+export const getUserByEmail = async email => {
+  return await models.User.findOne({
+    where: {
+      email
+    }
+  });
+};
+
 router.get("/me", function(req, res) {
   if (req.user) {
     getUser(req.user.username).then(user => {
@@ -33,30 +41,40 @@ router.get("/me", function(req, res) {
   }
 });
 
-router.get(
-  "/",
-  passport.authenticate("local", { failureRedirect: "/" }),
-  function(req, res) {
-    req.user.then(user => {
-      if (user.admin) {
-        getAllUsers(user.username).then(user => {
-          return res.json(user);
-        });
-      } else {
-        return res.json({});
-      }
+router.get("/", function(req, res) {
+  if (req.user && req.user.admin) {
+    getAllUsers().then(user => {
+      return res.json(user);
     });
+  } else {
+    return res.status(401).send("Unauthorised");
   }
-);
+});
 
 router.post("/register", (req, res) => {
   const { username, password, email, name } = req.body;
-  bcrypt.hash(password, saltRounds).then(hash => {
-    const user = { username, password: hash, email, name };
-    createUser(user).then(user => {
+
+  getUser(username)
+    .then(user => {
+      if (user) {
+        throw "Username already taken";
+      }
+      return getUserByEmail(email);
+    })
+    .then(user => {
+      if (user) {
+        throw "Email already taken";
+      }
+      return bcrypt.hash(password, saltRounds);
+    })
+    .then(hash => {
+      const user = { username, password: hash, email, name };
+      return createUser(user);
+    })
+    .then(user => {
       return res.json(user);
-    });
-  });
+    })
+    .catch(error => res.status(403).send(error));
 });
 
 router.post(
