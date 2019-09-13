@@ -1,11 +1,18 @@
 import React from "react";
 import Link from "next/link";
 import Head from "next/head";
+
+import Header from "../components/header";
 import "../styles/main.css";
 
 class Buzz extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      user: null
+    };
+
     this.readResponseAsJSON = this.readResponseAsJSON.bind(this);
     this.loginSuccessful = this.loginSuccessful.bind(this);
     this.loginfail = this.loginfail.bind(this);
@@ -16,7 +23,7 @@ class Buzz extends React.Component {
   }
 
   loginSuccessful(result) {
-    console.log(result);
+    this.setState({ user: result });
   }
 
   loginfail(response) {
@@ -44,6 +51,10 @@ class Buzz extends React.Component {
   }
 
   render() {
+    const welcomeMessage = this.state.user
+      ? "Welcome " + this.state.user.username
+      : "";
+
     return (
       <div>
         <Head>
@@ -53,7 +64,8 @@ class Buzz extends React.Component {
             rel="stylesheet"
           />
         </Head>
-        <p>Welcome, you are now logged in</p>
+        <Header />
+        <div className="subheader">{welcomeMessage}</div>
       </div>
     );
   }

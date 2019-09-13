@@ -9,6 +9,16 @@ input {
   -webkit-appearance: none;
 }
 
+.subheader {
+  display: flex;
+  background-color: $green;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  font-size: 20px;
+  color: $white;
+}
+
 @mixin mobile {
   @media (max-width: 599px) {
     @content;

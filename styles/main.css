@@ -7,6 +7,15 @@ body {
 input {
   -webkit-appearance: none; }
 
+.subheader {
+  display: flex;
+  background-color: #58b368;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  font-size: 20px;
+  color: #ffffff; }
+
 .login-sidebar {
   background-color: #454d66;
   flex: 1;
@@ -117,6 +126,30 @@ input {
         font-size: 20px;
         text-align: center;
         color: #ffffff; }
+
+header {
+  background-color: #454d66;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  header .logo {
+    height: 100px;
+    width: 100px;
+    padding: 25px 50px; }
+  header .menu {
+    padding: 25px 50px;
+    display: flex;
+    align-items: center; }
+    header .menu .singleMenu {
+      padding: 25px 50px; }
+      header .menu .singleMenu a {
+        text-decoration: none;
+        color: #ffffff;
+        font-size: 24px; }
+    header .menu img {
+      padding-left: 50px;
+      height: 80px;
+      width: 80px; }
 
 .container {
   display: flex;

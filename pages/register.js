@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Head from "next/head";
+
 import LoginSidebar from "../components/loginSidebar";
 import LoginWrapper from "../components/loginWrapper";
 import "../styles/main.css";

@@ -41,7 +41,7 @@
     "watch": [
       "pages",
       "components",
-      "styles"
+      "styles/main.css"
     ]
   }
 }

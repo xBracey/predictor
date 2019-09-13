@@ -1,0 +1,34 @@
+header {
+  background-color: $navy;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .logo {
+    height: 100px;
+    width: 100px;
+    padding: 25px 50px;
+  }
+
+  .menu {
+    padding: 25px 50px;
+    display: flex;
+    align-items: center;
+
+    .singleMenu {
+      padding: 25px 50px;
+
+      a {
+        text-decoration: none;
+        color: $white;
+        font-size: 24px;
+      }
+    }
+
+    img {
+      padding-left: 50px;
+      height: 80px;
+      width: 80px;
+    }
+  }
+}
