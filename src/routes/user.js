@@ -2,7 +2,6 @@ import { Router } from "express";
 import bcrypt from "bcrypt";
 import models, { sequelize } from "../models";
 import passport from "passport";
-import { ensureLoggedIn } from "connect-ensure-login";
 
 const router = Router();
 const saltRounds = 10;
