@@ -3,17 +3,43 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: column;
 
-  .logo {
-    height: 100px;
-    width: 100px;
-    padding: 25px 50px;
+  @include desktop {
+    flex-direction: row;
+  }
+
+  .logo-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+    @include desktop {
+      width: auto;
+    }
+
+    img {
+      height: 80px;
+      width: 80px;
+      padding: 35px 50px;
+    }
+
+    img.logo {
+      height: 100px;
+      width: 100px;
+      padding: 25px 50px;
+    }
   }
 
   .menu {
     padding: 25px 50px;
     display: flex;
     align-items: center;
+    flex-direction: column;
+
+    @include desktop {
+      flex-direction: row;
+    }
 
     .singleMenu {
       padding: 25px 50px;

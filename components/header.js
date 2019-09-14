@@ -6,7 +6,9 @@ class Header extends React.Component {
     super();
 
     this.state = {
-      currentPage: "/"
+      currentPage: "/",
+      menuClicked: false,
+      width: 0
     };
 
     this.menu = [
@@ -23,12 +25,19 @@ class Header extends React.Component {
         link: "/results"
       }
     ];
+
+    this.onMenuClicked = this.onMenuClicked.bind(this);
   }
 
   componentDidMount() {
     this.setState({
-      currentPage: window.location.pathname
+      currentPage: window.location.pathname,
+      width: window.innerWidth
     });
+  }
+
+  onMenuClicked() {
+    this.setState({ menuClicked: !this.state.menuClicked });
   }
 
   renderMenu() {
@@ -42,16 +51,33 @@ class Header extends React.Component {
       );
     });
 
-    return (
+    const accountImage =
+      this.state.width > 900 ? <img src="static/account.svg" /> : null;
+
+    return !this.state.menuClicked && this.state.width < 900 ? null : (
       <div className="menu">
         {menuComponent}
-        <img src="static/account.svg" />
+        {accountImage}
       </div>
     );
   }
 
   renderLogo() {
-    return <img className="logo" src="static/footyBee-white.svg" />;
+    const menuSource = this.state.menuClicked
+      ? "static/close-menu.svg"
+      : "static/menu.svg";
+
+    const menuImage =
+      this.state.width > 900 ? null : (
+        <img onClick={this.onMenuClicked} src={menuSource} />
+      );
+
+    return (
+      <div className="logo-container">
+        <img className="logo" src="static/footyBee-white.svg" />
+        {menuImage}
+      </div>
+    );
   }
 
   render() {
