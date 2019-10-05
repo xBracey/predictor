@@ -19,6 +19,17 @@ input {
   color: $white;
 }
 
+.page-outer-container {
+  display: flex;
+  align-items: center;
+}
+
+.page-inner-container {
+  width: 100%;
+  max-width: 1500px;
+  padding: 50px;
+}
+
 @mixin mobile {
   @media (max-width: 599px) {
     @content;

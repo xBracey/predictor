@@ -15,7 +15,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/user", routes.user);
+app.use("/api", routes.api);
+app.use("/admin", routes.admin);
 app.use("/", routes.pages);
 
 sequelize.sync({ force }).then(() => {

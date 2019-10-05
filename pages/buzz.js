@@ -55,6 +55,8 @@ class Buzz extends React.Component {
       ? "Welcome " + this.state.user.username
       : "";
 
+    const isAdmin = this.state.user && this.state.user.admin;
+
     return (
       <div>
         <Head>
@@ -64,7 +66,7 @@ class Buzz extends React.Component {
             rel="stylesheet"
           />
         </Head>
-        <Header />
+        <Header isAdmin={isAdmin} />
         <div className="subheader">{welcomeMessage}</div>
       </div>
     );

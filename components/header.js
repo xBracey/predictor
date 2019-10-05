@@ -11,6 +11,21 @@ class Header extends React.Component {
       width: 0
     };
 
+    this.adminMenu = [
+      {
+        text: "Players",
+        link: "/admin/players"
+      },
+      {
+        text: "Teams",
+        link: "/admin/teams"
+      },
+      {
+        text: "Groups",
+        link: "/admin/groups"
+      }
+    ];
+
     this.menu = [
       {
         text: "Leagues",
@@ -41,7 +56,9 @@ class Header extends React.Component {
   }
 
   renderMenu() {
-    const menuComponent = this.menu.map(singleMenu => {
+    const menu = this.props.admin ? this.adminMenu : this.menu;
+
+    const menuComponent = menu.map(singleMenu => {
       const extraStyling =
         this.state.currentPage === singleMenu.link ? "currentPage" : "";
       return (
@@ -51,11 +68,18 @@ class Header extends React.Component {
       );
     });
 
-    const accountImage =
-      this.state.width > 900 ? <img src="static/account.svg" /> : null;
+    const adminMenu = this.props.isAdmin ? (
+      <div className="singleMenu" key={"Admin"}>
+        <a href="/admin">Admin</a>
+      </div>
+    ) : null;
 
-    return !this.state.menuClicked && this.state.width < 900 ? null : (
+    const accountImage =
+      this.state.width > 1200 ? <img src="/static/account.svg" /> : null;
+
+    return !this.state.menuClicked && this.state.width < 1200 ? null : (
       <div className="menu">
+        {adminMenu}
         {menuComponent}
         {accountImage}
       </div>
@@ -64,17 +88,19 @@ class Header extends React.Component {
 
   renderLogo() {
     const menuSource = this.state.menuClicked
-      ? "static/close-menu.svg"
-      : "static/menu.svg";
+      ? "/static/close-menu.svg"
+      : "/static/menu.svg";
 
     const menuImage =
-      this.state.width > 900 ? null : (
+      this.state.width > 1200 ? null : (
         <img onClick={this.onMenuClicked} src={menuSource} />
       );
 
     return (
       <div className="logo-container">
-        <img className="logo" src="static/footyBee-white.svg" />
+        <a href="/buzz">
+          <img className="logo" src="/static/footyBee-white.svg" />
+        </a>
         {menuImage}
       </div>
     );

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "server-dev": "nodemon --exec babel-node src/index.js",
+    "server-dev": "nodemon --watch src --exec babel-node src/index.js",
     "server": "babel-node src/index.js",
     "build": "next build; next export",
     "start": "yarn web-scss; yarn build; yarn server",

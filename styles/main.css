@@ -16,6 +16,15 @@ input {
   font-size: 20px;
   color: #ffffff; }
 
+.page-outer-container {
+  display: flex;
+  align-items: center; }
+
+.page-inner-container {
+  width: 100%;
+  max-width: 1500px;
+  padding: 50px; }
+
 .login-sidebar {
   background-color: #454d66;
   flex: 1;
@@ -126,6 +135,62 @@ input {
         font-size: 20px;
         text-align: center;
         color: #ffffff; }
+
+header {
+  background-color: #454d66;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column; }
+  @media (min-width: 1200px) {
+    header {
+      flex-direction: row; } }
+  header .logo-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between; }
+    @media (min-width: 1200px) {
+      header .logo-container {
+        width: auto; } }
+    header .logo-container img {
+      height: 80px;
+      width: 80px;
+      padding: 35px 50px; }
+    header .logo-container img.logo {
+      height: 100px;
+      width: 100px;
+      padding: 25px 50px; }
+  header .menu {
+    padding: 25px 50px;
+    display: flex;
+    align-items: center;
+    flex-direction: column; }
+    @media (min-width: 1200px) {
+      header .menu {
+        flex-direction: row; } }
+    header .menu .singleMenu {
+      padding: 25px 50px; }
+      header .menu .singleMenu a {
+        text-decoration: none;
+        color: #ffffff;
+        font-size: 24px; }
+    header .menu img {
+      padding-left: 50px;
+      height: 80px;
+      width: 80px; }
+
+table {
+  border-collapse: collapse;
+  width: 100%; }
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px; }
+
+tr:nth-child(even) {
+  background-color: #dddddd; }
 
 header {
   background-color: #454d66;
