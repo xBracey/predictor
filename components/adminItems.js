@@ -54,7 +54,11 @@ class AdminItems extends React.Component {
 
     return (
       <table>
-        <tr>{headerComponent} </tr>
+        <tr>
+          {headerComponent}
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
         {this.renderItems()}
       </table>
     );
@@ -63,7 +67,12 @@ class AdminItems extends React.Component {
   renderItems() {
     return this.state.items
       ? this.state.items.map(item => (
-          <AdminItem item={item} fields={this.props.fields} />
+          <AdminItem
+            apiPrefix={this.props.apiPrefix}
+            item={item}
+            fields={this.props.fields}
+            idField={this.props.idField}
+          />
         ))
       : null;
   }

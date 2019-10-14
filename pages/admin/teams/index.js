@@ -2,13 +2,14 @@ import React from "react";
 import Link from "next/link";
 import Head from "next/head";
 
-import Header from "../../components/header";
-import AdminItems from "../../components/adminItems";
-import "../../styles/main.css";
+import Header from "../../../components/header";
+import AdminItems from "../../../components/adminItems";
+import "../../../styles/main.css";
 
 const teamFields = ["name", "groupNumber"];
+const idField = "name";
 
-class Buzz extends React.Component {
+class Teams extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -26,7 +27,11 @@ class Buzz extends React.Component {
         <Header isAdmin={false} admin={true} />
         <div className="page-outer-container">
           <div className="page-inner-container">
-            <AdminItems apiPrefix={"teams"} fields={teamFields} />
+            <AdminItems
+              apiPrefix={"teams"}
+              fields={teamFields}
+              idField={idField}
+            />
           </div>
         </div>
       </div>
@@ -34,4 +39,4 @@ class Buzz extends React.Component {
   }
 }
 
-export default Buzz;
+export default Teams;

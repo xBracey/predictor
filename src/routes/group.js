@@ -41,9 +41,9 @@ router.post("/", function(req, res) {
   }
 });
 
-router.delete("/", function(req, res) {
-  if (req.user && req.user.admin && req.body.number) {
-    deleteGroup(req.body.number).then(group => {
+router.delete("/:number", function(req, res) {
+  if (req.user && req.user.admin && req.params.number) {
+    deleteGroup(req.params.number).then(group => {
       return res.json(group);
     });
   } else if (!req.body.number) {

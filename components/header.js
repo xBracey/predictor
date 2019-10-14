@@ -70,7 +70,7 @@ class Header extends React.Component {
 
     const adminMenu = this.props.isAdmin ? (
       <div className="singleMenu" key={"Admin"}>
-        <a href="/admin">Admin</a>
+        <a href="/admin/players">Admin</a>
       </div>
     ) : null;
 
@@ -97,12 +97,12 @@ class Header extends React.Component {
       );
 
     return (
-      <div className="logo-container">
-        <a href="/buzz">
+      <a href="/buzz">
+        <div className="logo-container">
           <img className="logo" src="/static/footyBee-white.svg" />
-        </a>
-        {menuImage}
-      </div>
+          {menuImage}
+        </div>
+      </a>
     );
   }
 
