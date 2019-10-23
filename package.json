@@ -10,7 +10,7 @@
     "web-dev": "concurrently --kill-others \"yarn scss\" \"next dev\"",
     "scss": "node-sass --watch ./styles/main.scss -o ./styles",
     "web-scss": "node-sass ./styles/main.scss -o ./styles",
-    "dev": "concurrently --kill-others \"yarn scss\" \"nodemon --exec 'yarn build'\" \"yarn server\""
+    "dev": "concurrently --kill-others \"yarn scss\" \"nodemon --exec 'yarn build'\" \"yarn server-dev\""
   },
   "license": "MIT",
   "dependencies": {

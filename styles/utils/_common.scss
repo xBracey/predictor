@@ -21,13 +21,18 @@ input {
 
 .page-outer-container {
   display: flex;
-  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 150px);
 }
 
 .page-inner-container {
   width: 100%;
   max-width: 1500px;
   padding: 50px;
+}
+
+.green {
+  background-color: $green;
 }
 
 @mixin mobile {

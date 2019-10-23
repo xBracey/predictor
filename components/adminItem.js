@@ -63,6 +63,10 @@ class AdminItem extends React.Component {
   }
 
   renderEdit() {
+    if (this.props.noEdit) {
+      return null;
+    }
+
     return (
       <td>
         <button onClick={this.onEdit}>Edit</button>

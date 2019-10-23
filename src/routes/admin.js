@@ -22,10 +22,6 @@ router.get("/groups", (req, res) => {
   res.sendFile(path.join(outDirectoy + "groups.html"));
 });
 
-router.get("/groups/edit", (req, res) => {
-  res.sendFile(path.join(outDirectoy + "groups/edit.html"));
-});
-
 router.get("/players", (req, res) => {
   res.sendFile(path.join(outDirectoy + "players.html"));
 });

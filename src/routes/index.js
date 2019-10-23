@@ -9,7 +9,7 @@ import teams from "./teams";
 import admin from "./admin";
 
 api.use("/user", user);
-api.use("/group", group);
+api.use("/groups", group);
 api.use("/players", players);
 api.use("/teams", teams);
 

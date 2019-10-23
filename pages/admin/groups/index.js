@@ -28,9 +28,10 @@ class Groups extends React.Component {
         <div className="page-outer-container">
           <div className="page-inner-container">
             <AdminItems
-              apiPrefix={"group"}
+              apiPrefix={"groups"}
               fields={groupFields}
               idField={idField}
+              noEdit={true}
             />
           </div>
         </div>

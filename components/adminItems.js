@@ -52,11 +52,13 @@ class AdminItems extends React.Component {
   renderTable() {
     const headerComponent = this.props.fields.map(field => <th>{field}</th>);
 
+    const editComponent = this.props.noEdit ? null : <th>Edit</th>;
+
     return (
       <table>
         <tr>
           {headerComponent}
-          <th>Edit</th>
+          {editComponent}
           <th>Delete</th>
         </tr>
         {this.renderItems()}
@@ -72,6 +74,7 @@ class AdminItems extends React.Component {
             item={item}
             fields={this.props.fields}
             idField={this.props.idField}
+            noEdit={this.props.noEdit}
           />
         ))
       : null;
