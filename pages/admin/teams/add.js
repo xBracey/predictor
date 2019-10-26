@@ -96,7 +96,7 @@ class TeamAdd extends React.Component {
           <div className="page-inner-container add-edit-container">
             <h1> Add Team </h1>
             <form onSubmit={this.handleSubmit}>
-              <input type="name" id="name" />
+              <input type="text" id="name" />
               <select id="groupNumber">{groups}</select>
               <input type="submit" value="Save" />
             </form>

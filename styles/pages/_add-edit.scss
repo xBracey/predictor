@@ -56,6 +56,17 @@
       font-weight: normal;
     }
 
+    input[type="text"] {
+      border-radius: 10px;
+      height: 50px;
+      margin: 20px;
+      background-color: $white;
+      color: $green;
+      font-size: 20px;
+      text-align: center;
+      border: 2px solid $green;
+    }
+
     input[type="submit"] {
       padding: 20px 100px;
       margin: 10px;

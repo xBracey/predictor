@@ -293,6 +293,15 @@ header {
       outline: none; }
     .add-edit-container form select option {
       font-weight: normal; }
+    .add-edit-container form input[type="text"] {
+      border-radius: 10px;
+      height: 50px;
+      margin: 20px;
+      background-color: #ffffff;
+      color: #58b368;
+      font-size: 20px;
+      text-align: center;
+      border: 2px solid #58b368; }
     .add-edit-container form input[type="submit"] {
       padding: 20px 100px;
       margin: 10px;

@@ -98,7 +98,7 @@ class PlayerAdd extends React.Component {
           <div className="page-inner-container add-edit-container">
             <h1> Add Player </h1>
             <form onSubmit={this.handleSubmit}>
-              <input type="name" id="name" />
+              <input type="text" id="name" />
               <select id="teamName">{teams}</select>
               <input type="submit" value="Save" />
             </form>
