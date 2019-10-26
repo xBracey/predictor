@@ -22,8 +22,16 @@ router.get("/groups", (req, res) => {
   res.sendFile(path.join(outDirectoy + "groups.html"));
 });
 
+router.get("/groups/add", (req, res) => {
+  res.sendFile(path.join(outDirectoy + "groups/add.html"));
+});
+
 router.get("/players", (req, res) => {
   res.sendFile(path.join(outDirectoy + "players.html"));
+});
+
+router.get("/players/add", (req, res) => {
+  res.sendFile(path.join(outDirectoy + "players/add.html"));
 });
 
 router.get("/players/edit", (req, res) => {
@@ -32,6 +40,10 @@ router.get("/players/edit", (req, res) => {
 
 router.get("/teams", (req, res) => {
   res.sendFile(path.join(outDirectoy + "teams.html"));
+});
+
+router.get("/teams/add", (req, res) => {
+  res.sendFile(path.join(outDirectoy + "teams/add.html"));
 });
 
 router.get("/teams/edit", (req, res) => {

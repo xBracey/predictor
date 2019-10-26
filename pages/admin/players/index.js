@@ -12,6 +12,12 @@ const idField = "name";
 class Players extends React.Component {
   constructor(props) {
     super(props);
+
+    this.onAdd = this.onAdd;
+  }
+
+  onAdd() {
+    window.location.href = `${window.location.href}/add`;
   }
 
   render() {
@@ -32,6 +38,9 @@ class Players extends React.Component {
               fields={playerFields}
               idField={idField}
             />
+            <div onClick={this.onAdd} className="addItem">
+              Add Player
+            </div>
           </div>
         </div>
       </div>

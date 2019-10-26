@@ -3,7 +3,7 @@ import models, { sequelize } from "../models";
 
 const router = Router();
 
-const createGroup = async ({ number }) => {
+const createGroup = async number => {
   return await models.Group.create({ number });
 };
 

@@ -12,6 +12,12 @@ const idField = "number";
 class Groups extends React.Component {
   constructor(props) {
     super(props);
+
+    this.onAdd = this.onAdd;
+  }
+
+  onAdd() {
+    window.location.href = `${window.location.href}/add`;
   }
 
   render() {
@@ -33,6 +39,9 @@ class Groups extends React.Component {
               idField={idField}
               noEdit={true}
             />
+            <div onClick={this.onAdd} className="addItem">
+              Add Group
+            </div>
           </div>
         </div>
       </div>

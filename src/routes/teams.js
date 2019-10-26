@@ -3,7 +3,7 @@ import models, { sequelize } from "../models";
 
 const router = Router();
 
-const createTeam = async ({ name, groupNumber }) => {
+const createTeam = async (name, groupNumber) => {
   return await models.Team.create({ name, groupNumber });
 };
 

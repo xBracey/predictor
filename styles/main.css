@@ -301,3 +301,14 @@ header {
       border-radius: 20px;
       border: none;
       font-size: 20px; }
+
+.addItem {
+  padding: 25px;
+  margin: 10px;
+  background-color: #58b368;
+  color: #ffffff;
+  width: 150px;
+  border-radius: 20px;
+  border: none;
+  font-size: 20px;
+  text-align: center; }
