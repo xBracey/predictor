@@ -97,12 +97,12 @@ class Header extends React.Component {
       );
 
     return (
-      <a href="/buzz">
-        <div className="logo-container">
+      <div className="logo-container">
+        <a href="/buzz">
           <img className="logo" src="/static/footyBee-white.svg" />
-          {menuImage}
-        </div>
-      </a>
+        </a>
+        {menuImage}
+      </div>
     );
   }
 
