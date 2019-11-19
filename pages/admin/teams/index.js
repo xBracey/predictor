@@ -37,6 +37,7 @@ class Teams extends React.Component {
               apiPrefix={"teams"}
               fields={teamFields}
               idField={idField}
+              filterName={"groupNumber"}
             />
             <div onClick={this.onAdd} className="addItem">
               Add Team

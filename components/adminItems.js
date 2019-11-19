@@ -8,21 +8,28 @@ class AdminItems extends React.Component {
     super(props);
 
     this.state = {
-      items: null
+      filter: null,
+      items: null,
+      itemFilters: []
     };
 
     this.getSuccessful = this.getSuccessful.bind(this);
     this.getFail = this.getFail.bind(this);
     this.readResponseAsJSON = this.readResponseAsJSON.bind(this);
+    this.onFilterSelect = this.onFilterSelect.bind(this);
   }
 
   componentDidMount() {
     this.apiCall();
   }
 
-  getSuccessful(result) {
-    console.log(result);
-    this.setState({ items: result });
+  getSuccessful(results) {
+    const itemFilters = results.map(result => result[this.props.filterName]);
+
+    this.setState({
+      items: results,
+      itemFilters: Array.from(new Set(itemFilters)).sort()
+    });
   }
 
   getFail(response) {
@@ -49,6 +56,10 @@ class AdminItems extends React.Component {
       .catch(this.getFail);
   }
 
+  onFilterSelect(event) {
+    this.setState({ filter: event.target.value });
+  }
+
   renderTable() {
     const headerComponent = this.props.fields.map(field => <th>{field}</th>);
 
@@ -66,22 +77,54 @@ class AdminItems extends React.Component {
     );
   }
 
+  renderFilter() {
+    console.log(this.state.itemFilters);
+
+    if (!this.state.itemFilters || !this.props.filterName) {
+      return;
+    }
+
+    const filterComponent = this.state.itemFilters.map(singleFilter => (
+      <option value={singleFilter}>{singleFilter}</option>
+    ));
+
+    return (
+      <select onChange={this.onFilterSelect}>
+        <option value="">All</option>
+        {filterComponent}
+      </select>
+    );
+  }
+
   renderItems() {
-    return this.state.items
-      ? this.state.items.map(item => (
-          <AdminItem
-            apiPrefix={this.props.apiPrefix}
-            item={item}
-            fields={this.props.fields}
-            idField={this.props.idField}
-            noEdit={this.props.noEdit}
-          />
-        ))
+    const { filter, items } = this.state;
+    const { apiPrefix, idField, fields, filterName, noEdit } = this.props;
+
+    return items
+      ? items
+          .filter(item => item[filterName] === filter || !filter)
+          .sort((item1, item2) => {
+            return item1[idField] > item2[idField] ? 1 : -1;
+          })
+          .map(item => (
+            <AdminItem
+              apiPrefix={apiPrefix}
+              item={item}
+              fields={fields}
+              idField={idField}
+              noEdit={noEdit}
+            />
+          ))
       : null;
   }
 
   render() {
-    return <div className="admin-items">{this.renderTable()}</div>;
+    return (
+      <div className="admin-items">
+        {this.renderFilter()}
+        {this.renderTable()}
+      </div>
+    );
   }
 }
 

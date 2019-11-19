@@ -37,6 +37,7 @@ class Players extends React.Component {
               apiPrefix={"players"}
               fields={playerFields}
               idField={idField}
+              filterName={"teamName"}
             />
             <div onClick={this.onAdd} className="addItem">
               Add Player
