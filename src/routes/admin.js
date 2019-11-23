@@ -50,4 +50,16 @@ router.get("/teams/edit", (req, res) => {
   res.sendFile(path.join(outDirectoy + "teams/edit.html"));
 });
 
+router.get("/matches", (req, res) => {
+  res.sendFile(path.join(outDirectoy + "matches.html"));
+});
+
+router.get("/matches/add", (req, res) => {
+  res.sendFile(path.join(outDirectoy + "matches/add.html"));
+});
+
+router.get("/matches/edit", (req, res) => {
+  res.sendFile(path.join(outDirectoy + "matches/edit.html"));
+});
+
 export default router;

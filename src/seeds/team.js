@@ -2,100 +2,84 @@ import models, { sequelize } from "../models";
 
 export const teams = [
   {
-    name: "England",
+    name: "Austria",
     groupNumber: "A"
   },
   {
-    name: "Czech Republic",
-    groupNumber: "B"
-  },
-  {
-    name: "Ukraine",
-    groupNumber: "C"
-  },
-  {
-    name: "Portugal",
-    groupNumber: "D"
-  },
-  {
-    name: "Ireland",
-    groupNumber: "E"
-  },
-  {
-    name: "Denmark",
-    groupNumber: "F"
-  },
-  {
-    name: "Hungary",
+    name: "Belgium",
     groupNumber: "A"
   },
   {
     name: "Croatia",
-    groupNumber: "B"
+    groupNumber: "A"
   },
   {
-    name: "Spain",
-    groupNumber: "C"
+    name: "Czech Republic",
+    groupNumber: "A"
   },
   {
-    name: "Sweden",
-    groupNumber: "D"
+    name: "Denmark",
+    groupNumber: "A"
   },
   {
-    name: "Poland",
-    groupNumber: "E"
+    name: "England",
+    groupNumber: "A"
   },
   {
-    name: "Austria",
-    groupNumber: "F"
+    name: "Finland",
+    groupNumber: "A"
   },
   {
     name: "France",
     groupNumber: "A"
   },
   {
-    name: "Turkey",
-    groupNumber: "B"
-  },
-  {
-    name: "Belgium",
-    groupNumber: "C"
-  },
-  {
-    name: "Russia",
-    groupNumber: "D"
+    name: "Germany",
+    groupNumber: "A"
   },
   {
     name: "Italy",
-    groupNumber: "E"
+    groupNumber: "A"
   },
   {
-    name: "Greece",
-    groupNumber: "F"
+    name: "Netherlands",
+    groupNumber: "A"
   },
   {
-    name: "Wales",
+    name: "Poland",
+    groupNumber: "A"
+  },
+  {
+    name: "Portugal",
+    groupNumber: "A"
+  },
+  {
+    name: "Russia",
+    groupNumber: "A"
+  },
+  {
+    name: "Spain",
+    groupNumber: "A"
+  },
+  {
+    name: "Sweden",
     groupNumber: "A"
   },
   {
     name: "Switzerland",
-    groupNumber: "B"
+    groupNumber: "A"
   },
   {
-    name: "Northern Ireland",
-    groupNumber: "C"
+    name: "Turkey",
+    groupNumber: "A"
   },
   {
-    name: "Serbia",
-    groupNumber: "D"
+    name: "Ukraine",
+    groupNumber: "A"
   },
   {
-    name: "Germany",
-    groupNumber: "E"
-  },
-  {
-    name: "Netherlands",
-    groupNumber: "F"
+    name: "Wales",
+    groupNumber: "A"
   }
 ];
 

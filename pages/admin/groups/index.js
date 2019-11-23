@@ -38,6 +38,7 @@ class Groups extends React.Component {
               fields={groupFields}
               idField={idField}
               noEdit={true}
+              sortField={idField}
             />
             <div onClick={this.onAdd} className="addItem">
               Add Group

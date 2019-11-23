@@ -38,6 +38,7 @@ class Teams extends React.Component {
               fields={teamFields}
               idField={idField}
               filterName={"groupNumber"}
+              sortField={idField}
             />
             <div onClick={this.onAdd} className="addItem">
               Add Team

@@ -5,6 +5,9 @@ const group_match = (sequelize, DataTypes) => {
     },
     awayGoals: {
       type: DataTypes.INTEGER
+    },
+    date: {
+      type: DataTypes.DATE
     }
   });
 

@@ -98,13 +98,20 @@ class AdminItems extends React.Component {
 
   renderItems() {
     const { filter, items } = this.state;
-    const { apiPrefix, idField, fields, filterName, noEdit } = this.props;
+    const {
+      apiPrefix,
+      idField,
+      fields,
+      filterName,
+      noEdit,
+      sortField
+    } = this.props;
 
     return items
       ? items
           .filter(item => item[filterName] === filter || !filter)
           .sort((item1, item2) => {
-            return item1[idField] > item2[idField] ? 1 : -1;
+            return item1[sortField] > item2[sortField] ? 1 : -1;
           })
           .map(item => (
             <AdminItem

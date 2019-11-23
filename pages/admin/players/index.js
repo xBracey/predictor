@@ -38,6 +38,7 @@ class Players extends React.Component {
               fields={playerFields}
               idField={idField}
               filterName={"teamName"}
+              sortField={idField}
             />
             <div onClick={this.onAdd} className="addItem">
               Add Player

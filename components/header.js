@@ -13,6 +13,10 @@ class Header extends React.Component {
 
     this.adminMenu = [
       {
+        text: "Matches",
+        link: "/admin/matches"
+      },
+      {
         text: "Players",
         link: "/admin/players"
       },
