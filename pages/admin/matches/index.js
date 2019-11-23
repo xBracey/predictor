@@ -8,7 +8,7 @@ import "../../../styles/main.css";
 
 const matchFields = ["id", "groupNumber", "homeTeamName", "awayTeamName"];
 const idField = "id";
-const sortField = "groupNumber";
+const sortField = "id";
 
 class Matches extends React.Component {
   constructor(props) {

@@ -1,34 +1,33 @@
 import React from "react";
 import Link from "next/link";
 import Head from "next/head";
+import DatePicker from "react-datepicker";
 
 import Header from "../../../components/header";
 import AdminItems from "../../../components/adminItems";
 import "../../../styles/main.css";
+import "react-datepicker/dist/react-datepicker.css";
 
-class PlayerEdit extends React.Component {
+class MatchesEdit extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { id: null, player: null, teams: null };
+    this.state = { id: null, match: null, date: Date.now() };
 
     this.readResponseAsJSON = this.readResponseAsJSON.bind(this);
-    this.getPlayerSuccessful = this.getPlayerSuccessful.bind(this);
-    this.getTeamSuccessful = this.getTeamSuccessful.bind(this);
+    this.getMatchSuccessful = this.getMatchSuccessful.bind(this);
     this.getFail = this.getFail.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.updatePlayerSuccessful = this.updatePlayerSuccessful.bind(this);
+    this.updateMatchSuccessful = this.updateMatchSuccessful.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
   }
 
-  getPlayerSuccessful(result) {
+  getMatchSuccessful(result) {
     if (result) {
-      this.setState({ player: result });
-    }
-  }
+      const date = new Date(result.date);
 
-  getTeamSuccessful(result) {
-    if (result) {
-      this.setState({ teams: result });
+      console.log(date);
+      this.setState({ match: result, date });
     }
   }
 
@@ -44,50 +43,61 @@ class PlayerEdit extends React.Component {
     }
   }
 
-  getPlayer(id) {
-    fetch(`/api/players/${id}`, {
+  getMatch(id) {
+    fetch(`/api/match/group/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
       }
     })
       .then(this.readResponseAsJSON)
-      .then(this.getPlayerSuccessful)
+      .then(this.getMatchSuccessful)
       .catch(this.getFail);
   }
 
-  getTeams() {
-    fetch(`/api/teams`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.getTeamSuccessful)
-      .catch(this.getFail);
-  }
-
-  updatePlayerSuccessful(result) {
-    window.alert("Player Successfully Updated");
+  updateMatchSuccessful(result) {
+    window.alert("Match Successfully Updated");
 
     window.history.back();
   }
 
+  handleDateChange(date) {
+    this.setState({ date });
+  }
+
   handleSubmit(event) {
     event.preventDefault();
-    const { name } = this.state.player;
-    const teamName = event.target.teamName.value;
+    const { id, homeTeamName, awayTeamName, groupNumber } = this.state.match;
+    const homeGoals = event.target.homeGoals.value
+      ? event.target.homeGoals.value
+      : null;
+    const awayGoals = event.target.awayGoals.value
+      ? event.target.awayGoals.value
+      : null;
+    const date = event.target.date.value;
 
-    fetch(`/api/players`, {
+    fetch(`/api/match/group`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ name, teamName })
+      body: JSON.stringify({
+        id,
+        homeTeamName,
+        awayTeamName,
+        groupNumber,
+        homeGoals,
+        awayGoals,
+        date: new Date(
+          date
+            .split("/")
+            .reverse()
+            .join("/")
+        )
+      })
     })
       .then(this.readResponseAsJSON)
-      .then(this.updatePlayerSuccessful)
+      .then(this.updateMatchSuccessful)
       .catch(this.getFail);
   }
 
@@ -98,25 +108,16 @@ class PlayerEdit extends React.Component {
       const id = searchParams.get("id");
       this.setState({ id });
 
-      this.getTeams();
-      this.getPlayer(id);
+      this.getMatch(id);
     }
   }
 
   render() {
-    const name = this.state.player ? this.state.player.name : "";
-
-    const teams =
-      !this.state.teams || !this.state.player
-        ? null
-        : this.state.teams.map(team => {
-            const selected = team.name === this.state.player.teamName;
-            return (
-              <option value={team.name} selected={selected}>
-                {team.name}
-              </option>
-            );
-          });
+    const homeGoals = this.state.match ? this.state.match.homeGoals : "";
+    const awayGoals = this.state.match ? this.state.match.awayGoals : "";
+    const homeTeamName = this.state.match ? this.state.match.homeTeamName : "";
+    const awayTeamName = this.state.match ? this.state.match.awayTeamName : "";
+    const groupNumber = this.state.match ? this.state.match.groupNumber : "";
 
     return (
       <div>
@@ -130,9 +131,18 @@ class PlayerEdit extends React.Component {
         <Header isAdmin={false} admin={true} />
         <div className="page-outer-container">
           <div className="page-inner-container add-edit-container">
-            <h1> {name} </h1>
+            <h1>
+              {`${homeTeamName} vs ${awayTeamName} - Group ${groupNumber}`}
+            </h1>
             <form onSubmit={this.handleSubmit}>
-              <select id="teamName">{teams}</select>
+              <DatePicker
+                id="date"
+                selected={this.state.date}
+                dateFormat="dd/MM/yyyy"
+                onChange={this.handleDateChange}
+              />
+              <input type="number" id="homeGoals" value={homeGoals} />
+              <input type="number" id="awayGoals" value={awayGoals} />
               <input type="submit" value="Save" />
             </form>
           </div>
@@ -142,4 +152,4 @@ class PlayerEdit extends React.Component {
   }
 }
 
-export default PlayerEdit;
+export default MatchesEdit;
