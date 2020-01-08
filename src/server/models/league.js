@@ -1,5 +1,9 @@
 const league = (sequelize, DataTypes) => {
   const League = sequelize.define("league", {
+    code: {
+      type: DataTypes.STRING,
+      primaryKey: true
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false

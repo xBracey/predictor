@@ -3,6 +3,7 @@ import Link from "next/link";
 import Head from "next/head";
 
 import Header from "../components/header";
+import Footer from "../components/footer";
 import "../styles/main.css";
 
 class Buzz extends React.Component {
@@ -68,6 +69,7 @@ class Buzz extends React.Component {
         </Head>
         <Header isAdmin={isAdmin} />
         <div className="subheader">{welcomeMessage}</div>
+        <Footer />
       </div>
     );
   }

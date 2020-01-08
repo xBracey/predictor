@@ -16,8 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", routes.api);
-app.use("/admin", routes.admin);
-app.use("/", routes.pages);
+// app.use("/admin", routes.admin);
+// app.use("/", routes.pages);
 
 sequelize.sync({ force }).then(() => {
   if (force) {

@@ -305,13 +305,13 @@ router.post("/group/create", function(req, res) {
           .json({ error: "Matches have already been generated" });
       } else {
         models.Team.findAll().then(teamsArray => {
-          // if (teamsArray.length !== 24) {
-          //   return res.status(400).json({
-          //     error: `Incorrect number of teams, there are ${
-          //       teamsArray.length
-          //     } teams when there should be 24`
-          //   });
-          // }
+          if (teamsArray.length !== 24) {
+            return res.status(400).json({
+              error: `Incorrect number of teams, there are ${
+                teamsArray.length
+              } teams when there should be 24`
+            });
+          }
 
           const teams = JSON.parse(JSON.stringify(teamsArray));
           const group_matches = [];

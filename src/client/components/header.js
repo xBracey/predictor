@@ -112,10 +112,12 @@ class Header extends React.Component {
 
   render() {
     return (
-      <header>
-        {this.renderLogo()}
-        {this.renderMenu()}
-      </header>
+      <div className="page-outer-container header-outer-container">
+        <header className="page-inner-container">
+          {this.renderLogo()}
+          {this.renderMenu()}
+        </header>
+      </div>
     );
   }
 }
