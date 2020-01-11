@@ -7,7 +7,6 @@ import group from "./group";
 import players from "./players";
 import teams from "./teams";
 import match from "./match";
-import admin from "./admin";
 
 api.use("/user", user);
 api.use("/groups", group);
@@ -17,6 +16,5 @@ api.use("/match", match);
 
 export default {
   api,
-  pages,
-  admin
+  pages
 };

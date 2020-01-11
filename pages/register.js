@@ -98,7 +98,7 @@ class Register extends React.Component {
         <div className="container">
           <LoginSidebar />
           <LoginWrapper bottomLink="/" bottomText="Back to Login Page">
-            <h1> Register </h1>
+            <h1> Register</h1>
             <form onSubmit={this.handleSubmit}>
               <div className="input-wrapper">
                 <input type="text" id="name" placeholder="Name" />

@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "build": "babel-node src/index.js",
-    "start": "yarn scss; yarn build;",
+    "build-pages": "next build; next export",
+    "start": "yarn build-pages; yarn scss;  yarn build;",
     "scss": "node-sass ./styles/main.scss -o ./out/static",
     "dev-scss": "node-sass --watch ./styles/main.scss -o ./out/static",
     "dev": "concurrently --kill-others \"yarn dev-scss\" \"nodemon --watch src --exec babel-node src/index.js\""

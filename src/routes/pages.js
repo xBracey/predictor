@@ -1,39 +1,55 @@
 import express, { Router } from "express";
 import path from "path";
+import next from "next";
 
 const router = Router();
 const outDirectoy = __dirname + "/../../out/";
 
-import nextApp from "../";
+const nextApp = next({ dev: true });
+const handle = nextApp.getRequestHandler();
 
-// Serve static files from the React app
-router.use(express.static(path.join(outDirectoy)));
+const pages = [
+  "/index",
+  "/register",
+  "/admin",
+  "/admin/groups",
+  "/admin/groups/add",
+  "/admin/matches",
+  "/admin/matches/edit",
+  "/admin/players",
+  "/admin/players/add",
+  "/admin/players/edit",
+  "/admin/teams",
+  "/admin/teams/add",
+  "/admin/teams/edit"
+];
 
-// The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
-router.get("/", (req, res) => {
-  nextApp.render(req, res, "/index");
-});
+nextApp.prepare().then(() => {
+  // Serve static files from the React app
+  router.use(express.static(path.join(outDirectoy)));
 
-router.get("/register", (req, res) => {
-  nextApp.render(req, res, "/register");
-});
-
-router.get("/logout", function(req, res) {
-  req.logout();
-  res.redirect("/");
-});
-
-router.get("/buzz", (req, res) => {
-  if (req.user) {
-    nextApp.render(req, res, "/buzz");
-  } else {
+  router.get("/logout", function(req, res) {
+    req.logout();
     res.redirect("/");
-  }
-});
+  });
 
-router.get("*", (req, res) => {
-  res.sendFile(path.join(outDirectoy + "404.html"));
+  router.get("/buzz", (req, res) => {
+    if (req.user) {
+      nextApp.render(req, res, "/buzz");
+    } else {
+      res.redirect("/");
+    }
+  });
+
+  pages.forEach(page => {
+    router.get(page, (req, res) => {
+      nextApp.render(req, res, page);
+    });
+  });
+
+  router.get("*", (req, res) => {
+    return handle(req, res);
+  });
 });
 
 export default router;
