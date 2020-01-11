@@ -16,7 +16,7 @@ class Players extends React.Component {
   }
 
   onAdd() {
-    window.location.href = `${window.location.href}/add`;
+    window.location.href = `${window.location.href}add`;
   }
 
   render() {
