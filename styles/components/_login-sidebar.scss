@@ -26,7 +26,7 @@
   .sidebar-info {
     display: none;
     flex-direction: column;
-    margin: auto;
+    margin: 50px auto auto auto;
 
     @include desktop {
       display: flex;

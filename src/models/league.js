@@ -8,6 +8,7 @@ const league = (sequelize, DataTypes) => {
 
   League.associate = models => {
     League.belongsToMany(models.User, { through: models.User_League });
+    League.belongsToMany(models.Rule, { through: models.League_Rule });
   };
 
   return League;

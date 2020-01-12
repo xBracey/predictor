@@ -35,6 +35,7 @@ const user = (sequelize, DataTypes) => {
     User.belongsToMany(models.Knockout_Match, {
       through: models.Knockout_Prediction
     });
+    User.belongsToMany(models.Rule, { through: models.Rule_Prediction });
   };
 
   return User;

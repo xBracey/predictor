@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import models, { sequelize } from "../models";
 import passport from "passport";
 
+import fixtures from "../fixtures";
+
 const router = Router();
 const saltRounds = 10;
 
@@ -29,6 +31,27 @@ export const getUserByEmail = async email => {
     }
   });
 };
+
+export const getUsersLeagues = async username => {
+  return await models.User.findOne({
+    where: {
+      username
+    },
+    include: [{ model: models.League }]
+  });
+};
+
+router.get("/leagues", function(req, res) {
+  if (req.user) {
+    // getUsersLeagues(req.user.username).then(userLeagues => {
+    //   return res.json(userLeagues.leagues);
+    // });
+
+    return res.json(fixtures.userLeagues);
+  } else {
+    return res.status(401).send("Unauthorised");
+  }
+});
 
 router.get("/me", function(req, res) {
   if (req.user) {

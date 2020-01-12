@@ -22,7 +22,10 @@ const models = {
   Knockout_Match_Scorer: sequelize.import("./knockout_match_scorer"),
   Group_Prediction: sequelize.import("./group_prediction"),
   Knockout_Prediction: sequelize.import("./knockout_prediction"),
-  User_League: sequelize.import("./user_league")
+  User_League: sequelize.import("./user_league"),
+  Rule: sequelize.import("./rule"),
+  Rule_Prediction: sequelize.import("./rule_prediction"),
+  League_Rule: sequelize.import("./league_rule")
 };
 
 Object.keys(models).forEach(key => {

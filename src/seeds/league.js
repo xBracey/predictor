@@ -2,6 +2,7 @@ import models, { sequelize } from "../models";
 
 const leagues = [
   {
+    code: "90059",
     name: "Brace's Predictor"
   }
 ];
