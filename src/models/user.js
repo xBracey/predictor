@@ -23,12 +23,17 @@ const user = (sequelize, DataTypes) => {
     admin: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
+    },
+    verification_hash: {
+      type: DataTypes.STRING
+    },
+    forgot_password_hash: {
+      type: DataTypes.STRING
     }
   });
 
   User.associate = models => {
     User.belongsToMany(models.League, { through: models.User_League });
-    User.belongsTo(models.Player, { as: "top_scorer_id" });
     User.belongsToMany(models.Group_Match, {
       through: models.Group_Prediction
     });

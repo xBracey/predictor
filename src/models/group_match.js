@@ -15,9 +15,6 @@ const group_match = (sequelize, DataTypes) => {
     Group_Match.belongsTo(models.Group);
     Group_Match.belongsTo(models.Team, { as: "homeTeam" });
     Group_Match.belongsTo(models.Team, { as: "awayTeam" });
-    Group_Match.belongsToMany(models.Player, {
-      through: models.Group_Match_Scorer
-    });
     Group_Match.belongsToMany(models.User, {
       through: models.Group_Prediction
     });

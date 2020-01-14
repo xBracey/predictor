@@ -7,6 +7,10 @@ const knockout_prediction = (sequelize, DataTypes) => {
     away_goals: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    home_win: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
     }
   });
 
