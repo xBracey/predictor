@@ -1,6 +1,14 @@
 const league = (sequelize, DataTypes) => {
   const League = sequelize.define("league", {
-    name: {
+    leagueName: {
+      type: DataTypes.STRING,
+      primaryKey: true
+    },
+    displayName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    password: {
       type: DataTypes.STRING,
       allowNull: false
     }

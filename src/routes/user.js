@@ -3,8 +3,6 @@ import bcrypt from "bcrypt";
 import models, { sequelize } from "../models";
 import passport from "passport";
 
-import fixtures from "../fixtures";
-
 const router = Router();
 const saltRounds = 10;
 
@@ -43,11 +41,9 @@ export const getUsersLeagues = async username => {
 
 router.get("/leagues", function(req, res) {
   if (req.user) {
-    // getUsersLeagues(req.user.username).then(userLeagues => {
-    //   return res.json(userLeagues.leagues);
-    // });
-
-    return res.json(fixtures.userLeagues);
+    getUsersLeagues(req.user.username).then(userLeagues => {
+      return res.json(userLeagues.leagues);
+    });
   } else {
     return res.status(401).send("Unauthorised");
   }

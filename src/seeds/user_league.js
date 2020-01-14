@@ -3,7 +3,7 @@ import models, { sequelize } from "../models";
 const user_leagues = [
   {
     userUsername: "xBracey",
-    leagueId: "1",
+    leagueLeagueName: "brace",
     admin: true
   }
 ];

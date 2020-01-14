@@ -8,6 +8,14 @@ const users = [
     name: "Thomas Brace",
     verified: true,
     admin: true
+  },
+  {
+    username: "xBracey2",
+    password: "$2b$10$9Z.cV.rYcefrux//LpzfIuGK38r.UaQBXzbt.rD0WDuPWRmgzMwu2",
+    email: "tommybrace@hotmail.co.uk",
+    name: "Thomas Brace",
+    verified: true,
+    admin: true
   }
 ];
 
