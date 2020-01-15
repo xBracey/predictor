@@ -25,7 +25,7 @@ router.get("/", function(req, res) {
       return res.json(groups);
     });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -35,9 +35,9 @@ router.post("/", function(req, res) {
       return res.json(group);
     });
   } else if (!req.body.number) {
-    return res.status(400).send("Wrong Data");
+    return res.status(400).json({ error: "Wrong Data" });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -47,9 +47,9 @@ router.delete("/:number", function(req, res) {
       return res.json(group);
     });
   } else if (!req.body.number) {
-    return res.status(400).send("Wrong Data");
+    return res.status(400).json({ error: "Wrong Data" });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 

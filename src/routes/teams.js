@@ -44,7 +44,7 @@ router.get("/", function(req, res) {
       return res.json(teams);
     });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -54,9 +54,9 @@ router.get("/:name", function(req, res) {
       return res.json(team);
     });
   } else if (!req.params.name) {
-    return res.status(400).send("Wrong Data");
+    return res.status(400).json({ error: "Wrong Data" });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -66,9 +66,9 @@ router.post("/", function(req, res) {
       return res.json(team);
     });
   } else if (!req.body.name || !req.body.groupNumber) {
-    return res.status(400).send("Wrong Data");
+    return res.status(400).json({ error: "Wrong Data" });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -78,9 +78,9 @@ router.put("/", function(req, res) {
       return res.json(team);
     });
   } else if (!req.body.name || !req.body.teamName) {
-    return res.status(400).send("Wrong Data");
+    return res.status(400).json({ error: "Wrong Data" });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -90,9 +90,9 @@ router.delete("/:name", function(req, res) {
       return res.json(team);
     });
   } else if (!req.body.name) {
-    return res.status(400).send("Wrong Data");
+    return res.status(400).json({ error: "Wrong Data" });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 

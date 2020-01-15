@@ -19,7 +19,12 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n\t\"username\": \"{{username}}\",\n\t\"password\": \"{{password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "{{host}}/api/user/login",
@@ -130,6 +135,330 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "GET Groups",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/groups",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Groups",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/groups/Y",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"groups",
+						"Y"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Groups",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"number\": \"Y\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/groups",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Match Group",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/match/group",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"match",
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Match Group",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"date\": \"2020-01-15 17:18:37\",\n    \"groupNumber\": \"A\",\n    \"homeTeamName\": \"Austria\",\n    \"awayTeamName\": \"England\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/match/group",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"match",
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Match Knockout",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"date\": \"2020-01-15 17:18:37\",\n    \"homeTeamName\": \"Austria\",\n    \"awayTeamName\": \"England\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/match/knockout",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"match",
+						"knockout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Match Group",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\",\n    \"date\": \"2020-01-15 17:18:37\",\n    \"groupNumber\": \"A\",\n    \"homeTeamName\": \"Austria\",\n    \"awayTeamName\": \"England\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/match/group",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"match",
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Match Knockout",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\",\n    \"date\": \"2020-01-15 17:18:37\",\n    \"groupNumber\": \"A\",\n    \"homeTeamName\": \"Austria\",\n    \"awayTeamName\": \"England\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/match/knockout",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"match",
+						"knockout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Match Group Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/match/group/create",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"match",
+						"group",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Match Group ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/match/group",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"match",
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Match Knockout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/match/knockout",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"match",
+						"knockout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Match Knockout ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/match/knockout/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"match",
+						"knockout",
+						"1"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -156,7 +485,7 @@
 	],
 	"variable": [
 		{
-			"id": "668ebe6b-d621-425d-b45d-510a55ba7151",
+			"id": "7aeee818-7b0f-4f68-967b-19e9717e9c99",
 			"key": "host",
 			"value": "http://localhost:3000",
 			"type": "string"

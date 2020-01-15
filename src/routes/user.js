@@ -45,7 +45,7 @@ router.get("/leagues", function(req, res) {
       return res.json(userLeagues.leagues);
     });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -55,7 +55,7 @@ router.get("/me", function(req, res) {
       return res.json(user);
     });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -65,7 +65,7 @@ router.get("/", function(req, res) {
       return res.json(user);
     });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 

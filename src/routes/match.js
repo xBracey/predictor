@@ -68,7 +68,7 @@ router.get("/group", function(req, res) {
       return res.json(matches);
     });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -78,7 +78,7 @@ router.get("/knockout", function(req, res) {
       return res.json(matches);
     });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -88,9 +88,9 @@ router.get("/group/:id", function(req, res) {
       return res.json(match);
     });
   } else if (!req.params.id) {
-    return res.status(400).send("Wrong Data");
+    return res.status(400).json({ error: "Wrong Data" });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -100,9 +100,9 @@ router.get("/knockout/:id", function(req, res) {
       return res.json(match);
     });
   } else if (!req.params.id) {
-    return res.status(400).send("Wrong Data");
+    return res.status(400).json({ error: "Wrong Data" });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -136,9 +136,9 @@ router.post("/group", function(req, res) {
       return res.json(match);
     });
   } else if (!date || !groupNumber || !homeTeamName || !awayTeamName) {
-    return res.status(400).send("Wrong Data");
+    return res.status(400).json({ error: "Wrong Data" });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -147,34 +147,27 @@ router.post("/knockout", function(req, res) {
     homeGoals,
     awayGoals,
     date,
-    groupNumber,
     homeTeamName,
-    awayTeamName
+    awayTeamName,
+    homeWin
   } = req.body;
 
-  if (
-    req.user &&
-    req.user.admin &&
-    date &&
-    groupNumber &&
-    homeTeamName &&
-    awayTeamName
-  ) {
+  if (req.user && req.user.admin && date && homeTeamName && awayTeamName) {
     createMatch(
       models.Knockout_Match,
       homeGoals,
       awayGoals,
+      homeWin,
       date,
-      groupNumber,
       homeTeamName,
       awayTeamName
     ).then(match => {
       return res.json(match);
     });
-  } else if (!date || !groupNumber || !homeTeamName || !awayTeamName) {
-    return res.status(400).send("Wrong Data");
+  } else if (!date || !homeTeamName || !awayTeamName) {
+    return res.status(400).json({ error: "Wrong Data" });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -217,9 +210,9 @@ router.put("/group", function(req, res) {
     !homeTeamName ||
     !awayTeamName
   ) {
-    return res.status(400).send("Wrong Data");
+    return res.status(400).json({ error: "Wrong Data" });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -262,9 +255,9 @@ router.put("/knockout", function(req, res) {
     !homeTeamName ||
     !awayTeamName
   ) {
-    return res.status(400).send("Wrong Data");
+    return res.status(400).json({ error: "Wrong Data" });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -274,9 +267,9 @@ router.delete("/group/:id", function(req, res) {
       return res.json(match);
     });
   } else if (!req.params.id) {
-    return res.status(400).send("Wrong Data");
+    return res.status(400).json({ error: "Wrong Data" });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -286,9 +279,9 @@ router.delete("/knockout/:id", function(req, res) {
       return res.json(match);
     });
   } else if (!req.params.id) {
-    return res.status(400).send("Wrong Data");
+    return res.status(400).json({ error: "Wrong Data" });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
@@ -335,7 +328,7 @@ router.post("/group/create", function(req, res) {
       }
     });
   } else {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 

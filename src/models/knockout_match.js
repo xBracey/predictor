@@ -1,22 +1,22 @@
 const knockout_match = (sequelize, DataTypes) => {
   const Knockout_Match = sequelize.define("knockout_match", {
-    home_goals: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+    homeGoals: {
+      type: DataTypes.INTEGER
     },
-    away_goals: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+    awayGoals: {
+      type: DataTypes.INTEGER
     },
-    home_win: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false
+    date: {
+      type: DataTypes.DATE
+    },
+    homeWin: {
+      type: DataTypes.BOOLEAN
     }
   });
 
   Knockout_Match.associate = models => {
-    Knockout_Match.belongsTo(models.Team, { as: "home_team_id" });
-    Knockout_Match.belongsTo(models.Team, { as: "away_team_id" });
+    Knockout_Match.belongsTo(models.Team, { as: "homeTeam" });
+    Knockout_Match.belongsTo(models.Team, { as: "awayTeam" });
     Knockout_Match.belongsToMany(models.User, {
       through: models.Knockout_Prediction
     });
