@@ -15,6 +15,12 @@ const rule = (sequelize, DataTypes) => {
     },
     isFinal: {
       type: DataTypes.BOOLEAN
+    },
+    default_points: {
+      type: DataTypes.INTEGER
+    },
+    rule_winner_id: {
+      type: DataTypes.INTEGER
     }
   });
 

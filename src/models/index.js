@@ -18,8 +18,6 @@ const models = {
   Group_Match: sequelize.import("./group_match"),
   Knockout_Match: sequelize.import("./knockout_match"),
   User: sequelize.import("./user"),
-  Group_Match_Scorer: sequelize.import("./group_match_scorer"),
-  Knockout_Match_Scorer: sequelize.import("./knockout_match_scorer"),
   Group_Prediction: sequelize.import("./group_prediction"),
   Knockout_Prediction: sequelize.import("./knockout_prediction"),
   User_League: sequelize.import("./user_league"),

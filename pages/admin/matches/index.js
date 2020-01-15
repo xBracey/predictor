@@ -13,15 +13,10 @@ class Matches extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onAdd = this.onAdd;
     this.onCreate = this.onCreate.bind(this);
     this.createSuccessful = this.createSuccessful.bind(this);
     this.createFail = this.createFail.bind(this);
     this.readResponseAsJSON = this.readResponseAsJSON.bind(this);
-  }
-
-  onAdd() {
-    window.location.href = `${window.location.href}/add`;
   }
 
   onCreate() {

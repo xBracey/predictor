@@ -32,7 +32,7 @@ class AdminItem extends React.Component {
 
   onEdit() {
     const { item, idField } = this.props;
-    window.location.href = `${window.location.href}/edit?id=${encodeURI(
+    window.location.href = `${window.location.href}edit?id=${encodeURI(
       item[idField]
     )}`;
   }
