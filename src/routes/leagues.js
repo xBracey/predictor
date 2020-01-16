@@ -51,6 +51,44 @@ const addExistingLeague = async (username, leagueName, password) => {
   return newLeague;
 };
 
+const addRuleToLeague = async (ruleId, leagueLeagueName, points) => {
+  const leagueCheck = await models.League.findAll({
+    where: { leagueName: leagueLeagueName }
+  });
+
+  const ruleCheck = await models.Rule.findAll({
+    where: { id: ruleId }
+  });
+
+  const leagueRuleCheck = await models.League_Rule.findAll({
+    where: { ruleId, leagueLeagueName }
+  });
+
+  if (!leagueCheck.length || !ruleCheck.length) {
+    return false;
+  }
+
+  if (leagueRuleCheck.length) {
+    return await models.League_Rule.update(
+      {
+        points
+      },
+      {
+        where: {
+          ruleId,
+          leagueLeagueName
+        }
+      }
+    );
+  }
+
+  return await models.League_Rule.create({
+    ruleId,
+    leagueLeagueName,
+    points
+  });
+};
+
 router.post("/create", function(req, res) {
   if (
     req.user &&
@@ -88,9 +126,27 @@ router.post("/add", function(req, res) {
     ).then(league => {
       return league
         ? res.json(league)
-        : res.status(400).send("User already is a part of this league!");
+        : res
+            .status(400)
+            .send({ error: "User already is a part of this league!" });
     });
   } else if (!req.body.leagueName || !req.body.password) {
+    return res.status(400).json({ error: "Wrong Data" });
+  } else {
+    return res.status(401).json({ error: "Unauthorised" });
+  }
+});
+
+router.post("/add/rule", function(req, res) {
+  const { ruleId, leagueName, points } = req.body;
+
+  if (req.user && ruleId && leagueName && points) {
+    addRuleToLeague(ruleId, leagueName, points).then(league => {
+      return league
+        ? res.json(league)
+        : res.status(400).send({ error: "Rule or League does not exist" });
+    });
+  } else if (!leagueName || !ruleId || !points) {
     return res.status(400).json({ error: "Wrong Data" });
   } else {
     return res.status(401).json({ error: "Unauthorised" });
