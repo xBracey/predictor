@@ -39,6 +39,17 @@ export const getUsersLeagues = async username => {
   });
 };
 
+export const changeUserName = async (username, name) => {
+  return await models.User.update(
+    { name },
+    {
+      where: {
+        username
+      }
+    }
+  );
+};
+
 router.get("/leagues", function(req, res) {
   if (req.user) {
     getUsersLeagues(req.user.username).then(userLeagues => {
@@ -64,6 +75,18 @@ router.get("/", function(req, res) {
     getAllUsers().then(user => {
       return res.json(user);
     });
+  } else {
+    return res.status(401).json({ error: "Unauthorised" });
+  }
+});
+
+router.put("/", function(req, res) {
+  if (req.user && req.body.name) {
+    changeUserName(req.user.username, req.body.name).then(user => {
+      return res.json(user);
+    });
+  } else if (!req.body.name) {
+    return res.status(400).json({ error: "Wrong Data" });
   } else {
     return res.status(401).json({ error: "Unauthorised" });
   }
