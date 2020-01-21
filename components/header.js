@@ -7,6 +7,7 @@ class Header extends React.Component {
     this.state = {
       currentPage: "/",
       menuClicked: false,
+      user: null,
       width: 0
     };
 
@@ -44,6 +45,10 @@ class Header extends React.Component {
       }
     ];
 
+    this.readResponseAsJSON = this.readResponseAsJSON.bind(this);
+    this.loginSuccessful = this.loginSuccessful.bind(this);
+    this.loginfail = this.loginfail.bind(this);
+
     this.onMenuClicked = this.onMenuClicked.bind(this);
   }
 
@@ -52,6 +57,35 @@ class Header extends React.Component {
       currentPage: window.location.pathname,
       width: window.innerWidth
     });
+    this.getUser();
+  }
+
+  loginSuccessful(result) {
+    this.setState({ user: result });
+  }
+
+  loginfail(response) {
+    console.log(response);
+  }
+
+  readResponseAsJSON(response) {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw response;
+    }
+  }
+
+  getUser() {
+    fetch("api/user/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(this.readResponseAsJSON)
+      .then(this.loginSuccessful)
+      .catch(this.loginfail);
   }
 
   onMenuClicked() {
@@ -71,11 +105,12 @@ class Header extends React.Component {
       );
     });
 
-    const adminMenu = this.props.isAdmin ? (
-      <div className="singleMenu" key={"Admin"}>
-        <a href="/admin/players">Admin</a>
-      </div>
-    ) : null;
+    const adminMenu =
+      this.state.user && this.state.user.admin ? (
+        <div className="singleMenu" key={"Admin"}>
+          <a href="/admin/players">Admin</a>
+        </div>
+      ) : null;
 
     const accountImage =
       this.state.width > 1200 ? <img src="/static/account.svg" /> : null;
@@ -112,8 +147,10 @@ class Header extends React.Component {
   render() {
     return (
       <header>
-        {this.renderLogo()}
-        {this.renderMenu()}
+        <div className="header-container">
+          {this.renderLogo()}
+          {this.renderMenu()}
+        </div>
       </header>
     );
   }

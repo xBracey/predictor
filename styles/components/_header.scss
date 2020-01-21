@@ -1,60 +1,67 @@
 header {
   background-color: $navy;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
+  justify-content: center;
 
-  @include desktop {
-    flex-direction: row;
-  }
-
-  .logo-container {
+  .header-container {
     display: flex;
-    width: 100%;
     justify-content: space-between;
-
-    @include desktop {
-      width: auto;
-    }
-
-    img {
-      height: 80px;
-      width: 80px;
-      padding: 35px 50px;
-    }
-
-    img.logo {
-      height: 100px;
-      width: 100px;
-      padding: 25px 50px;
-    }
-  }
-
-  .menu {
-    padding: 25px 50px;
-    display: flex;
     align-items: center;
     flex-direction: column;
+    width: 100%;
+    max-width: 1500px;
 
     @include desktop {
       flex-direction: row;
     }
 
-    .singleMenu {
-      padding: 25px 50px;
+    .logo-container {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
 
-      a {
-        text-decoration: none;
-        color: $white;
-        font-size: 24px;
+      @include desktop {
+        width: auto;
+      }
+
+      img {
+        height: 80px;
+        width: 80px;
+        padding: 35px 50px;
+      }
+
+      img.logo {
+        height: 100px;
+        width: 100px;
+        padding: 25px 50px;
       }
     }
 
-    img {
-      padding-left: 50px;
-      height: 80px;
-      width: 80px;
+    .menu {
+      padding: 25px 50px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+
+      @include desktop {
+        flex-direction: row;
+      }
+
+      .singleMenu {
+        padding: 25px 50px;
+
+        a {
+          text-decoration: none;
+          color: $white;
+          font-size: 24px;
+        }
+      }
+
+      img {
+        padding-left: 50px;
+        height: 80px;
+        width: 80px;
+      }
     }
   }
 }

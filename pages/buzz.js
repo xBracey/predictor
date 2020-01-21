@@ -7,55 +7,9 @@ import Header from "../components/header";
 class Buzz extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      user: null
-    };
-
-    this.readResponseAsJSON = this.readResponseAsJSON.bind(this);
-    this.loginSuccessful = this.loginSuccessful.bind(this);
-    this.loginfail = this.loginfail.bind(this);
-  }
-
-  componentDidMount() {
-    this.getUser();
-  }
-
-  loginSuccessful(result) {
-    this.setState({ user: result });
-  }
-
-  loginfail(response) {
-    console.log(response);
-  }
-
-  readResponseAsJSON(response) {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw response;
-    }
-  }
-
-  getUser() {
-    fetch("api/user/me", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.loginSuccessful)
-      .catch(this.loginfail);
   }
 
   render() {
-    const welcomeMessage = this.state.user
-      ? "Welcome " + this.state.user.username
-      : "";
-
-    const isAdmin = this.state.user && this.state.user.admin;
-
     return (
       <div>
         <Head>
@@ -66,8 +20,8 @@ class Buzz extends React.Component {
           />
           <link href="/static/main.css" rel="stylesheet" />
         </Head>
-        <Header isAdmin={isAdmin} />
-        <div className="subheader">{welcomeMessage}</div>
+        <Header />
+        <div className="subheader">{"Welcome"}</div>
       </div>
     );
   }
