@@ -24,6 +24,8 @@ const pages = [
   "/admin/teams/edit"
 ];
 
+const userPages = ["/buzz", "/leagues"];
+
 nextApp.prepare().then(() => {
   // Serve static files from the React app
   router.use(express.static(path.join(outDirectoy)));
@@ -33,12 +35,14 @@ nextApp.prepare().then(() => {
     res.redirect("/");
   });
 
-  router.get("/buzz", (req, res) => {
-    if (req.user) {
-      nextApp.render(req, res, "/buzz");
-    } else {
-      res.redirect("/");
-    }
+  userPages.forEach(page => {
+    router.get(page, (req, res) => {
+      if (req.user) {
+        nextApp.render(req, res, page);
+      } else {
+        res.redirect("/");
+      }
+    });
   });
 
   pages.forEach(page => {

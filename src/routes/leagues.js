@@ -28,12 +28,20 @@ const addLeague = async (username, leagueName, displayName, password) => {
 };
 
 const addExistingLeague = async (username, leagueName, password) => {
-  const leagueCheck = await models.User_League.findAll({
+  const leagueUserCheck = await models.User_League.findAll({
     where: { userUsername: username, leagueLeagueName: leagueName }
   });
 
-  if (leagueCheck.length) {
-    return false;
+  const leagueCheck = await models.League.findAll({
+    where: { leagueName, password }
+  });
+
+  if (leagueUserCheck.length) {
+    return { error: "User already is a part of this league!" };
+  }
+
+  if (!leagueCheck.length) {
+    return { error: "League name or password is incorrect" };
   }
 
   const newLeague = await models.League.findOne({
@@ -48,7 +56,7 @@ const addExistingLeague = async (username, leagueName, password) => {
     leagueLeagueName: leagueName
   });
 
-  return newLeague;
+  return { newLeague, error: null };
 };
 
 const addRuleToLeague = async (ruleId, leagueLeagueName, points) => {
@@ -141,12 +149,8 @@ router.post("/add", function(req, res) {
       req.user.username,
       req.body.leagueName,
       req.body.password
-    ).then(league => {
-      return league
-        ? res.json(league)
-        : res
-            .status(400)
-            .send({ error: "User already is a part of this league!" });
+    ).then(({ newLeague, error }) => {
+      return newLeague ? res.json(newLeague) : res.status(400).send({ error });
     });
   } else if (!req.body.leagueName || !req.body.password) {
     return res.status(400).json({ error: "Wrong Data" });
