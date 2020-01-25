@@ -171,12 +171,7 @@ class League extends React.Component {
     return (
       <div>
         <Head>
-          <title>League</title>
-          <link
-            href="https://fonts.googleapis.com/css?family=Roboto"
-            rel="stylesheet"
-          />
-          <link href="/static/main.css" rel="stylesheet" />
+          <title>Leagues</title>
         </Head>
         <Header />
         {this.renderAddCreateLeagues()}

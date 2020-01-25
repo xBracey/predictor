@@ -14,11 +14,6 @@ class Buzz extends React.Component {
       <div>
         <Head>
           <title>Buzz</title>
-          <link
-            href="https://fonts.googleapis.com/css?family=Roboto"
-            rel="stylesheet"
-          />
-          <link href="/static/main.css" rel="stylesheet" />
         </Head>
         <Header />
         <div className="subheader">{"Welcome"}</div>

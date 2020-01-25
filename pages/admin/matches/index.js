@@ -54,11 +54,6 @@ class Matches extends React.Component {
       <div>
         <Head>
           <title>Admin</title>
-          <link
-            href="https://fonts.googleapis.com/css?family=Roboto"
-            rel="stylesheet"
-          />
-          <link href="/static/main.css" rel="stylesheet" />
         </Head>
         <Header isAdmin={false} admin={true} />
         <div className="page-outer-container">

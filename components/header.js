@@ -1,4 +1,5 @@
 import React from "react";
+import HeadInfo from "./headInfo";
 
 class Header extends React.Component {
   constructor(props) {
@@ -147,6 +148,7 @@ class Header extends React.Component {
   render() {
     return (
       <header>
+        <HeadInfo />
         <div className="header-container">
           {this.renderLogo()}
           {this.renderMenu()}

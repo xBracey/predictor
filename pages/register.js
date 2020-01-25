@@ -1,6 +1,6 @@
 import React from "react";
-import Link from "next/link";
 import Head from "next/head";
+import HeadInfo from "../components/headInfo";
 
 import LoginSidebar from "../components/loginSidebar";
 import LoginWrapper from "../components/loginWrapper";
@@ -89,12 +89,8 @@ class Register extends React.Component {
       <div>
         <Head>
           <title>Home</title>
-          <link
-            href="https://fonts.googleapis.com/css?family=Roboto"
-            rel="stylesheet"
-          />
-          <link href="/static/main.css" rel="stylesheet" />
         </Head>
+        <HeadInfo />
         <div className="container">
           <LoginSidebar />
           <LoginWrapper bottomLink="/" bottomText="Back to Login Page">
