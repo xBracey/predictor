@@ -5,10 +5,10 @@
   "scripts": {
     "build": "pm2 start --interpreter babel-node src/index.js -i max",
     "build-pages": "next build; next export",
-    "start": "rm -rf out; yarn build-pages; yarn scss; yarn build",
+    "start": "rm -rf out; rm -rf .next; yarn build-pages; yarn scss; yarn build",
     "scss": "node-sass ./styles/main.scss -o ./out/static",
     "dev-scss": "node-sass --watch ./styles/main.scss -o ./out/static",
-    "dev": "rm -rf out; yarn build-pages; yarn scss; concurrently --kill-others \"yarn dev-scss\" \"nodemon --watch src --exec babel-node src/index.js\""
+    "dev": "rm -rf out; rm -rf .next; yarn build-pages; yarn scss; concurrently --kill-others \"yarn dev-scss\" \"nodemon --watch src --exec babel-node src/index.js\""
   },
   "license": "MIT",
   "dependencies": {

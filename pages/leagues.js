@@ -10,7 +10,7 @@ class League extends React.Component {
 
     this.state = {
       error: null,
-      success: null
+      success: "Successfully added your league"
     };
 
     this.handleAdd = this.handleAdd.bind(this);
@@ -57,23 +57,17 @@ class League extends React.Component {
 
   addResponse(response) {
     response.json().then(responseJson => {
-      console.log(responseJson);
       if (response.ok) {
         const success = `You've successfully created ${responseJson.displayName}`;
         this.setState({ success });
       } else {
         this.setState({ error: responseJson.error });
       }
-
-      setTimeout(() => {
-        this.setState({ error: null, success: null });
-      }, 2000);
     });
   }
 
   joinResponse(response) {
     response.json().then(responseJson => {
-      console.log(responseJson);
       if (response.ok) {
         const success = `You've successfully joined ${responseJson.leagueName}`;
         this.setState({ success });

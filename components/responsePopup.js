@@ -6,11 +6,21 @@ class ResponsePopup extends React.Component {
   }
 
   renderError() {
-    return <div className="error">{this.props.error}</div>;
+    return (
+      <div className="error">
+        <img src="/static/error.svg" />
+        {this.props.error}
+      </div>
+    );
   }
 
   renderSuccess() {
-    return <div className="success">{this.props.success}</div>;
+    return (
+      <div className="success">
+        <img src="/static/confirm.svg" />
+        {this.props.success}
+      </div>
+    );
   }
 
   render() {
