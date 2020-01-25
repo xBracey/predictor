@@ -3,15 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "babel-node src/index.js",
+    "build": "pm2 start --interpreter babel-node src/index.js -i max",
     "build-pages": "next build; next export",
-    "start": "yarn build-pages; yarn scss;  yarn build;",
+    "start": "rm -rf out; yarn build-pages; yarn scss; yarn build",
     "scss": "node-sass ./styles/main.scss -o ./out/static",
     "dev-scss": "node-sass --watch ./styles/main.scss -o ./out/static",
-    "dev": "concurrently --kill-others \"yarn dev-scss\" \"nodemon --watch src --exec babel-node src/index.js\""
+    "dev": "rm -rf out; yarn build-pages; yarn scss; concurrently --kill-others \"yarn dev-scss\" \"nodemon --watch src --exec babel-node src/index.js\""
   },
   "license": "MIT",
   "dependencies": {
+    "@babel/cli": "^7.8.3",
     "@babel/core": "^7.5.5",
     "@babel/node": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
@@ -32,6 +33,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^7.12.0",
+    "pm2": "^4.2.3",
     "react": "16.9.0",
     "react-datepicker": "^2.10.1",
     "react-dom": "16.9.0",

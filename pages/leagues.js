@@ -17,12 +17,58 @@ class League extends React.Component {
     this.handleJoin = this.handleJoin.bind(this);
     this.joinResponse = this.joinResponse.bind(this);
     this.onResponseClose = this.onResponseClose.bind(this);
+    this.addResponse = this.addResponse.bind(this);
   }
 
-  handleAdd(event) {}
+  handleAdd(event) {
+    event.preventDefault();
+    const displayName = event.target.displayName.value;
+    const leagueName = event.target.leagueName.value;
+    const password = event.target.password.value;
+    const confirmPassword = event.target.confirmPassword.value;
+
+    const error = !displayName.trim()
+      ? "Display Name cannot be empty"
+      : !leagueName.trim()
+      ? "League Name cannot be empty"
+      : !password.trim()
+      ? "Password cannot be empty"
+      : password !== confirmPassword
+      ? "Passwords do not match"
+      : null;
+
+    if (error) {
+      this.setState({ error });
+      return;
+    }
+
+    fetch("api/leagues/create", {
+      method: "POST",
+      body: JSON.stringify({ displayName, leagueName, password }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(this.addResponse);
+  }
 
   onResponseClose() {
     this.setState({ error: null, success: null });
+  }
+
+  addResponse(response) {
+    response.json().then(responseJson => {
+      console.log(responseJson);
+      if (response.ok) {
+        const success = `You've successfully created ${responseJson.displayName}`;
+        this.setState({ success });
+      } else {
+        this.setState({ error: responseJson.error });
+      }
+
+      setTimeout(() => {
+        this.setState({ error: null, success: null });
+      }, 2000);
+    });
   }
 
   joinResponse(response) {
@@ -45,6 +91,17 @@ class League extends React.Component {
     event.preventDefault();
     const leagueName = event.target.leagueName.value;
     const password = event.target.password.value;
+
+    const error = !leagueName.trim()
+      ? "League Name cannot be empty"
+      : !password.trim()
+      ? "Password cannot be empty"
+      : null;
+
+    if (error) {
+      this.setState({ error });
+      return;
+    }
 
     fetch("api/leagues/add", {
       method: "POST",
@@ -92,6 +149,11 @@ class League extends React.Component {
             <div>
               <label htmlFor="password"> League Password </label>
               <input type="password" name="password" />
+            </div>
+
+            <div>
+              <label htmlFor="confirmPassword"> Confirm Password </label>
+              <input type="password" name="confirmPassword" />
             </div>
 
             <div className="submit-container">

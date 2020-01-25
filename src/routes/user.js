@@ -92,30 +92,24 @@ router.put("/", function(req, res) {
   }
 });
 
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res) => {
   const { username, password, email, name } = req.body;
 
-  getUser(username)
-    .then(user => {
-      if (user) {
-        throw "Username already taken";
-      }
-      return getUserByEmail(email);
-    })
-    .then(user => {
-      if (user) {
-        throw "Email already taken";
-      }
-      return bcrypt.hash(password, saltRounds);
-    })
-    .then(hash => {
-      const user = { username, password: hash, email, name };
-      return createUser(user);
-    })
-    .then(user => {
-      return res.json(user);
-    })
-    .catch(error => res.status(403).send(error));
+  let user = await getUser(username);
+
+  if (user) {
+    return res.status(403).send({ error: "Username already taken" });
+  }
+  user = await getUserByEmail(email);
+  if (user) {
+    return res.status(403).send({ error: "Email already taken" });
+  }
+  const passwordHash = await bcrypt.hash(password, saltRounds);
+
+  user = { username, password: passwordHash, email, name };
+  user = createUser(user);
+
+  return res.json(user);
 });
 
 router.post(

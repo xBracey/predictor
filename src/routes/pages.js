@@ -5,7 +5,7 @@ import next from "next";
 const router = Router();
 const outDirectoy = __dirname + "/../../out/";
 
-const nextApp = next({ dev: true });
+const nextApp = next({ dev: process.env.ENV === "development" });
 const handle = nextApp.getRequestHandler();
 
 const pages = [

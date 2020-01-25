@@ -8,6 +8,7 @@ import players from "./players";
 import teams from "./teams";
 import match from "./match";
 import leagues from "./leagues";
+import predictions from "./predictions";
 
 api.use("/user", user);
 api.use("/groups", group);
@@ -15,6 +16,7 @@ api.use("/players", players);
 api.use("/teams", teams);
 api.use("/match", match);
 api.use("/leagues", leagues);
+api.use("/predictions", predictions);
 
 export default {
   api,
