@@ -23,7 +23,7 @@ class LeagueTable extends React.Component {
     return this.props.data.map(row => {
       gd = row.goalsFor - row.goalsAgainst;
       return (
-        <div className="table-row">
+        <div className="table-row" key={row.team}>
           <div className="column team">{row.team}</div>
           <div className="column">{row.goalsFor}</div>
           <div className="column">{row.goalsAgainst}</div>

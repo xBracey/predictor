@@ -51,7 +51,7 @@
 
   .table-header {
     color: black;
-    background-color: white;
+    background-color: $light-grey;
   }
 
   .table-row:nth-child(2n) {
@@ -61,9 +61,4 @@
   .table-row:nth-child(2n-1) {
     background-color: $navy;
   }
-}
-
-.results {
-  background-color: $green;
-  padding: 50px;
 }

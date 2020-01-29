@@ -1,0 +1,36 @@
+.results {
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+
+  .inner-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    .league-results {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.results.dark {
+  background-color: $green;
+
+  h2 {
+    color: white;
+  }
+}
+
+.results.light {
+  background-color: $light-grey;
+}
