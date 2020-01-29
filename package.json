@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "pm2 start --interpreter babel-node src/index.js -i max",
+    "build": "pm2 start --interpreter babel-node src/index.js",
     "build-pages": "next build; next export",
     "pre-start": "rm -rf out; rm -rf .next; yarn build-pages; yarn scss;",
     "start": "yarn pre-start; yarn build",
