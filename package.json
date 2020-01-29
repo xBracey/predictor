@@ -5,7 +5,8 @@
   "scripts": {
     "build": "pm2 start --interpreter babel-node src/index.js -i max",
     "build-pages": "next build; next export",
-    "start": "rm -rf out; rm -rf .next; yarn build-pages; yarn scss; yarn build",
+    "pre-start": "rm -rf out; rm -rf .next; yarn build-pages; yarn scss;",
+    "start": "yarn pre-start; yarn build",
     "scss": "node-sass ./styles/main.scss -o ./out/static",
     "dev-scss": "node-sass --watch ./styles/main.scss -o ./out/static",
     "dev": "rm -rf out; rm -rf .next; yarn build-pages; yarn scss; concurrently --kill-others \"yarn dev-scss\" \"nodemon --watch src --exec babel-node src/index.js\""

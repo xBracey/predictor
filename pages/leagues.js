@@ -10,7 +10,7 @@ class League extends React.Component {
 
     this.state = {
       error: null,
-      success: "Successfully added your league"
+      success: null
     };
 
     this.handleAdd = this.handleAdd.bind(this);
