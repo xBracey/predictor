@@ -4,33 +4,7 @@ import Head from "next/head";
 import Header from "../components/header";
 import LeagueTable from "../components/leagueTable";
 import LeagueResult from "../components/leagueResult";
-
-const data = [
-  {
-    team: "Norway",
-    goalsFor: 2,
-    goalsAgainst: 5,
-    points: 5
-  },
-  {
-    team: "Germany",
-    goalsFor: 2,
-    goalsAgainst: 5,
-    points: 5
-  },
-  {
-    team: "Czech Republic",
-    goalsFor: 2,
-    goalsAgainst: 5,
-    points: 5
-  },
-  {
-    team: "Croatia",
-    goalsFor: 2,
-    goalsAgainst: 5,
-    points: 5
-  }
-];
+import { groupStandings } from "../lib/group";
 
 const groups = ["A", "B", "C", "D", "E", "F"];
 
@@ -80,6 +54,20 @@ class Results extends React.Component {
     ));
   }
 
+  renderGroup(matches, light) {
+    let groupTeamsItems = [];
+    matches.forEach(match => {
+      groupTeamsItems.push(match.homeTeamName);
+      groupTeamsItems.push(match.awayTeamName);
+    });
+
+    let groupTeams = Array.from(new Set(groupTeamsItems));
+
+    const sortedGroupTeams = groupStandings(groupTeams, matches);
+
+    return <LeagueTable data={sortedGroupTeams} light={light} />;
+  }
+
   renderGroups() {
     let groupCounter = 0;
     let colour = "dark";
@@ -98,6 +86,7 @@ class Results extends React.Component {
               <div className="league-results">
                 {this.renderResults(matches, light)}
               </div>
+              {this.renderGroup(matches, light)}
             </div>
           </div>
         );
@@ -106,8 +95,6 @@ class Results extends React.Component {
   }
 
   render() {
-    console.log(this.state.groupMatches);
-
     return (
       <div>
         <Head>
