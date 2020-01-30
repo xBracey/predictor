@@ -3,6 +3,10 @@
   display: flex;
   justify-content: center;
 
+  @include mobile {
+    padding: 50px 25px;
+  }
+
   h2 {
     font-size: 28px;
     margin-bottom: 40px;
