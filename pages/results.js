@@ -80,7 +80,7 @@ class Results extends React.Component {
         light = groupCounter % 2 === 1 ? false : true;
 
         return (
-          <div className={`results ${colour}`}>
+          <div className={`results ${colour}`} key={groupNumber}>
             <div className="inner-container">
               <h2>{`Group ${groupNumber}:`}</h2>
               <div className="league-results">

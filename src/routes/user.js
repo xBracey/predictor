@@ -109,15 +109,26 @@ router.post("/register", async (req, res) => {
   user = { username, password: passwordHash, email, name };
   user = createUser(user);
 
-  return res.json(user);
+  return res.json({ username });
 });
 
-router.post(
-  "/login",
-  passport.authenticate("local", { failureRedirect: "/" }),
-  function(req, res, next) {
-    res.redirect("/buzz");
-  }
-);
+router.post("/login", function(req, res, next) {
+  passport.authenticate("local", function(error, user, info) {
+    if (error) {
+      return res.status(403).send({ error });
+    }
+    if (!user) {
+      return res
+        .status(403)
+        .send({ error: "Username or password is incorrect" });
+    }
+    req.logIn(user, function(err) {
+      if (err) {
+        return next(err);
+      }
+      return res.status(200).send({ username: user.username });
+    });
+  })(req, res, next);
+});
 
 export default router;

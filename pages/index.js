@@ -4,36 +4,34 @@ import HeadInfo from "../components/headInfo";
 
 import LoginSidebar from "../components/loginSidebar";
 import LoginWrapper from "../components/loginWrapper";
+import ResponsePopup from "../components/responsePopup";
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      errors: {
-        username: null,
-        password: null
-      }
+      error: null,
+      success: null
     };
+
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.readResponseAsJSON = this.readResponseAsJSON.bind(this);
-    this.loginSuccessful = this.loginSuccessful.bind(this);
-    this.loginfail = this.loginfail.bind(this);
+    this.loginResponse = this.loginResponse.bind(this);
+    this.onResponseClose = this.onResponseClose.bind(this);
   }
 
-  loginSuccessful(result) {
-    window.location = "/buzz";
+  loginResponse(response) {
+    response.json().then(responseJson => {
+      if (response.ok) {
+        window.location = "/buzz";
+      } else {
+        this.setState({ error: responseJson.error });
+      }
+    });
   }
 
-  loginfail(response) {
-    console.log(response);
-  }
-
-  readResponseAsJSON(response) {
-    if (response.ok) {
-      return response;
-    } else {
-      throw response;
-    }
+  onResponseClose() {
+    this.setState({ error: null, success: null });
   }
 
   login(username, password) {
@@ -43,10 +41,7 @@ class Home extends React.Component {
       headers: {
         "Content-Type": "application/json"
       }
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.loginSuccessful)
-      .catch(this.loginfail);
+    }).then(this.loginResponse);
   }
 
   handleError(name, value) {
@@ -59,28 +54,21 @@ class Home extends React.Component {
     event.preventDefault();
     const username = event.target.username.value;
     const password = event.target.password.value;
-    const errors = { ...this.state.errors };
 
-    errors.username = !username.trim() ? "empty" : null;
-    errors.password = !password.trim() ? "empty" : null;
+    const error = !username.trim()
+      ? "Username cannot be empty"
+      : !password.trim()
+      ? "Password cannot be empty"
+      : null;
 
-    if (Object.values(errors).every(error => error == null)) {
+    if (!error) {
       this.login(username, password);
     }
 
-    this.setState({ errors });
+    this.setState({ error });
   }
 
   render() {
-    const usernameError = this.handleError(
-      "Username",
-      this.state.errors.username
-    );
-    const passwordError = this.handleError(
-      "Password",
-      this.state.errors.password
-    );
-
     return (
       <div>
         <Head>
@@ -96,28 +84,21 @@ class Home extends React.Component {
             <h1> Login </h1>
             <form onSubmit={this.handleSubmit}>
               <div className="input-wrapper">
-                <input
-                  className={this.state.errors.username ? "error" : ""}
-                  type="text"
-                  id="username"
-                  placeholder="Username"
-                />
-                {usernameError}
+                <input type="text" id="username" placeholder="Username" />
               </div>
               <div className="input-wrapper">
-                <input
-                  className={this.state.errors.password ? "error" : ""}
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                />
-                {passwordError}
+                <input type="password" id="password" placeholder="Password" />
               </div>
               <input type="submit" value="Login" />
             </form>
             <div className="break" />
             <a href="/forgot-password"> Forgotten Password? </a>
           </LoginWrapper>
+          <ResponsePopup
+            onClose={this.onResponseClose}
+            error={this.state.error}
+            success={this.state.success}
+          />
         </div>
       </div>
     );

@@ -23,7 +23,7 @@
     }
 
     .login-content {
-      padding: 20px 50px;
+      padding: 20px 40px;
       flex: 1;
       color: $navy;
       display: flex;
@@ -36,9 +36,10 @@
 
       form {
         display: flex;
-        flex-direction: column;
         align-items: center;
         width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
 
         input[type="submit"] {
           padding: 20px 100px;
@@ -56,9 +57,11 @@
           flex-direction: column;
           align-items: center;
           width: 100%;
+          margin: 0px 10px;
 
           input[type="text"],
-          input[type="password"] {
+          input[type="password"],
+          input[type="email"] {
             border-radius: 10px;
             height: 50px;
             margin: 20px;
@@ -78,6 +81,12 @@
 
           input.error {
             border-color: $red;
+          }
+        }
+
+        .input-wrapper.half {
+          @include desktop {
+            width: calc(50% - 20px);
           }
         }
       }
