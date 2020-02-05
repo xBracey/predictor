@@ -24,7 +24,7 @@ const pages = [
   "/admin/teams/edit"
 ];
 
-const userPages = ["/buzz", "/leagues", "/results"];
+const userPages = ["/buzz", "/leagues", "/results", "/predictions"];
 
 nextApp.prepare().then(() => {
   // Serve static files from the React app
