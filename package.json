@@ -38,7 +38,7 @@
     "react": "16.9.0",
     "react-datepicker": "^2.10.1",
     "react-dom": "16.9.0",
-    "sequelize": "^5.12.3",
+    "sequelize": "^5.15.1",
     "uuid": "^3.3.3"
   },
   "nodemonConfig": {
