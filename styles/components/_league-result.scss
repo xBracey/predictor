@@ -66,6 +66,7 @@
   .arrow,
   .arrow img {
     height: 30px;
+    touch-action: manipulation;
 
     @include mobile {
       height: 20px;

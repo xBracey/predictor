@@ -25,15 +25,18 @@ class Predictions extends React.Component {
   onResultChange(homeGoals, awayGoals, groupNumber, id) {
     const { groupMatches } = this.state;
 
-    const newGroupMatches = [...groupMatches[groupNumber]];
-    const oldGroupMatchIndex = newGroupMatches.findIndex(
+    const newGroupMatches = { ...groupMatches };
+    const newGroupMatchesChanged = [...groupMatches[groupNumber]];
+    const oldGroupMatchIndex = newGroupMatchesChanged.findIndex(
       match => match.id === id
     );
-    newGroupMatches[oldGroupMatchIndex].homeGoals = homeGoals;
-    newGroupMatches[oldGroupMatchIndex].awayGoals = awayGoals;
+    newGroupMatchesChanged[oldGroupMatchIndex].homeGoals = homeGoals;
+    newGroupMatchesChanged[oldGroupMatchIndex].awayGoals = awayGoals;
+
+    newGroupMatches[groupNumber] = newGroupMatchesChanged;
 
     this.setState({
-      groupMatches: { ...groupMatches, [groupNumber]: newGroupMatches }
+      groupMatches: newGroupMatches
     });
   }
 

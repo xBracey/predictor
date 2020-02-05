@@ -34,18 +34,14 @@ class LeaguePrediction extends React.Component {
         this.setState({
           homeGoals: homeGoalsNew
         });
-      }
 
-      if (homeGoalsNew === "") {
-        homeGoalsNew = 0;
+        this.props.onResultChange(
+          parseInt(homeGoalsNew),
+          awayGoals,
+          this.props.match.groupNumber,
+          this.props.match.id
+        );
       }
-
-      this.props.onResultChange(
-        parseInt(homeGoalsNew),
-        awayGoals,
-        this.props.match.groupNumber,
-        this.props.match.id
-      );
     } else {
       let awayGoalsNew =
         increase === null
@@ -58,18 +54,14 @@ class LeaguePrediction extends React.Component {
         this.setState({
           awayGoals: awayGoalsNew
         });
-      }
 
-      if (awayGoalsNew === "") {
-        awayGoalsNew = 0;
+        this.props.onResultChange(
+          homeGoals,
+          parseInt(awayGoalsNew),
+          this.props.match.groupNumber,
+          this.props.match.id
+        );
       }
-
-      this.props.onResultChange(
-        homeGoals,
-        parseInt(awayGoalsNew),
-        this.props.match.groupNumber,
-        this.props.match.id
-      );
     }
   }
 
