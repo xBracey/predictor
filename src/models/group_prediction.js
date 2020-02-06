@@ -1,12 +1,10 @@
 const group_prediction = (sequelize, DataTypes) => {
   const Group_Prediction = sequelize.define("group_prediction", {
     homeGoals: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+      type: DataTypes.INTEGER
     },
     awayGoals: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+      type: DataTypes.INTEGER
     }
   });
 

@@ -2,6 +2,7 @@ import { Router } from "express";
 import bcrypt from "bcrypt";
 import models, { sequelize } from "../models";
 import passport from "passport";
+import { createPredictions } from "../seeds/group_prediction";
 
 const router = Router();
 const saltRounds = 10;
@@ -108,6 +109,8 @@ router.post("/register", async (req, res) => {
 
   user = { username, password: passwordHash, email, name };
   user = createUser(user);
+
+  await createPredictions(username);
 
   return res.json({ username });
 });

@@ -25,6 +25,19 @@
       flex-wrap: wrap;
     }
   }
+
+  .submit-predictions {
+    height: 60px;
+    width: 250px;
+    display: flex;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    background-color: $navy;
+    color: white;
+    cursor: pointer;
+  }
 }
 
 .results.dark {
@@ -32,6 +45,11 @@
 
   h2 {
     color: white;
+  }
+
+  .submit-predictions {
+    background-color: white;
+    color: $green;
   }
 }
 

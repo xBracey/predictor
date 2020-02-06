@@ -7,8 +7,8 @@ class LeaguePrediction extends React.Component {
     const { homeGoals, awayGoals } = props;
 
     this.state = {
-      homeGoals,
-      awayGoals
+      homeGoals: homeGoals === null ? "" : homeGoals,
+      awayGoals: awayGoals === null ? "" : awayGoals
     };
 
     this.onChangeHome = this.onChangeScore.bind(this, true, null);
@@ -27,7 +27,7 @@ class LeaguePrediction extends React.Component {
         increase === null
           ? e.target.value.replace(/\s+/, "")
           : increase
-          ? homeGoals + 1
+          ? parseInt(homeGoals + 1)
           : homeGoals - 1;
 
       if (homeGoalsNew > -1 && homeGoalsNew < 20) {
@@ -47,7 +47,7 @@ class LeaguePrediction extends React.Component {
         increase === null
           ? e.target.value.replace(/\s+/, "")
           : increase
-          ? awayGoals + 1
+          ? parseInt(awayGoals + 1)
           : awayGoals - 1;
 
       if (awayGoalsNew > -1 && awayGoalsNew < 20) {

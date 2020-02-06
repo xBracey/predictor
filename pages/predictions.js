@@ -5,6 +5,7 @@ import Header from "../components/header";
 import LeagueTable from "../components/leagueTable";
 import LeaguePrediction from "../components/leaguePrediction";
 import { groupStandings } from "../lib/group";
+import ResponsePopup from "../components/responsePopup";
 
 const groups = ["A", "B", "C", "D", "E", "F"];
 
@@ -12,10 +13,16 @@ class Predictions extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { groupMatches: {} };
+    this.state = {
+      groupMatches: {},
+      error: null,
+      success: null
+    };
 
     this.setResults = this.setResults.bind(this);
     this.onResultChange = this.onResultChange.bind(this);
+    this.predictionResponse = this.predictionResponse.bind(this);
+    this.onResponseClose = this.onResponseClose.bind(this);
   }
 
   componentDidMount() {
@@ -58,6 +65,38 @@ class Predictions extends React.Component {
 
       this.setState({ groupMatches });
     });
+  }
+
+  onResponseClose() {
+    this.setState({ error: null, success: null });
+  }
+
+  predictionResponse(response) {
+    if (response.ok) {
+      this.setState({
+        success: "Prediction successfully made"
+      });
+    }
+  }
+
+  submitPredictions(groupNumber) {
+    const predictions = [...this.state.groupMatches[groupNumber]];
+
+    predictions.forEach(prediction => {
+      if (prediction.homeGoals === "" || prediction.awayGoals === "") {
+        prediction.homeGoals = null;
+        prediction.awayGoals = null;
+      }
+      prediction.groupMatchId = prediction.id;
+    });
+
+    fetch("api/predictions/group", {
+      method: "POST",
+      body: JSON.stringify({ predictions }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(this.predictionResponse);
   }
 
   renderResults(matches, light) {
@@ -108,6 +147,14 @@ class Predictions extends React.Component {
                 {this.renderResults(matches, light)}
               </div>
               {this.renderGroup(matches, light)}
+              <div
+                className="submit-predictions"
+                onClick={() => {
+                  this.submitPredictions(groupNumber);
+                }}
+              >
+                Submit Predictions
+              </div>
             </div>
           </div>
         );
@@ -123,6 +170,11 @@ class Predictions extends React.Component {
         </Head>
         <Header />
         {this.renderGroups()}
+        <ResponsePopup
+          onClose={this.onResponseClose}
+          error={this.state.error}
+          success={this.state.success}
+        />
       </div>
     );
   }

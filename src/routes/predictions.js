@@ -4,7 +4,9 @@ import Predictions from "../../pages/predictions";
 
 const router = Router();
 
-const addPredictions = async predictions => {
+const addPredictions = async (predictions, username) => {
+  predictions.forEach(prediction => (prediction.userUsername = username));
+
   return await models.Group_Prediction.bulkCreate(predictions, {
     updateOnDuplicate: ["homeGoals", "awayGoals"]
   });
@@ -25,7 +27,8 @@ const getGroupPredictions = async username => {
       ...JSON.parse(JSON.stringify(match.group_prediction)),
       groupNumber: match.groupNumber,
       homeTeamName: match.homeTeamName,
-      awayTeamName: match.awayTeamName
+      awayTeamName: match.awayTeamName,
+      id: match.id
     };
     predictions.push(prediction);
   });
@@ -47,7 +50,7 @@ router.post("/group", function(req, res) {
   const { predictions } = req.body;
 
   if (req.user && predictions) {
-    addPredictions(predictions).then(returnedPredictions => {
+    addPredictions(predictions, req.user.username).then(returnedPredictions => {
       return res.json(returnedPredictions);
     });
   } else if (!predictions) {
