@@ -41,7 +41,7 @@ class Predictions extends React.Component {
   }
 
   getResults() {
-    fetch("api/match/group", {
+    fetch("api/predictions/group", {
       method: "GET"
     }).then(this.setResults);
   }

@@ -64,3 +64,5 @@ out/
 
 build/
 dist/
+
+static/.DS_Store

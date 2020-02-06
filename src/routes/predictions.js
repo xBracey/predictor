@@ -1,5 +1,6 @@
 import { Router } from "express";
 import models, { sequelize } from "../models";
+import Predictions from "../../pages/predictions";
 
 const router = Router();
 
@@ -8,6 +9,39 @@ const addPredictions = async predictions => {
     updateOnDuplicate: ["homeGoals", "awayGoals"]
   });
 };
+
+const getGroupPredictions = async username => {
+  const user = await models.User.findOne({
+    where: {
+      username
+    },
+    include: [{ model: models.Group_Match }]
+  });
+
+  const predictions = [];
+
+  user.group_matches.forEach(match => {
+    const prediction = {
+      ...JSON.parse(JSON.stringify(match.group_prediction)),
+      groupNumber: match.groupNumber,
+      homeTeamName: match.homeTeamName,
+      awayTeamName: match.awayTeamName
+    };
+    predictions.push(prediction);
+  });
+
+  return predictions;
+};
+
+router.get("/group", function(req, res) {
+  if (req.user) {
+    getGroupPredictions(req.user.username).then(returnedPredictions => {
+      return res.json(returnedPredictions);
+    });
+  } else {
+    return res.status(401).json({ error: "Unauthorised" });
+  }
+});
 
 router.post("/group", function(req, res) {
   const { predictions } = req.body;
