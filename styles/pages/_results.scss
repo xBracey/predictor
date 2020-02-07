@@ -27,16 +27,23 @@
   }
 
   .submit-predictions {
-    height: 60px;
-    width: 250px;
+    height: 80px;
+    width: 300px;
     display: flex;
     border-radius: 20px;
     justify-content: center;
     align-items: center;
-    font-size: 20px;
+    font-size: 24px;
     background-color: $navy;
     color: white;
     cursor: pointer;
+    margin: 25px;
+
+    @include mobile {
+      height: 60px;
+      width: 250px;
+      font-size: 20px;
+    }
   }
 }
 

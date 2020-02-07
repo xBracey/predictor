@@ -25,10 +25,10 @@ class LeagueTable extends React.Component {
       return (
         <div className="table-row" key={row.name}>
           <div className="column team">{row.name}</div>
-          <div className="column">{row.goalsFor}</div>
-          <div className="column">{row.goalsAgainst}</div>
-          <div className="column">{gd}</div>
-          <div className="column">{row.points}</div>
+          <div className="column">{parseInt(row.goalsFor)}</div>
+          <div className="column">{parseInt(row.goalsAgainst)}</div>
+          <div className="column">{parseInt(gd)}</div>
+          <div className="column">{parseInt(row.points)}</div>
         </div>
       );
     });

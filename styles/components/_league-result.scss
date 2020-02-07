@@ -5,6 +5,7 @@
   color: white;
   width: 50%;
   text-align: center;
+  margin: 20px 0px;
 
   @include mobile {
     width: 100%;
@@ -39,7 +40,7 @@
   .score {
     font-size: 25px;
     font-weight: bold;
-    width: 30px;
+    width: 40px;
     border: none;
     background-color: transparent;
     color: white;
@@ -49,7 +50,7 @@
 
     @include mobile {
       font-size: 22px;
-      width: 20px;
+      width: 30px;
     }
   }
 
@@ -65,11 +66,11 @@
 
   .arrow,
   .arrow img {
-    height: 30px;
+    height: 40px;
     touch-action: manipulation;
 
     @include mobile {
-      height: 20px;
+      height: 30px;
     }
   }
 }

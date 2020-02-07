@@ -28,6 +28,8 @@ class LeaguePrediction extends React.Component {
           ? e.target.value.replace(/\s+/, "")
           : increase
           ? parseInt(homeGoals + 1)
+          : homeGoals == 0
+          ? ""
           : homeGoals - 1;
 
       if (homeGoalsNew > -1 && homeGoalsNew < 20) {
@@ -48,6 +50,8 @@ class LeaguePrediction extends React.Component {
           ? e.target.value.replace(/\s+/, "")
           : increase
           ? parseInt(awayGoals + 1)
+          : awayGoals == 0
+          ? ""
           : awayGoals - 1;
 
       if (awayGoalsNew > -1 && awayGoalsNew < 20) {
