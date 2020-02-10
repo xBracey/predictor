@@ -216,6 +216,14 @@ const calculateGroupMatchScores = (
 router.get("/standings/:leagueName", async function(req, res) {
   const { leagueName } = req.params;
 
+  const leagueCheck = await models.League.findAll({
+    where: { leagueName }
+  });
+
+  if (!leagueCheck.length) {
+    return res.status(401).json({ error: "League does not exist" });
+  }
+
   if (req.user && leagueName) {
     const leaguesArray = await getLeagueUsersRules(leagueName);
     const userLeagues = JSON.parse(JSON.stringify(leaguesArray));
@@ -253,6 +261,35 @@ router.get("/standings/:leagueName", async function(req, res) {
   } else {
     return res.status(401).json({ error: "Unauthorised" });
   }
+});
+
+router.get("/info/:leagueName", async function(req, res) {
+  const { leagueName } = req.params;
+
+  let league = await models.League.findOne({
+    where: { leagueName },
+    include: [{ model: models.User }]
+  });
+
+  if (!league) {
+    return res.status(401).json({ error: "League does not exist" });
+  }
+
+  let userIsAdmin = false;
+
+  league = JSON.parse(JSON.stringify(league));
+
+  league.users.forEach(user => {
+    if (user.user_league.admin && user.username === req.user.username) {
+      userIsAdmin = true;
+    }
+  });
+
+  return res.json({
+    leagueName: league.leagueName,
+    displayName: league.displayName,
+    userIsAdmin
+  });
 });
 
 export default router;

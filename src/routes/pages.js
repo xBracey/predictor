@@ -51,6 +51,14 @@ nextApp.prepare().then(() => {
     });
   });
 
+  router.get("/league/:id", (req, res) => {
+    if (req.user) {
+      nextApp.render(req, res, "/league", { id: req.params.id });
+    } else {
+      res.redirect("/");
+    }
+  });
+
   router.get("*", (req, res) => {
     return handle(req, res);
   });

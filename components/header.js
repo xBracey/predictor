@@ -78,7 +78,7 @@ class Header extends React.Component {
   }
 
   getUser() {
-    fetch("api/user/me", {
+    fetch("/api/user/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json"

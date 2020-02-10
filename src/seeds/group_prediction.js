@@ -10,8 +10,8 @@ export const createPredictions = async userUsername => {
     group_predictions_array.push({
       groupMatchId: matches[i].id,
       userUsername,
-      homeGoals: null,
-      awayGoals: null
+      homeGoals: Math.floor(Math.random() * 5),
+      awayGoals: Math.floor(Math.random() * 5)
     });
   }
 
@@ -21,6 +21,10 @@ export const createPredictions = async userUsername => {
 const group_predictions = async () => {
   await createPredictions("xBracey");
   await createPredictions("xBracey2");
+  await createPredictions("xBracey3");
+  await createPredictions("xBracey4");
+  await createPredictions("xBracey5");
+  await createPredictions("xBracey6");
   await createPredictions("JBrace");
 };
 

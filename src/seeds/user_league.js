@@ -5,6 +5,36 @@ const user_leagues = [
     userUsername: "xBracey",
     leagueLeagueName: "brace",
     admin: true
+  },
+  {
+    userUsername: "xBracey2",
+    leagueLeagueName: "brace",
+    admin: false
+  },
+  {
+    userUsername: "xBracey3",
+    leagueLeagueName: "brace",
+    admin: false
+  },
+  {
+    userUsername: "xBracey4",
+    leagueLeagueName: "brace",
+    admin: false
+  },
+  {
+    userUsername: "xBracey5",
+    leagueLeagueName: "brace",
+    admin: false
+  },
+  {
+    userUsername: "xBracey6",
+    leagueLeagueName: "brace",
+    admin: false
+  },
+  {
+    userUsername: "JBrace",
+    leagueLeagueName: "brace",
+    admin: true
   }
 ];
 
