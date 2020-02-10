@@ -35,6 +35,16 @@ const user_leagues = [
     userUsername: "JBrace",
     leagueLeagueName: "brace",
     admin: true
+  },
+  {
+    userUsername: "xBracey",
+    leagueLeagueName: "brace2",
+    admin: true
+  },
+  {
+    userUsername: "JBrace",
+    leagueLeagueName: "brace2",
+    admin: true
   }
 ];
 

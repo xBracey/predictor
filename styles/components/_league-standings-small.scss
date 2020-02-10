@@ -1,0 +1,17 @@
+.league-standings-small {
+  display: flex;
+
+  .info {
+    display: flex;
+    justify-content: center;
+
+    h2 {
+      color: $green;
+    }
+
+    img {
+      height: 35px;
+      width: 35px;
+    }
+  }
+}

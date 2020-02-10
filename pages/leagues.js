@@ -20,6 +20,10 @@ class League extends React.Component {
     this.addResponse = this.addResponse.bind(this);
   }
 
+  componentDidMount() {
+    // this.getLeagues();
+  }
+
   handleAdd(event) {
     event.preventDefault();
     const displayName = event.target.displayName.value;

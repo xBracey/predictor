@@ -213,15 +213,13 @@ const calculateGroupMatchScores = (
   return points;
 };
 
-router.get("/standings/:leagueName", async function(req, res) {
-  const { leagueName } = req.params;
-
+const getLeagueStandings = async (req, leagueName) => {
   const leagueCheck = await models.League.findAll({
     where: { leagueName }
   });
 
   if (!leagueCheck.length) {
-    return res.status(401).json({ error: "League does not exist" });
+    return { status: 401, error: "League does not exist" };
   }
 
   if (req.user && leagueName) {
@@ -230,7 +228,7 @@ router.get("/standings/:leagueName", async function(req, res) {
     const usernames = userLeagues.users.map(user => user.username);
 
     if (!usernames.includes(req.user.username)) {
-      return res.status(401).json({ error: "Unauthorised" });
+      return { status: 401, error: "Unauthorised" };
     }
 
     const leagueRulesGroupMatch = leaguesArray.rules.filter(
@@ -241,7 +239,7 @@ router.get("/standings/:leagueName", async function(req, res) {
     let points = 0;
     let username = null;
 
-    const usernamePoints = {};
+    let usernamePoints = [];
 
     for (let index = 0; index < usernames.length; index++) {
       username = usernames[index];
@@ -254,25 +252,42 @@ router.get("/standings/:leagueName", async function(req, res) {
         points
       );
 
-      usernamePoints[username] = points;
+      usernamePoints.push({
+        username,
+        points,
+        isUser: req.user.username === username
+      });
     }
 
-    return res.json(usernamePoints);
-  } else {
-    return res.status(401).json({ error: "Unauthorised" });
-  }
-});
+    usernamePoints = usernamePoints.sort((a, b) => b.points - a.points);
 
-router.get("/info/:leagueName", async function(req, res) {
+    return { status: 200, usernamePoints };
+  } else {
+    return { status: 401, error: "Unauthorised" };
+  }
+};
+
+router.get("/standings/:leagueName", async function(req, res) {
   const { leagueName } = req.params;
 
+  const leagueStandings = await getLeagueStandings(req, leagueName);
+
+  return res
+    .status(leagueStandings.status)
+    .json(leagueStandings.usernamePoints);
+});
+
+const getLeagueInfo = async (req, leagueName) => {
   let league = await models.League.findOne({
     where: { leagueName },
     include: [{ model: models.User }]
   });
 
   if (!league) {
-    return res.status(401).json({ error: "League does not exist" });
+    return {
+      status: 401,
+      error: "League does not exist"
+    };
   }
 
   let userIsAdmin = false;
@@ -285,11 +300,55 @@ router.get("/info/:leagueName", async function(req, res) {
     }
   });
 
-  return res.json({
+  return {
+    status: 200,
     leagueName: league.leagueName,
     displayName: league.displayName,
     userIsAdmin
+  };
+};
+
+router.get("/info/:leagueName", async function(req, res) {
+  const { leagueName } = req.params;
+
+  const leagueInfo = await getLeagueInfo(req, leagueName);
+
+  return res.status(leagueInfo.status).json(leagueInfo);
+});
+
+const getLeagues = async username => {
+  return await models.User.findOne({
+    where: {
+      username
+    },
+    include: [{ model: models.League }]
   });
+};
+
+router.get("/", async function(req, res) {
+  if (!req.user) {
+    return res.status(401).json({ error: "Unauthorised" });
+  }
+
+  const userLeagues = await getLeagues(req.user.username);
+  const leagues = JSON.parse(JSON.stringify(userLeagues.leagues));
+  const leaguesInfoStandings = [];
+  let leagueInfoStanding = {};
+  let league = {};
+  let standings = [];
+
+  for (let index = 0; index < leagues.length; index++) {
+    league = leagues[index];
+
+    standings = await getLeagueStandings(req, league.leagueName);
+    leagueInfoStanding.standings = standings.usernamePoints;
+
+    leagueInfoStanding.info = await getLeagueInfo(req, league.leagueName);
+    leaguesInfoStandings.push({ ...leagueInfoStanding });
+    leagueInfoStanding = {};
+  }
+
+  return res.json(leaguesInfoStandings);
 });
 
 export default router;

@@ -2,6 +2,7 @@ import React from "react";
 import Head from "next/head";
 
 import Header from "../components/header";
+import LeagueStandings from "../components/leagueStandings";
 
 class League extends React.Component {
   static getInitialProps({ query: { id } }) {
@@ -58,14 +59,20 @@ class League extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div>
         <Head>
           <title>League</title>
         </Head>
         <Header />
-        <div className="subheader">{"Welcome"}</div>
+        <div className="league-subheader">
+          <h1>{this.state.leagueInfo.displayName}</h1>
+        </div>
+        <div className="league">
+          <div className="league-inner">
+            <LeagueStandings data={this.state.leagueStandings} />
+          </div>
+        </div>
       </div>
     );
   }
