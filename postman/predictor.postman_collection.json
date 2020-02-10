@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f766f3e5-de93-4785-a9e3-12db8832bf7a",
+		"_postman_id": "aa114ef6-a6fe-4fcf-8253-b105f93c051b",
 		"name": "Predictor",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -41,7 +41,7 @@
 			"response": []
 		},
 		{
-			"name": "GET User",
+			"name": "GET User Me",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -54,6 +54,156 @@
 						"api",
 						"user",
 						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"predictions\": [\n\t\t{\n\t\t\t\"userUsername\": \"xbracey\",\n\t\t    \"groupMatchId\": \"1\",\n\t\t    \"homeGoals\": \"2\",\n\t\t    \"awayGoals\": \"2\"\n\t\t},\n\t\t{\n\t\t\t\"userUsername\": \"xbracey\",\n\t\t    \"groupMatchId\": \"2\",\n\t\t    \"homeGoals\": \"3\",\n\t\t    \"awayGoals\": \"3\"\n\t\t}\n\t]\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/predictions/group",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"predictions",
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InhCcmFjZXkiLCJpYXQiOjE1NjYyODMzMzl9.Waz1F-KcTPTSIRLLPdADbHo15uWMfFOXpQM4NkuqmGg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "xBracey2",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "Tommy.B22",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "tommy-brace-22@hotmail.com",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "Tom",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/api/user",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"user"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST User Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "xBracey3",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Tommy.B2",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "tommybrace@hotmail.co.ukf",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Tommy Brace",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/api/user/register",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"register"
 					]
 				}
 			},
@@ -83,6 +233,65 @@
 						"api",
 						"leagues",
 						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST League Rule",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"leagueName\": \"brace\",\n    \"ruleId\": \"1\",\n    \"points\": \"50\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/leagues/add/rule",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"leagues",
+						"add",
+						"rule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Predictions",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"predictions\": [\n\t\t{\n\t\t\t\"userUsername\": \"xbracey\",\n\t\t    \"groupMatchId\": \"1\",\n\t\t    \"homeGoals\": \"2\",\n\t\t    \"awayGoals\": \"2\"\n\t\t},\n\t\t{\n\t\t\t\"userUsername\": \"xbracey\",\n\t\t    \"groupMatchId\": \"2\",\n\t\t    \"homeGoals\": \"3\",\n\t\t    \"awayGoals\": \"3\"\n\t\t}\n\t]\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/predictions/group",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"predictions",
+						"group"
 					]
 				}
 			},
@@ -149,6 +358,26 @@
 					"path": [
 						"api",
 						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Group Standings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/groups/standings/A",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"groups",
+						"standings",
+						"A"
 					]
 				}
 			},
@@ -227,6 +456,64 @@
 			"response": []
 		},
 		{
+			"name": "GET League Standings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/leagues/standings/brace",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"leagues",
+						"standings",
+						"brace"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Leagues",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/leagues",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"leagues"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET League Info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/leagues/info/brace",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"leagues",
+						"info",
+						"brace"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "POST Match Group",
 			"request": {
 				"method": "POST",
@@ -255,6 +542,41 @@
 					"path": [
 						"api",
 						"match",
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Predictions",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"predictions\": [\n    \t{\n    \t\t\"homeGoals\": null,\n    \t\t\"awayGoals\": null,\n    \t\t\"groupMatchId\": \"1\"\n    \t}\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/predictions/group",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"predictions",
 						"group"
 					]
 				}
@@ -361,42 +683,6 @@
 						"api",
 						"match",
 						"knockout"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "POST Match Group Create",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/api/match/group/create",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"match",
-						"group",
-						"create"
 					]
 				}
 			},
