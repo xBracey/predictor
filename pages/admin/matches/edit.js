@@ -19,6 +19,22 @@ class MatchesEdit extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateMatchSuccessful = this.updateMatchSuccessful.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.onHomeGoalsChange = this.onHomeGoalsChange.bind(this);
+    this.onAwayGoalsChange = this.onAwayGoalsChange.bind(this);
+  }
+
+  onHomeGoalsChange(event) {
+    const match = { ...this.state.match };
+    match.homeGoals = event.target.value;
+
+    this.setState({ match });
+  }
+
+  onAwayGoalsChange(event) {
+    const match = { ...this.state.match };
+    match.awayGoals = event.target.value;
+
+    this.setState({ match });
   }
 
   getMatchSuccessful(result) {
@@ -136,8 +152,18 @@ class MatchesEdit extends React.Component {
                 dateFormat="dd/MM/yyyy"
                 onChange={this.handleDateChange}
               />
-              <input type="number" id="homeGoals" value={homeGoals} />
-              <input type="number" id="awayGoals" value={awayGoals} />
+              <input
+                onChange={this.onHomeGoalsChange}
+                type="number"
+                id="homeGoals"
+                value={homeGoals}
+              />
+              <input
+                onChange={this.onAwayGoalsChange}
+                type="number"
+                id="awayGoals"
+                value={awayGoals}
+              />
               <input type="submit" value="Save" />
             </form>
           </div>

@@ -1,4 +1,5 @@
 import models, { sequelize } from "../models";
+import moment from "moment";
 
 const group_match = async () => {
   const teamsArray = await models.Team.findAll();
@@ -16,7 +17,7 @@ const group_match = async () => {
         groupNumber: teams[i].groupNumber,
         homeTeamName: teams[i].name,
         awayTeamName: matching_teams[j].name,
-        date: Date.now(),
+        date: moment().add(Math.floor(Math.random() * 8), "days"),
         homeGoals: Math.floor(Math.random() * 4),
         awayGoals: Math.floor(Math.random() * 4)
       });

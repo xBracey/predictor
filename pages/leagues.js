@@ -3,7 +3,7 @@ import Head from "next/head";
 
 import Header from "../components/header";
 import ResponsePopup from "../components/responsePopup";
-import LeagueStandingsSmall from "../components/leagueStandingsSmall";
+import AllLeagues from "../components/allLeagues";
 
 class League extends React.Component {
   constructor(props) {
@@ -20,28 +20,6 @@ class League extends React.Component {
     this.joinResponse = this.joinResponse.bind(this);
     this.onResponseClose = this.onResponseClose.bind(this);
     this.addResponse = this.addResponse.bind(this);
-    this.setLeagues = this.setLeagues.bind(this);
-  }
-
-  componentDidMount() {
-    this.getLeagues();
-  }
-
-  getLeagues() {
-    fetch("api/leagues", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(this.setLeagues);
-  }
-
-  setLeagues(response) {
-    response.json().then(leagues => {
-      if (response.ok) {
-        this.setState({ leagues });
-      }
-    });
   }
 
   handleAdd(event) {
@@ -130,22 +108,6 @@ class League extends React.Component {
     }).then(this.joinResponse);
   }
 
-  renderLeagues() {
-    const leaguesComponent = this.state.leagues.map(league => (
-      <LeagueStandingsSmall
-        displayName={league.info.displayName}
-        standings={league.standings}
-        leagueName={league.info.leagueName}
-      />
-    ));
-
-    return (
-      <div className="leagues-outer">
-        <div className="leagues-inner">{leaguesComponent}</div>
-      </div>
-    );
-  }
-
   renderAddCreateLeagues() {
     return (
       <div className="add-create-leagues">
@@ -207,7 +169,7 @@ class League extends React.Component {
         </Head>
         <Header />
         {this.renderAddCreateLeagues()}
-        {this.renderLeagues()}
+        <AllLeagues />
         <ResponsePopup
           onClose={this.onResponseClose}
           error={this.state.error}

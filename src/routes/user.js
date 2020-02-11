@@ -23,6 +23,15 @@ export const getUser = async username => {
   });
 };
 
+export const getUserInfo = async username => {
+  return await models.User.findOne({
+    where: {
+      username
+    },
+    attributes: ["username", "name", "admin"]
+  });
+};
+
 export const getUserByEmail = async email => {
   return await models.User.findOne({
     where: {
@@ -63,7 +72,7 @@ router.get("/leagues", function(req, res) {
 
 router.get("/me", function(req, res) {
   if (req.user) {
-    getUser(req.user.username).then(user => {
+    getUserInfo(req.user.username).then(user => {
       return res.json(user);
     });
   } else {

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import models, { sequelize } from "../models";
+import moment from "moment";
 
 const router = Router();
 
@@ -66,6 +67,19 @@ router.get("/group", function(req, res) {
   if (req.user) {
     getAllMatches(models.Group_Match).then(matches => {
       return res.json(matches);
+    });
+  } else {
+    return res.status(401).json({ error: "Unauthorised" });
+  }
+});
+
+router.get("/group/today", function(req, res) {
+  if (req.user) {
+    getAllMatches(models.Group_Match).then(matches => {
+      const todayMatches = matches.filter(match =>
+        moment(match.date).isSame(moment(), "day")
+      );
+      return res.json(todayMatches);
     });
   } else {
     return res.status(401).json({ error: "Unauthorised" });
