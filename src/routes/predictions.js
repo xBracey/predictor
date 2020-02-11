@@ -1,6 +1,5 @@
 import { Router } from "express";
 import models, { sequelize } from "../models";
-import Predictions from "../../pages/predictions";
 
 const router = Router();
 

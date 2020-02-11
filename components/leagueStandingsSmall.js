@@ -8,11 +8,16 @@ class LeagueStandingsSmall extends React.Component {
 
   render() {
     return (
-      <div className="league-standings-small">
-        <h2>{this.props.displayName}</h2>
-        <img src="/static/link.svg" />
-        <LeagueStandings data={this.props.data} />
-      </div>
+      <a
+        className="league-standings-small"
+        href={`/league/${this.props.leagueName}`}
+      >
+        <div className="info">
+          <h2>{this.props.displayName}</h2>
+          <img src="/static/link.svg" />
+        </div>
+        <LeagueStandings data={this.props.standings} small={true} />
+      </a>
     );
   }
 }

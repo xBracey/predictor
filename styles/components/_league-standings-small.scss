@@ -1,17 +1,40 @@
 .league-standings-small {
   display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  padding: 50px;
+  width: calc(50% - 100px);
+  color: black;
+
+  @include mobile {
+    padding: 25px;
+    width: calc(100% - 50px);
+  }
 
   .info {
     display: flex;
     justify-content: center;
+    align-items: center;
 
     h2 {
       color: $green;
+      font-size: 24px;
+
+      @include mobile {
+        font-size: 20px;
+      }
     }
 
     img {
-      height: 35px;
-      width: 35px;
+      height: 30px;
+      width: 30px;
+      margin-left: 20px;
+
+      @include mobile {
+        height: 20px;
+        width: 20px;
+        margin-left: 15px;
+      }
     }
   }
 }

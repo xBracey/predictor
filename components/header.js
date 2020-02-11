@@ -114,7 +114,11 @@ class Header extends React.Component {
       ) : null;
 
     const accountImage =
-      this.state.width > 1200 ? <img src="/static/account.svg" /> : null;
+      this.state.width > 1200 ? (
+        <a href="/logout">
+          <img src="/static/account.svg" />
+        </a>
+      ) : null;
 
     return !this.state.menuClicked && this.state.width < 1200 ? null : (
       <div className="menu">

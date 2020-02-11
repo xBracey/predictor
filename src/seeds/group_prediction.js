@@ -25,6 +25,11 @@ const group_predictions = async () => {
   await createPredictions("xBracey4");
   await createPredictions("xBracey5");
   await createPredictions("xBracey6");
+  await createPredictions("xBracey7");
+  await createPredictions("xBracey8");
+  await createPredictions("xBracey9");
+  await createPredictions("xBracey10");
+  await createPredictions("xBracey11");
   await createPredictions("JBrace");
 };
 

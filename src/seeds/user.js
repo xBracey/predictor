@@ -50,6 +50,46 @@ const users = [
     admin: true
   },
   {
+    username: "xBracey7",
+    password: "$2b$10$9Z.cV.rYcefrux//LpzfIuGK38r.UaQBXzbt.rD0WDuPWRmgzMwu2",
+    email: "tommybrace7@hotmail.co.uk",
+    name: "Thomas Brace",
+    verified: true,
+    admin: true
+  },
+  {
+    username: "xBracey8",
+    password: "$2b$10$9Z.cV.rYcefrux//LpzfIuGK38r.UaQBXzbt.rD0WDuPWRmgzMwu2",
+    email: "tommybrace8@hotmail.co.uk",
+    name: "Thomas Brace",
+    verified: true,
+    admin: true
+  },
+  {
+    username: "xBracey9",
+    password: "$2b$10$9Z.cV.rYcefrux//LpzfIuGK38r.UaQBXzbt.rD0WDuPWRmgzMwu2",
+    email: "tommybrace9@hotmail.co.uk",
+    name: "Thomas Brace",
+    verified: true,
+    admin: true
+  },
+  {
+    username: "xBracey10",
+    password: "$2b$10$9Z.cV.rYcefrux//LpzfIuGK38r.UaQBXzbt.rD0WDuPWRmgzMwu2",
+    email: "tommybrace10@hotmail.co.uk",
+    name: "Thomas Brace",
+    verified: true,
+    admin: true
+  },
+  {
+    username: "xBracey11",
+    password: "$2b$10$9Z.cV.rYcefrux//LpzfIuGK38r.UaQBXzbt.rD0WDuPWRmgzMwu2",
+    email: "tommybrace11@hotmail.co.uk",
+    name: "Thomas Brace",
+    verified: true,
+    admin: true
+  },
+  {
     username: "JBrace",
     password: "$2b$10$KM8VTwT5uuQe.GCHs1P69.S4L304uxJOo8ODG90fbDETM4IgB5vAO",
     email: "james.h.brace@gmail.com",

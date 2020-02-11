@@ -25,6 +25,14 @@
     }
   }
 
+  .table-row.small {
+    font-size: 20px;
+
+    .column {
+      padding: 8px;
+    }
+  }
+
   .table-row:nth-child(2n) {
     background-color: $yellow;
   }
