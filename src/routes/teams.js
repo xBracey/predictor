@@ -1,95 +1,113 @@
 import { Router } from "express";
 import models, { sequelize } from "../models";
+import { checkAdmin } from "./user";
 
 const router = Router();
 
-const createTeam = async (name, groupNumber) => {
-  return await models.Team.create({ name, groupNumber });
-};
+// Routes
 
-const getAllTeams = async () => {
-  return await models.Team.findAll();
-};
+// GET /teams
+router.get("/", async (req, res) => {
+  const teams = await models.Team.findAll();
+  return res.json(teams);
+});
 
-const getTeam = async name => {
-  return await models.Team.findOne({
-    where: {
-      name
-    }
-  });
-};
+// GET /teams/:name
+router.get("/:name", async (req, res) => {
+  const { name } = req.params;
 
-const updateTeam = async (name, groupNumber) => {
-  return await models.Team.update(
-    { name, groupNumber },
-    {
+  if (name) {
+    const team = await models.Team.findOne({
       where: {
         name
       }
+    });
+    return res.json(team);
+  } else if (!name) {
+    return res.status(400).json({ error: "Wrong Data" });
+  }
+});
+
+// POST /teams
+router.post("/", async (req, res) => {
+  const { name, groupNumber } = req.body;
+  const admin = await checkAdmin(req.user);
+
+  if (admin && name && groupNumber) {
+    const team = await models.Team.findOne({
+      where: {
+        name
+      }
+    });
+
+    if (team) {
+      return res.status(400).json({ error: "Team already exists" });
     }
-  );
-};
 
-const deleteTeam = async name => {
-  return await models.Team.destroy({
-    where: {
-      name
+    const newTeam = await models.Team.create({ name, groupNumber });
+    return res.json(newTeam);
+  } else if (!name || !groupNumber) {
+    return res.status(400).json({ error: "Wrong Data" });
+  } else {
+    return res.status(401).json({ error: "Unauthorised" });
+  }
+});
+
+// PUT /teams
+router.put("/", async (req, res) => {
+  const { name, groupNumber } = req.body;
+  const admin = await checkAdmin(req.user);
+
+  if (admin && name && groupNumber) {
+    const team = await models.Team.findOne({
+      where: {
+        name
+      }
+    });
+
+    if (!team) {
+      return res.status(400).json({ error: "Team does not exist" });
     }
-  });
-};
 
-router.get("/", function(req, res) {
-  if (req.user) {
-    getAllTeams().then(teams => {
-      return res.json(teams);
-    });
-  } else {
-    return res.status(401).json({ error: "Unauthorised" });
-  }
-});
-
-router.get("/:name", function(req, res) {
-  if (req.user && req.params.name) {
-    getTeam(req.params.name).then(team => {
-      return res.json(team);
-    });
-  } else if (!req.params.name) {
+    const newTeam = await models.Team.update(
+      { name, groupNumber },
+      {
+        where: {
+          name
+        }
+      }
+    );
+    return res.json(newTeam);
+  } else if (!name || !groupNumber) {
     return res.status(400).json({ error: "Wrong Data" });
   } else {
     return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
-router.post("/", function(req, res) {
-  if (req.user && req.user.admin && req.body.name && req.body.groupNumber) {
-    createTeam(req.body.name, req.body.groupNumber).then(team => {
-      return res.json(team);
-    });
-  } else if (!req.body.name || !req.body.groupNumber) {
-    return res.status(400).json({ error: "Wrong Data" });
-  } else {
-    return res.status(401).json({ error: "Unauthorised" });
-  }
-});
+// DELETE /teams
+router.delete("/:name", async (req, res) => {
+  const { name } = req.params;
+  const admin = await checkAdmin(req.user);
 
-router.put("/", function(req, res) {
-  if (req.user && req.user.admin && req.body.name && req.body.groupNumber) {
-    updateTeam(req.body.name, req.body.groupNumber).then(team => {
-      return res.json(team);
+  if (admin && name) {
+    const team = await models.Team.findOne({
+      where: {
+        name
+      }
     });
-  } else if (!req.body.name || !req.body.teamName) {
-    return res.status(400).json({ error: "Wrong Data" });
-  } else {
-    return res.status(401).json({ error: "Unauthorised" });
-  }
-});
 
-router.delete("/:name", function(req, res) {
-  if (req.user && req.user.admin && req.params.name) {
-    deleteTeam(req.params.name).then(team => {
-      return res.json(team);
+    if (!team) {
+      return res.status(400).json({ error: "Team does not exist" });
+    }
+
+    const deletedTeam = await models.Team.destroy({
+      where: {
+        name
+      }
     });
-  } else if (!req.body.name) {
+    return res.json(deletedTeam);
+  } else if (!name) {
     return res.status(400).json({ error: "Wrong Data" });
   } else {
     return res.status(401).json({ error: "Unauthorised" });

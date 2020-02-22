@@ -1,14 +1,14 @@
 import express, { Router } from "express";
 import path from "path";
+import { checkAdmin } from "./user";
 
 const router = Router();
 const outDirectoy = __dirname + "/../../out/admin/";
 
 router.use("/*", (req, res, next) => {
-  if (req.user && req.user.admin) {
+  const admin = await checkAdmin();
+  if (admin) {
     next();
-  } else if (!req.user) {
-    return res.redirect("/");
   } else {
     return res.redirect("/buzz");
   }

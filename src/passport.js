@@ -2,11 +2,17 @@ import bodyParser from "body-parser"; // import passport and passport-jwt module
 import passport from "passport";
 import bcrypt from "bcrypt";
 import { Strategy } from "passport-local";
-import session from "express-session";
+import { Strategy as BearerStrategy } from "passport-http-bearer";
+import moment from "moment";
 
 import { getUser } from "./routes/user";
 
+const jwt = require("jwt-simple");
+const SECRET = "pooliecrazy22";
+
 export function passportConfiguration(app) {
+  app.use(passport.initialize());
+
   passport.use(
     new Strategy(async function(username, password, next) {
       const user = await getUser(username);
@@ -16,29 +22,31 @@ export function passportConfiguration(app) {
 
       const result = await bcrypt.compare(password, user.password);
       if (result) {
-        return next(null, user);
+        return next(null, jwt.encode({ username, date: Date.now() }, SECRET));
       } else {
         return next(null, false);
       }
     })
   );
 
-  passport.serializeUser(function(user, next) {
-    next(null, user.username);
-  });
+  passport.use(
+    new BearerStrategy((token, next) => {
+      try {
+        const { username, date } = jwt.decode(token, SECRET);
+        const now = Date.now();
 
-  passport.deserializeUser(async function(username, next) {
-    const user = await getUser(username);
-    if (!user) {
-      return next(null, false);
-    } else {
-      return next(null, user);
-    }
-  });
+        const tokenDate = date + 24 * 60 * 60 * 14 * 1000;
 
-  app.use(session({ secret: "pooliecrazy22" }));
-  app.use(passport.initialize());
-  app.use(passport.session());
+        if (username && tokenDate > now) {
+          next(null, username);
+          return;
+        }
+        next("Unauthenticated", false);
+      } catch (error) {
+        next("Unauthenticated", false);
+      }
+    })
+  );
 
   return app;
 }

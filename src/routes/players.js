@@ -1,95 +1,105 @@
 import { Router } from "express";
 import models, { sequelize } from "../models";
+import { checkAdmin } from "./user";
 
 const router = Router();
 
-const createPlayer = async (name, teamName) => {
-  return await models.Player.create({ name, teamName });
-};
+// Routes
 
-const getAllPlayers = async () => {
-  return await models.Player.findAll();
-};
+// GET /players
+router.get("/", async (req, res) => {
+  const players = await models.Player.findAll();
+  return res.json(players);
+});
 
-const getPlayer = async name => {
-  return await models.Player.findOne({
-    where: {
-      name
-    }
-  });
-};
-
-const updatePlayer = async (name, teamName) => {
-  return await models.Player.update(
-    { name, teamName },
-    {
+// GET /players/:name
+router.get("/:name", async (req, res) => {
+  const { name } = req.params;
+  if (name) {
+    const player = await models.Player.findOne({
       where: {
         name
       }
+    });
+
+    return res.json(player);
+  } else if (!name) {
+    return res.status(400).json({ error: "Wrong Data" });
+  }
+});
+
+// POST /players
+router.post("/", async (req, res) => {
+  const admin = await checkAdmin(req.user);
+  const { name, teamName } = req.body;
+
+  if (admin && name && teamName) {
+    const team = await models.Team.findOne({
+      where: {
+        name: teamName
+      }
+    });
+
+    if (!team) {
+      return res.status(400).json({ error: "Team does not exist" });
     }
-  );
-};
 
-const deletePlayer = async name => {
-  return await models.Player.destroy({
-    where: {
-      name
+    const player = await models.Player.create({ name, teamName });
+    return res.json(player);
+  } else if (!name || !teamName) {
+    return res.status(400).json({ error: "Wrong Data" });
+  } else {
+    return res.status(401).json({ error: "Unauthorised" });
+  }
+});
+
+// PUT /players
+router.put("/", async (req, res) => {
+  const admin = await checkAdmin(req.user);
+  const { id, name, teamName } = req.body;
+
+  if (admin && id !== null && name && teamName) {
+    const team = await models.Team.findOne({
+      where: {
+        name: teamName
+      }
+    });
+
+    if (!team) {
+      return res.status(400).json({ error: "Team does not exist" });
     }
-  });
-};
 
-router.get("/", function(req, res) {
-  if (req.user) {
-    getAllPlayers().then(players => {
-      return res.json(players);
-    });
-  } else {
-    return res.status(401).json({ error: "Unauthorised" });
-  }
-});
+    const player = await models.Player.update(
+      { name, teamName },
+      {
+        where: {
+          id
+        }
+      }
+    );
 
-router.get("/:name", function(req, res) {
-  if (req.user && req.params.name) {
-    getPlayer(req.params.name).then(player => {
-      return res.json(player);
-    });
-  } else if (!req.params.name) {
+    return res.json(player);
+  } else if (!name || !teamName || id === null) {
     return res.status(400).json({ error: "Wrong Data" });
   } else {
     return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
-router.post("/", function(req, res) {
-  if (req.user && req.user.admin && req.body.name && req.body.teamName) {
-    createPlayer(req.body.name, req.body.teamName).then(player => {
-      return res.json(player);
-    });
-  } else if (!req.body.name || !req.body.teamName) {
-    return res.status(400).json({ error: "Wrong Data" });
-  } else {
-    return res.status(401).json({ error: "Unauthorised" });
-  }
-});
+// DELETE /players
+router.delete("/:id", async (req, res) => {
+  const admin = await checkAdmin(req.user);
+  const { id } = req.params;
 
-router.put("/", function(req, res) {
-  if (req.user && req.user.admin && req.body.name && req.body.teamName) {
-    updatePlayer(req.body.name, req.body.teamName).then(player => {
-      return res.json(player);
+  if (admin && id !== null) {
+    const player = await models.Player.destroy({
+      where: {
+        id
+      }
     });
-  } else if (!req.body.name || !req.body.teamName) {
-    return res.status(400).json({ error: "Wrong Data" });
-  } else {
-    return res.status(401).json({ error: "Unauthorised" });
-  }
-});
 
-router.delete("/:name", function(req, res) {
-  if (req.user && req.user.admin && req.params.name) {
-    deletePlayer(req.params.name).then(player => {
-      return res.json(player);
-    });
-  } else if (!req.params.name) {
+    return res.json(player);
+  } else if (id === null) {
     return res.status(400).json({ error: "Wrong Data" });
   } else {
     return res.status(401).json({ error: "Unauthorised" });

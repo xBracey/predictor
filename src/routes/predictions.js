@@ -3,13 +3,7 @@ import models, { sequelize } from "../models";
 
 const router = Router();
 
-const addPredictions = async (predictions, username) => {
-  predictions.forEach(prediction => (prediction.userUsername = username));
-
-  return await models.Group_Prediction.bulkCreate(predictions, {
-    updateOnDuplicate: ["homeGoals", "awayGoals"]
-  });
-};
+// Helper Functions
 
 const getGroupPredictions = async username => {
   const user = await models.User.findOne({
@@ -35,27 +29,32 @@ const getGroupPredictions = async username => {
   return predictions;
 };
 
-router.get("/group", function(req, res) {
-  if (req.user) {
-    getGroupPredictions(req.user.username).then(returnedPredictions => {
-      return res.json(returnedPredictions);
-    });
-  } else {
-    return res.status(401).json({ error: "Unauthorised" });
-  }
+// Routes
+
+// GET /predictions/group
+router.get("/group", async (req, res) => {
+  const returnedPredictions = await getGroupPredictions(req.user);
+
+  return res.json(returnedPredictions);
 });
 
-router.post("/group", function(req, res) {
+// POST /predictions/group
+router.post("/group", async (req, res) => {
   const { predictions } = req.body;
 
-  if (req.user && predictions) {
-    addPredictions(predictions, req.user.username).then(returnedPredictions => {
-      return res.json(returnedPredictions);
-    });
+  if (predictions) {
+    predictions.forEach(prediction => (prediction.userUsername = req.user));
+
+    const returnedPredictions = await models.Group_Prediction.bulkCreate(
+      predictions,
+      {
+        updateOnDuplicate: ["homeGoals", "awayGoals"]
+      }
+    );
+
+    return res.json(returnedPredictions);
   } else if (!predictions) {
     return res.status(400).json({ error: "Wrong Data" });
-  } else {
-    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 

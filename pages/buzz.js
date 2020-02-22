@@ -36,7 +36,7 @@ class Buzz extends React.Component {
   }
 
   getTodaysMatches() {
-    fetch("api/match/group/today", {
+    fetch("api/match/today", {
       method: "GET"
     }).then(this.setTodaysMatches);
   }

@@ -7,13 +7,7 @@ import { createPredictions } from "../seeds/group_prediction";
 const router = Router();
 const saltRounds = 10;
 
-const createUser = async ({ username, password, email, name }) => {
-  return await models.User.create({ username, password, email, name });
-};
-
-const getAllUsers = async () => {
-  return await models.User.findAll();
-};
+// Helper Functions
 
 export const getUser = async username => {
   return await models.User.findOne({
@@ -23,85 +17,70 @@ export const getUser = async username => {
   });
 };
 
-export const getUserInfo = async username => {
-  return await models.User.findOne({
-    where: {
-      username
-    },
-    attributes: ["username", "name", "admin"]
-  });
+export const checkAdmin = async username => {
+  const user = await getUser(username);
+  return user.admin;
 };
 
-export const getUserByEmail = async email => {
-  return await models.User.findOne({
-    where: {
-      email
-    }
-  });
-};
+// Routes
 
-export const getUsersLeagues = async username => {
-  return await models.User.findOne({
+// GET /user/leagues
+router.get("/leagues", async (req, res) => {
+  const userLeagues = await models.User.findOne({
     where: {
-      username
+      username: req.user
     },
     include: [{ model: models.League }]
   });
-};
 
-export const changeUserName = async (username, name) => {
-  return await models.User.update(
-    { name },
-    {
-      where: {
-        username
+  return res.json(userLeagues.leagues);
+});
+
+// GET /user/me
+router.get("/me", async (req, res) => {
+  const user = await models.User.findOne({
+    where: {
+      username: req.user
+    },
+    attributes: ["username", "name", "admin"]
+  });
+
+  return res.json(user);
+});
+
+// GET /user
+router.get("/", async (req, res) => {
+  const admin = await checkAdmin(req.user);
+
+  if (admin) {
+    const users = await models.User.findAll();
+    return res.json(users);
+  } else {
+    return res.status(401).json({ error: "Unauthorised" });
+  }
+});
+
+// PUT /user
+router.put("/", async (req, res) => {
+  const { name } = req.body;
+
+  if (name) {
+    const user = await models.User.update(
+      { name },
+      {
+        where: {
+          username: req.user
+        }
       }
-    }
-  );
-};
+    );
 
-router.get("/leagues", function(req, res) {
-  if (req.user) {
-    getUsersLeagues(req.user.username).then(userLeagues => {
-      return res.json(userLeagues.leagues);
-    });
-  } else {
-    return res.status(401).json({ error: "Unauthorised" });
-  }
-});
-
-router.get("/me", function(req, res) {
-  if (req.user) {
-    getUserInfo(req.user.username).then(user => {
-      return res.json(user);
-    });
-  } else {
-    return res.status(401).json({ error: "Unauthorised" });
-  }
-});
-
-router.get("/", function(req, res) {
-  if (req.user && req.user.admin) {
-    getAllUsers().then(user => {
-      return res.json(user);
-    });
-  } else {
-    return res.status(401).json({ error: "Unauthorised" });
-  }
-});
-
-router.put("/", function(req, res) {
-  if (req.user && req.body.name) {
-    changeUserName(req.user.username, req.body.name).then(user => {
-      return res.json(user);
-    });
-  } else if (!req.body.name) {
+    return res.json(user);
+  } else if (!name) {
     return res.status(400).json({ error: "Wrong Data" });
-  } else {
-    return res.status(401).json({ error: "Unauthorised" });
   }
 });
 
+// POST /user/register
 router.post("/register", async (req, res) => {
   const { username, password, email, name } = req.body;
 
@@ -110,37 +89,35 @@ router.post("/register", async (req, res) => {
   if (user) {
     return res.status(403).send({ error: "Username already taken" });
   }
-  user = await getUserByEmail(email);
+
+  user = await models.User.findOne({
+    where: {
+      email
+    }
+  });
+
   if (user) {
     return res.status(403).send({ error: "Email already taken" });
   }
   const passwordHash = await bcrypt.hash(password, saltRounds);
 
   user = { username, password: passwordHash, email, name };
-  user = createUser(user);
+  await models.User.create(user);
 
   await createPredictions(username);
 
   return res.json({ username });
 });
 
-router.post("/login", function(req, res, next) {
-  passport.authenticate("local", function(error, user, info) {
-    if (error) {
-      return res.status(403).send({ error });
-    }
-    if (!user) {
-      return res
-        .status(403)
-        .send({ error: "Username or password is incorrect" });
-    }
-    req.logIn(user, function(err) {
-      if (err) {
-        return next(err);
-      }
-      return res.status(200).send({ username: user.username });
+// POST /user/login
+router.post(
+  "/login",
+  passport.authenticate("local", { session: false }),
+  (req, res) => {
+    res.send({
+      token: req.user
     });
-  })(req, res, next);
-});
+  }
+);
 
 export default router;
