@@ -1,6 +1,9 @@
 import express, { Router } from "express";
 import path from "path";
 import next from "next";
+import cookieParser from "cookie-parser";
+import { SECRET } from "../passport";
+import jwt from "jwt-simple";
 
 const router = Router();
 const outDirectoy = __dirname + "/../../out/";
@@ -29,6 +32,7 @@ const userPages = ["/buzz", "/leagues", "/results", "/predictions"];
 nextApp.prepare().then(() => {
   // Serve static files from the React app
   router.use(express.static(path.join(outDirectoy)));
+  router.use(cookieParser());
 
   router.get("/logout", function(req, res) {
     req.logout();
@@ -36,12 +40,27 @@ nextApp.prepare().then(() => {
   });
 
   userPages.forEach(page => {
-    router.get(page, (req, res) => {
-      if (req.user) {
-        nextApp.render(req, res, page);
-      } else {
+    router.use(page, (req, res, next) => {
+      try {
+        const { username, date } = jwt.decode(req.cookies.token, SECRET);
+        const now = Date.now();
+
+        const tokenDate = date + 24 * 60 * 60 * 14 * 1000;
+
+        if (username && tokenDate > now) {
+          req.user = username;
+          next(null, username);
+          return;
+        }
+        res.redirect("/");
+      } catch (error) {
         res.redirect("/");
       }
+    });
+
+    router.get(page, (req, res) => {
+      console.log(req.user);
+      nextApp.render(req, res, page);
     });
   });
 

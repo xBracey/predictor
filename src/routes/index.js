@@ -3,7 +3,7 @@ import passport from "passport";
 const api = Router();
 const apiAuthExceptions = ["/user/login", "/user/register"];
 
-api.use("/", function(req, res, next) {
+api.use(function(req, res, next) {
   passport.authenticate("bearer", { session: false }, function(
     error,
     user,

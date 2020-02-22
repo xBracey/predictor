@@ -3,12 +3,11 @@ import passport from "passport";
 import bcrypt from "bcrypt";
 import { Strategy } from "passport-local";
 import { Strategy as BearerStrategy } from "passport-http-bearer";
-import moment from "moment";
 
 import { getUser } from "./routes/user";
 
-const jwt = require("jwt-simple");
-const SECRET = "pooliecrazy22";
+import jwt from "jwt-simple";
+export const SECRET = "pooliecrazy22";
 
 export function passportConfiguration(app) {
   app.use(passport.initialize());

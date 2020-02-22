@@ -114,6 +114,10 @@ router.post(
   "/login",
   passport.authenticate("local", { session: false }),
   (req, res) => {
+    res.cookie("token", req.user, {
+      httpOnly: true,
+      overwrite: true
+    });
     res.send({
       token: req.user
     });
