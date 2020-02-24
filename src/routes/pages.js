@@ -11,23 +11,24 @@ const outDirectoy = __dirname + "/../../out/";
 const nextApp = next({ dev: process.env.ENV === "development" });
 const handle = nextApp.getRequestHandler();
 
-const pages = [
-  "/index",
-  "/register",
-  "/admin",
-  "/admin/groups",
-  "/admin/groups/add",
-  "/admin/matches",
-  "/admin/matches/edit",
-  "/admin/players",
-  "/admin/players/add",
-  "/admin/players/edit",
-  "/admin/teams",
-  "/admin/teams/add",
-  "/admin/teams/edit"
-];
+const pages = ["/login", "/register"];
 
-const userPages = ["/buzz", "/leagues", "/results", "/predictions"];
+const userPages = ["/index", "/leagues", "/results", "/predictions"];
+
+const adminPages = [
+  "/index",
+  "/groups",
+  "/groups/add",
+  "/players",
+  "/players/add",
+  "/players/edit",
+  "/teams",
+  "/teams/add",
+  "/teams/edit",
+  "/matches",
+  "/matches/add",
+  "/matches/edit"
+];
 
 nextApp.prepare().then(() => {
   // Serve static files from the React app
@@ -35,8 +36,12 @@ nextApp.prepare().then(() => {
   router.use(cookieParser());
 
   router.get("/logout", function(req, res) {
+    res.cookie("token", null, {
+      httpOnly: true,
+      overwrite: true
+    });
     req.logout();
-    res.redirect("/");
+    res.redirect("/login");
   });
 
   userPages.forEach(page => {
@@ -52,14 +57,13 @@ nextApp.prepare().then(() => {
           next(null, username);
           return;
         }
-        res.redirect("/");
+        res.redirect("/login");
       } catch (error) {
-        res.redirect("/");
+        res.redirect("/login");
       }
     });
 
     router.get(page, (req, res) => {
-      console.log(req.user);
       nextApp.render(req, res, page);
     });
   });
@@ -70,12 +74,57 @@ nextApp.prepare().then(() => {
     });
   });
 
-  router.get("/league/:id", (req, res) => {
-    if (req.user) {
-      nextApp.render(req, res, "/league", { id: req.params.id });
-    } else {
-      res.redirect("/");
+  router.use("/league/:id", (req, res, next) => {
+    try {
+      const { username, date } = jwt.decode(req.cookies.token, SECRET);
+      const now = Date.now();
+
+      const tokenDate = date + 24 * 60 * 60 * 14 * 1000;
+
+      if (username && tokenDate > now) {
+        req.user = username;
+        next(null, username);
+      }
+      res.redirect("/login");
+    } catch (error) {
+      res.redirect("/login");
     }
+  });
+
+  router.get("/league/:id", (req, res) => {
+    nextApp.render(req, res, "/league", { id: req.params.id });
+  });
+
+  router.use("/admin/*", async (req, res, next) => {
+    try {
+      const { username, date } = jwt.decode(req.cookies.token, SECRET);
+      const now = Date.now();
+
+      const tokenDate = date + 24 * 60 * 60 * 14 * 1000;
+
+      if (username && tokenDate > now) {
+        req.user = username;
+
+        const admin = await checkAdmin(username);
+
+        if (admin) {
+          next(null, username);
+        } else {
+          res.redirect("/");
+        }
+
+        return;
+      }
+      res.redirect("/login");
+    } catch (error) {
+      res.redirect("/login");
+    }
+  });
+
+  adminPages.forEach(page => {
+    router.get(`admin${page}`, (req, res) => {
+      nextApp.render(req, res, page);
+    });
   });
 
   router.get("*", (req, res) => {

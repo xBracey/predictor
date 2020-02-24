@@ -3,6 +3,7 @@ import Link from "next/link";
 import Head from "next/head";
 
 import Header from "../../../components/header";
+import { apiGetRequest, apiPostRequest } from "../../../lib/api";
 
 class TeamAdd extends React.Component {
   constructor(props) {
@@ -10,47 +11,28 @@ class TeamAdd extends React.Component {
 
     this.state = { id: null, groups: null };
 
-    this.readResponseAsJSON = this.readResponseAsJSON.bind(this);
     this.getGroupsSuccessful = this.getGroupsSuccessful.bind(this);
-    this.getFail = this.getFail.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateTeamSuccessful = this.updateTeamSuccessful.bind(this);
   }
 
-  getGroupsSuccessful(result) {
-    if (result) {
-      this.setState({ groups: result });
-    }
-  }
-
-  getFail(response) {
-    console.log(response);
-  }
-
-  readResponseAsJSON(response) {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw response;
-    }
+  getGroupsSuccessful(response) {
+    response.json(result => {
+      if (result) {
+        this.setState({ groups: result });
+      }
+    });
   }
 
   getGroups() {
-    fetch(`/api/groups`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.getGroupsSuccessful)
-      .catch(this.getFail);
+    apiGetRequest(`/api/groups`, "GET", this.getGroupsSuccessful);
   }
 
-  updateTeamSuccessful(result) {
-    window.alert("Team Successfully Added");
-
-    window.history.back();
+  updateTeamSuccessful(response) {
+    if (response.ok) {
+      window.alert("Team Successfully Added");
+      window.history.back();
+    }
   }
 
   handleSubmit(event) {
@@ -58,16 +40,10 @@ class TeamAdd extends React.Component {
     const name = event.target.name.value;
     const groupNumber = event.target.groupNumber.value;
 
-    fetch(`/api/teams`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ name, groupNumber })
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.updateTeamSuccessful)
-      .catch(this.getFail);
+    apiPostRequest(`/api/groups`, "POST", this.updateTeamSuccessful, {
+      name,
+      groupNumber
+    });
   }
 
   componentDidMount() {

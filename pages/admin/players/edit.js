@@ -4,6 +4,7 @@ import Head from "next/head";
 
 import Header from "../../../components/header";
 import AdminItems from "../../../components/adminItems";
+import { apiGetRequest, apiPostRequest } from "../../../lib/api";
 
 class PlayerEdit extends React.Component {
   constructor(props) {
@@ -11,66 +12,41 @@ class PlayerEdit extends React.Component {
 
     this.state = { id: null, player: null, teams: null };
 
-    this.readResponseAsJSON = this.readResponseAsJSON.bind(this);
     this.getPlayerSuccessful = this.getPlayerSuccessful.bind(this);
     this.getTeamSuccessful = this.getTeamSuccessful.bind(this);
-    this.getFail = this.getFail.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updatePlayerSuccessful = this.updatePlayerSuccessful.bind(this);
   }
 
-  getPlayerSuccessful(result) {
-    if (result) {
-      this.setState({ player: result });
-    }
+  getPlayerSuccessful(response) {
+    response.json(result => {
+      if (result) {
+        this.setState({ player: result });
+      }
+    });
   }
 
-  getTeamSuccessful(result) {
-    if (result) {
-      this.setState({ teams: result });
-    }
-  }
-
-  getFail(response) {
-    console.log(response);
-  }
-
-  readResponseAsJSON(response) {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw response;
-    }
+  getTeamSuccessful(response) {
+    response.json(result => {
+      if (result) {
+        this.setState({ teams: result });
+      }
+    });
   }
 
   getPlayer(id) {
-    fetch(`/api/players/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.getPlayerSuccessful)
-      .catch(this.getFail);
+    apiGetRequest(`/api/players/${id}`, "GET", this.getPlayerSuccessful);
   }
 
   getTeams() {
-    fetch(`/api/teams`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.getTeamSuccessful)
-      .catch(this.getFail);
+    apiGetRequest(`/api/teams`, "GET", this.getTeamSuccessful);
   }
 
-  updatePlayerSuccessful(result) {
-    window.alert("Player Successfully Updated");
-
-    window.history.back();
+  updatePlayerSuccessful(response) {
+    if (response.ok) {
+      window.alert("Player Successfully Updated");
+      window.history.back();
+    }
   }
 
   handleSubmit(event) {
@@ -78,16 +54,10 @@ class PlayerEdit extends React.Component {
     const { name } = this.state.player;
     const teamName = event.target.teamName.value;
 
-    fetch(`/api/players`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ name, teamName })
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.updatePlayerSuccessful)
-      .catch(this.getFail);
+    apiPostRequest(`/api/players`, "PUT", this.updatePlayerSuccessful, {
+      name,
+      teamName
+    });
   }
 
   componentDidMount() {

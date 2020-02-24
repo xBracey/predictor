@@ -1,5 +1,6 @@
 import React from "react";
 import LeagueStandingsSmall from "./leagueStandingsSmall";
+import { apiGetRequest } from "../lib/api";
 
 class AllLeagues extends React.Component {
   constructor(props) {
@@ -17,12 +18,7 @@ class AllLeagues extends React.Component {
   }
 
   getLeagues() {
-    fetch("api/leagues", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(this.setLeagues);
+    apiGetRequest("api/leagues", "GET", this.setLeagues);
   }
 
   setLeagues(response) {
@@ -34,13 +30,16 @@ class AllLeagues extends React.Component {
   }
 
   render() {
-    const leaguesComponent = this.state.leagues.map(league => (
-      <LeagueStandingsSmall
-        displayName={league.info.displayName}
-        standings={league.standings}
-        leagueName={league.info.leagueName}
-      />
-    ));
+    const leaguesComponent = this.state.leagues.map(league => {
+      console.log(league);
+      return (
+        <LeagueStandingsSmall
+          displayName={league.info.info.displayName}
+          standings={league.standings}
+          leagueName={league.info.info.leagueName}
+        />
+      );
+    });
 
     return (
       <div className="leagues-outer">

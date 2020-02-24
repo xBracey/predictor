@@ -1,5 +1,6 @@
 import React from "react";
 import HeadInfo from "./headInfo";
+import { apiGetRequest } from "../lib/api";
 
 class Header extends React.Component {
   constructor(props) {
@@ -46,10 +47,8 @@ class Header extends React.Component {
       }
     ];
 
-    this.readResponseAsJSON = this.readResponseAsJSON.bind(this);
-    this.loginSuccessful = this.loginSuccessful.bind(this);
-    this.loginfail = this.loginfail.bind(this);
-
+    this.readUserResponse = this.readUserResponse.bind(this);
+    this.onLogout = this.onLogout.bind(this);
     this.onMenuClicked = this.onMenuClicked.bind(this);
   }
 
@@ -61,36 +60,23 @@ class Header extends React.Component {
     this.getUser();
   }
 
-  loginSuccessful(result) {
-    this.setState({ user: result });
-  }
-
-  loginfail(response) {
-    console.log(response);
-  }
-
-  readResponseAsJSON(response) {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw response;
-    }
+  readUserResponse(response) {
+    response.json().then(user => {
+      this.setState({ user });
+    });
   }
 
   getUser() {
-    fetch("/api/user/me", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.loginSuccessful)
-      .catch(this.loginfail);
+    apiGetRequest("api/user/me", "GET", this.readUserResponse);
   }
 
   onMenuClicked() {
     this.setState({ menuClicked: !this.state.menuClicked });
+  }
+
+  onLogout() {
+    localStorage.removeItem("token");
+    window.location.href = "/logout";
   }
 
   renderMenu() {
@@ -115,9 +101,9 @@ class Header extends React.Component {
 
     const accountImage =
       this.state.width > 1200 ? (
-        <a href="/logout">
+        <div class="logout" onClick={this.onLogout}>
           <img src="/static/account.svg" />
-        </a>
+        </div>
       ) : null;
 
     return !this.state.menuClicked && this.state.width < 1200 ? null : (

@@ -4,6 +4,7 @@ import Head from "next/head";
 
 import Header from "../../../components/header";
 import AdminItems from "../../../components/adminItems";
+import { apiPostRequest } from "../../../lib/api";
 
 const matchFields = ["id", "groupNumber", "homeTeamName", "awayTeamName"];
 const idField = "id";
@@ -15,38 +16,25 @@ class Matches extends React.Component {
 
     this.onCreate = this.onCreate.bind(this);
     this.createSuccessful = this.createSuccessful.bind(this);
-    this.createFail = this.createFail.bind(this);
-    this.readResponseAsJSON = this.readResponseAsJSON.bind(this);
   }
 
   onCreate() {
-    fetch(`/api/match/group/create`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.createSuccessful)
-      .catch(this.createFail);
+    apiPostRequest(
+      `/api/match/group/create`,
+      "POST",
+      this.createSuccessful,
+      {}
+    );
   }
 
-  createSuccessful(results) {
-    window.location.reload();
-  }
-
-  createFail(response) {
+  createSuccessful(response) {
     response.json().then(result => {
-      window.alert(result.error);
+      if (response.ok) {
+        window.location.reload();
+      } else {
+        window.alert(result.error);
+      }
     });
-  }
-
-  readResponseAsJSON(response) {
-    if (response.ok) {
-      return response.json();
-    } else {
-    }
-    throw response;
   }
 
   render() {

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Head from "next/head";
 
 import Header from "../../../components/header";
+import { apiGetRequest, apiPostRequest } from "../../../lib/api";
 
 class TeamEdit extends React.Component {
   constructor(props) {
@@ -10,66 +11,45 @@ class TeamEdit extends React.Component {
 
     this.state = { id: null, team: null, groups: null };
 
-    this.readResponseAsJSON = this.readResponseAsJSON.bind(this);
     this.getGroupsSuccessful = this.getGroupsSuccessful.bind(this);
     this.getTeamSuccessful = this.getTeamSuccessful.bind(this);
-    this.getFail = this.getFail.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateTeamSuccessful = this.updateTeamSuccessful.bind(this);
   }
 
-  getTeamSuccessful(result) {
-    if (result) {
-      this.setState({ team: result });
-    }
+  getTeamSuccessful(response) {
+    response.json(result => {
+      if (result) {
+        this.setState({ team: result });
+      }
+    });
   }
 
-  getGroupsSuccessful(result) {
-    if (result) {
-      this.setState({ groups: result });
-    }
+  getGroupsSuccessful(response) {
+    response.json(result => {
+      if (result) {
+        this.setState({ groups: result });
+      }
+    });
   }
 
   getFail(response) {
     console.log(response);
   }
 
-  readResponseAsJSON(response) {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw response;
-    }
-  }
-
   getTeam(id) {
-    fetch(`/api/teams/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.getTeamSuccessful)
-      .catch(this.getFail);
+    apiGetRequest(`/api/teams/${id}`, "GET", this.getTeamSuccessful);
   }
 
   getGroups() {
-    fetch(`/api/groups`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.getGroupsSuccessful)
-      .catch(this.getFail);
+    apiGetRequest(`/api/groups`, "GET", this.getGroupsSuccessful);
   }
 
-  updateTeamSuccessful(result) {
-    window.alert("Team Successfully Updated");
-
-    window.history.back();
+  updateTeamSuccessful(response) {
+    if (response.ok) {
+      window.alert("Team Successfully Updated");
+      window.history.back();
+    }
   }
 
   handleSubmit(event) {
@@ -77,16 +57,10 @@ class TeamEdit extends React.Component {
     const { name } = this.state.team;
     const groupNumber = event.target.groupNumber.value;
 
-    fetch(`/api/teams`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ name, groupNumber })
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.updateTeamSuccessful)
-      .catch(this.getFail);
+    apiPostRequest(`/api/teams`, "PUT", this.updateTeamSuccessful, {
+      name,
+      groupNumber
+    });
   }
 
   componentDidMount() {

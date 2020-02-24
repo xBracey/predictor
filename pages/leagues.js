@@ -4,6 +4,7 @@ import Head from "next/head";
 import Header from "../components/header";
 import ResponsePopup from "../components/responsePopup";
 import AllLeagues from "../components/allLeagues";
+import { apiPostRequest } from "../lib/api";
 
 class League extends React.Component {
   constructor(props) {
@@ -44,13 +45,11 @@ class League extends React.Component {
       return;
     }
 
-    fetch("api/leagues/create", {
-      method: "POST",
-      body: JSON.stringify({ displayName, leagueName, password }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(this.addResponse);
+    apiPostRequest("api/leagues/create", "POST", this.addResponse, {
+      displayName,
+      leagueName,
+      password
+    });
   }
 
   onResponseClose() {
@@ -99,13 +98,10 @@ class League extends React.Component {
       return;
     }
 
-    fetch("api/leagues/add", {
-      method: "POST",
-      body: JSON.stringify({ leagueName, password }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(this.joinResponse);
+    apiPostRequest("api/leagues/add", "POST", this.joinResponse, {
+      leagueName,
+      password
+    });
   }
 
   renderAddCreateLeagues() {

@@ -4,6 +4,7 @@ import Head from "next/head";
 
 import Header from "../../../components/header";
 import AdminItems from "../../../components/adminItems";
+import { apiGetRequest, apiPostRequest } from "../../../lib/api";
 
 class PlayerAdd extends React.Component {
   constructor(props) {
@@ -11,47 +12,28 @@ class PlayerAdd extends React.Component {
 
     this.state = { teams: null };
 
-    this.readResponseAsJSON = this.readResponseAsJSON.bind(this);
     this.getTeamSuccessful = this.getTeamSuccessful.bind(this);
-    this.getFail = this.getFail.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updatePlayerSuccessful = this.updatePlayerSuccessful.bind(this);
   }
 
-  getTeamSuccessful(result) {
-    if (result) {
-      this.setState({ teams: result });
-    }
-  }
-
-  getFail(response) {
-    console.log(response);
-  }
-
-  readResponseAsJSON(response) {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw response;
-    }
+  getTeamSuccessful(response) {
+    response.json(result => {
+      if (result) {
+        this.setState({ teams: result });
+      }
+    });
   }
 
   getTeams() {
-    fetch(`/api/teams`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.getTeamSuccessful)
-      .catch(this.getFail);
+    apiGetRequest(`/api/teams`, "GET", this.getTeamSuccessful);
   }
 
-  updatePlayerSuccessful(result) {
-    window.alert("Player Successfully Added");
-
-    window.history.back();
+  updatePlayerSuccessful(response) {
+    if (response.ok) {
+      window.alert("Player Successfully Added");
+      window.history.back();
+    }
   }
 
   handleSubmit(event) {
@@ -60,16 +42,10 @@ class PlayerAdd extends React.Component {
     const name = event.target.name.value;
     const teamName = event.target.teamName.value;
 
-    fetch(`/api/players`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ name, teamName })
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.updatePlayerSuccessful)
-      .catch(this.getFail);
+    apiPostRequest(`/api/players`, "POST", this.updatePlayerSuccessful, {
+      name,
+      teamName
+    });
   }
 
   componentDidMount() {

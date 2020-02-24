@@ -1,108 +1,91 @@
 import React from "react";
 import Head from "next/head";
-import HeadInfo from "../components/headInfo";
 
-import LoginSidebar from "../components/loginSidebar";
-import LoginWrapper from "../components/loginWrapper";
-import ResponsePopup from "../components/responsePopup";
+import Header from "../components/header";
+import LeagueResult from "../components/leagueResult";
+import AllLeagues from "../components/allLeagues";
+import { apiGetRequest } from "../lib/api";
 
-class Home extends React.Component {
+class Buzz extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      error: null,
-      success: null
+      todayMatches: [],
+      username: ""
     };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.loginResponse = this.loginResponse.bind(this);
-    this.onResponseClose = this.onResponseClose.bind(this);
+    this.setTodaysMatches = this.setTodaysMatches.bind(this);
+    this.setUsername = this.setUsername.bind(this);
   }
 
-  loginResponse(response) {
-    response.json().then(responseJson => {
-      if (response.ok) {
-        window.location = "/buzz";
-      } else {
-        this.setState({ error: responseJson.error });
+  componentDidMount() {
+    this.getTodaysMatches();
+    this.getUsername();
+  }
+
+  getUsername() {
+    apiGetRequest("api/user/me", "GET", this.setUsername);
+  }
+
+  setUsername(response) {
+    response.json().then(user => {
+      if (user.error) {
+        window.location = "/login";
       }
+      this.setState({ username: user.username });
     });
   }
 
-  onResponseClose() {
-    this.setState({ error: null, success: null });
+  getTodaysMatches() {
+    apiGetRequest("api/match/today", "GET", this.setTodaysMatches);
   }
 
-  login(username, password) {
-    fetch("api/user/login", {
-      method: "POST",
-      body: JSON.stringify({ username, password }),
-      headers: {
-        "Content-Type": "application/json"
+  setTodaysMatches(response) {
+    response.json().then(todayMatches => {
+      if (todayMatches.error) {
+        window.location = "/login";
       }
-    }).then(this.loginResponse);
+      this.setState({ todayMatches });
+    });
   }
 
-  handleError(name, value) {
-    if (value === "empty") {
-      return <p className="error">{`${name} cannot be empty`}</p>;
-    }
+  renderResults() {
+    return this.state.todayMatches.map(match => (
+      <LeagueResult
+        key={match.id}
+        homeTeam={match.homeTeamName}
+        awayTeam={match.awayTeamName}
+        homeGoals={match.homeGoals}
+        awayGoals={match.awayGoals}
+        light={false}
+      />
+    ));
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    const username = event.target.username.value;
-    const password = event.target.password.value;
-
-    const error = !username.trim()
-      ? "Username cannot be empty"
-      : !password.trim()
-      ? "Password cannot be empty"
-      : null;
-
-    if (!error) {
-      this.login(username, password);
-    }
-
-    this.setState({ error });
+  renderTodayMatches() {
+    return (
+      <div className="results">
+        <div className="inner-container">
+          <h2>{`Welcome ${this.state.username}, here are today's matches:`}</h2>
+          <div className="league-results">{this.renderResults()}</div>
+        </div>
+      </div>
+    );
   }
 
   render() {
     return (
       <div>
         <Head>
-          <title>Home</title>
+          <title>Buzz</title>
         </Head>
-        <HeadInfo />
-        <div className="container">
-          <LoginSidebar />
-          <LoginWrapper
-            bottomLink="/register"
-            bottomText="Don't have an account? Sign Up"
-          >
-            <h1> Login </h1>
-            <form onSubmit={this.handleSubmit}>
-              <div className="input-wrapper">
-                <input type="text" id="username" placeholder="Username" />
-              </div>
-              <div className="input-wrapper">
-                <input type="password" id="password" placeholder="Password" />
-              </div>
-              <input type="submit" value="Login" />
-            </form>
-            <div className="break" />
-            <a href="/forgot-password"> Forgotten Password? </a>
-          </LoginWrapper>
-          <ResponsePopup
-            onClose={this.onResponseClose}
-            error={this.state.error}
-            success={this.state.success}
-          />
-        </div>
+        <Header />
+        <div className="subheader">{this.renderTodayMatches()}</div>
+        <AllLeagues />
       </div>
     );
   }
 }
 
-export default Home;
+export default Buzz;

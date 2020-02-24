@@ -3,6 +3,7 @@ import Head from "next/head";
 
 import Header from "../components/header";
 import LeagueStandings from "../components/leagueStandings";
+import { apiGetRequest } from "../lib/api";
 
 class League extends React.Component {
   static getInitialProps({ query: { id } }) {
@@ -27,9 +28,11 @@ class League extends React.Component {
   }
 
   getStandings() {
-    fetch(`/api/leagues/standings/${this.props.leagueId}`, {
-      method: "GET"
-    }).then(this.setStandings);
+    apiGetRequest(
+      `/api/leagues/standings/${this.props.leagueId}`,
+      "GET",
+      this.setStandings
+    );
   }
 
   setStandings(response) {
@@ -43,9 +46,11 @@ class League extends React.Component {
   }
 
   getLeagueInfo() {
-    fetch(`/api/leagues/info/${this.props.leagueId}`, {
-      method: "GET"
-    }).then(this.setLeagueInfo);
+    apiGetRequest(
+      `/api/leagues/info/${this.props.leagueId}`,
+      "GET",
+      this.setLeagueInfo
+    );
   }
 
   setLeagueInfo(response) {

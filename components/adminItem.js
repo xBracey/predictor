@@ -1,6 +1,8 @@
 import React from "react";
 import Link from "next/link";
 
+import { apiGetRequest } from "../lib/api";
+
 class AdminItem extends React.Component {
   constructor(props) {
     super(props);
@@ -8,25 +10,11 @@ class AdminItem extends React.Component {
     this.onEdit = this.onEdit.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.getSuccessful = this.getSuccessful.bind(this);
-    this.getFail = this.getFail.bind(this);
-    this.readResponseAsJSON = this.readResponseAsJSON.bind(this);
   }
 
-  getSuccessful(result) {
-    if (result) {
-      window.location.reload();
-    }
-  }
-
-  getFail(response) {
-    console.log(response);
-  }
-
-  readResponseAsJSON(response) {
+  getSuccessful(response) {
     if (response.ok) {
-      return response.json();
-    } else {
-      throw response;
+      window.location.reload();
     }
   }
 
@@ -44,15 +32,11 @@ class AdminItem extends React.Component {
     );
 
     if (confirm) {
-      fetch(`/api/${this.props.apiPrefix}/${item[idField]}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-        .then(this.readResponseAsJSON)
-        .then(this.getSuccessful)
-        .catch(this.getFail);
+      apiGetRequest(
+        `/api/${this.props.apiPrefix}/${item[idField]}`,
+        "DELETE",
+        this.getSuccessful
+      );
     }
   }
 

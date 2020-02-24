@@ -15,16 +15,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/admin/*", (req, res, next) => {
-  if (req.user && req.user.admin) {
-    next();
-  } else if (!req.user) {
-    return res.redirect("/");
-  } else {
-    return res.redirect("/buzz");
-  }
-});
-
 app.use("/api", routes.api);
 app.use("/", routes.pages);
 

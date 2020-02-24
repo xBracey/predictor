@@ -6,6 +6,7 @@ import LeagueTable from "../components/leagueTable";
 import LeaguePrediction from "../components/leaguePrediction";
 import { groupStandings } from "../lib/group";
 import ResponsePopup from "../components/responsePopup";
+import { apiGetRequest, apiPostRequest } from "../lib/api";
 
 const groups = ["A", "B", "C", "D", "E", "F"];
 
@@ -48,9 +49,7 @@ class Predictions extends React.Component {
   }
 
   getResults() {
-    fetch("api/predictions/group", {
-      method: "GET"
-    }).then(this.setResults);
+    apiGetRequest("api/predictions/group", "GET", this.setResults);
   }
 
   setResults(response) {
@@ -90,13 +89,9 @@ class Predictions extends React.Component {
       prediction.groupMatchId = prediction.id;
     });
 
-    fetch("api/predictions/group", {
-      method: "POST",
-      body: JSON.stringify({ predictions }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(this.predictionResponse);
+    apiPostRequest("api/predictions/group", "POST", this.predictionResponse, {
+      predictions
+    });
   }
 
   renderResults(matches, light) {

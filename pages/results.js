@@ -5,6 +5,7 @@ import Header from "../components/header";
 import LeagueTable from "../components/leagueTable";
 import LeagueResult from "../components/leagueResult";
 import { groupStandings } from "../lib/group";
+import { apiGetRequest } from "../lib/api";
 
 const groups = ["A", "B", "C", "D", "E", "F"];
 
@@ -22,9 +23,7 @@ class Results extends React.Component {
   }
 
   getResults() {
-    fetch("api/match/group", {
-      method: "GET"
-    }).then(this.setResults);
+    apiGetRequest("api/match/group", "GET", this.setResults);
   }
 
   setResults(response) {

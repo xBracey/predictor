@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import Header from "../../../components/header";
 import AdminItems from "../../../components/adminItems";
 import "react-datepicker/dist/react-datepicker.css";
+import { apiGetRequest, apiPostRequest } from "../../../lib/api";
 
 class MatchesEdit extends React.Component {
   constructor(props) {
@@ -13,9 +14,7 @@ class MatchesEdit extends React.Component {
 
     this.state = { id: null, match: null, date: Date.now() };
 
-    this.readResponseAsJSON = this.readResponseAsJSON.bind(this);
     this.getMatchSuccessful = this.getMatchSuccessful.bind(this);
-    this.getFail = this.getFail.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateMatchSuccessful = this.updateMatchSuccessful.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
@@ -37,43 +36,26 @@ class MatchesEdit extends React.Component {
     this.setState({ match });
   }
 
-  getMatchSuccessful(result) {
-    if (result) {
-      const date = new Date(result.date);
-
-      console.log(date);
-      this.setState({ match: result, date });
-    }
-  }
-
-  getFail(response) {
-    console.log(response);
-  }
-
-  readResponseAsJSON(response) {
+  getMatchSuccessful(response) {
     if (response.ok) {
-      return response.json();
-    } else {
-      throw response;
+      response.json().then(result => {
+        if (result) {
+          const date = new Date(result.date);
+          this.setState({ match: result, date });
+        }
+      });
     }
   }
 
   getMatch(id) {
-    fetch(`/api/match/group/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.getMatchSuccessful)
-      .catch(this.getFail);
+    apiGetRequest(`/api/match/group/${id}`, "GET", this.getMatchSuccessful);
   }
 
-  updateMatchSuccessful(result) {
-    window.alert("Match Successfully Updated");
-
-    window.history.back();
+  updateMatchSuccessful(response) {
+    if (response.ok) {
+      window.alert("Match Successfully Updated");
+      window.history.back();
+    }
   }
 
   handleDateChange(date) {
@@ -91,29 +73,20 @@ class MatchesEdit extends React.Component {
       : null;
     const date = event.target.date.value;
 
-    fetch(`/api/match/group`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        id,
-        homeTeamName,
-        awayTeamName,
-        groupNumber,
-        homeGoals,
-        awayGoals,
-        date: new Date(
-          date
-            .split("/")
-            .reverse()
-            .join("/")
-        )
-      })
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.updateMatchSuccessful)
-      .catch(this.getFail);
+    apiPostRequest(`/api/match/group/`, "PUT", this.updateMatchSuccessful, {
+      id,
+      homeTeamName,
+      awayTeamName,
+      groupNumber,
+      homeGoals,
+      awayGoals,
+      date: new Date(
+        date
+          .split("/")
+          .reverse()
+          .join("/")
+      )
+    });
   }
 
   componentDidMount() {

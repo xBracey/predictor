@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 import AdminItem from "./adminItem";
+import { apiGetRequest } from "../lib/api";
 
 class AdminItems extends React.Component {
   constructor(props) {
@@ -14,8 +15,6 @@ class AdminItems extends React.Component {
     };
 
     this.getSuccessful = this.getSuccessful.bind(this);
-    this.getFail = this.getFail.bind(this);
-    this.readResponseAsJSON = this.readResponseAsJSON.bind(this);
     this.onFilterSelect = this.onFilterSelect.bind(this);
   }
 
@@ -23,37 +22,19 @@ class AdminItems extends React.Component {
     this.apiCall();
   }
 
-  getSuccessful(results) {
-    const itemFilters = results.map(result => result[this.props.filterName]);
+  getSuccessful(response) {
+    response.json().then(results => {
+      const itemFilters = results.map(result => result[this.props.filterName]);
 
-    this.setState({
-      items: results,
-      itemFilters: Array.from(new Set(itemFilters)).sort()
+      this.setState({
+        items: results,
+        itemFilters: Array.from(new Set(itemFilters)).sort()
+      });
     });
   }
 
-  getFail(response) {
-    console.log(response);
-  }
-
-  readResponseAsJSON(response) {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw response;
-    }
-  }
-
   apiCall() {
-    fetch(`/api/${this.props.apiPrefix}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(this.readResponseAsJSON)
-      .then(this.getSuccessful)
-      .catch(this.getFail);
+    apiGetRequest(`/api/${this.props.apiPrefix}`, "GET", this.getSuccessful);
   }
 
   onFilterSelect(event) {
@@ -78,8 +59,6 @@ class AdminItems extends React.Component {
   }
 
   renderFilter() {
-    console.log(this.state.itemFilters);
-
     if (!this.state.itemFilters || !this.props.filterName) {
       return;
     }
