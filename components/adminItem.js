@@ -43,7 +43,7 @@ class AdminItem extends React.Component {
   renderFields() {
     const { fields, item } = this.props;
 
-    return fields.map(field => <td>{item[field]}</td>);
+    return fields.map(field => <td key={field}>{item[field]}</td>);
   }
 
   renderEdit() {

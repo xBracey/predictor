@@ -17,7 +17,7 @@ class TeamAdd extends React.Component {
   }
 
   getGroupsSuccessful(response) {
-    response.json(result => {
+    response.json().then(result => {
       if (result) {
         this.setState({ groups: result });
       }
@@ -40,7 +40,7 @@ class TeamAdd extends React.Component {
     const name = event.target.name.value;
     const groupNumber = event.target.groupNumber.value;
 
-    apiPostRequest(`/api/groups`, "POST", this.updateTeamSuccessful, {
+    apiPostRequest(`/api/teams`, "POST", this.updateTeamSuccessful, {
       name,
       groupNumber
     });
@@ -54,7 +54,9 @@ class TeamAdd extends React.Component {
     const groups = !this.state.groups
       ? null
       : this.state.groups.map(group => (
-          <option value={group.number}>{group.number}</option>
+          <option key={group.number} value={group.number}>
+            {group.number}
+          </option>
         ));
 
     return (

@@ -18,7 +18,7 @@ class TeamEdit extends React.Component {
   }
 
   getTeamSuccessful(response) {
-    response.json(result => {
+    response.json().then(result => {
       if (result) {
         this.setState({ team: result });
       }
@@ -26,7 +26,7 @@ class TeamEdit extends React.Component {
   }
 
   getGroupsSuccessful(response) {
-    response.json(result => {
+    response.json().then(result => {
       if (result) {
         this.setState({ groups: result });
       }

@@ -18,7 +18,7 @@ class PlayerAdd extends React.Component {
   }
 
   getTeamSuccessful(response) {
-    response.json(result => {
+    response.json().then(result => {
       if (result) {
         this.setState({ teams: result });
       }
@@ -56,7 +56,9 @@ class PlayerAdd extends React.Component {
     const teams = !this.state.teams
       ? null
       : this.state.teams.map(team => (
-          <option value={team.name}>{team.name}</option>
+          <option key={team.name} value={team.name}>
+            {team.name}
+          </option>
         ));
 
     return (

@@ -16,18 +16,19 @@ class PlayerEdit extends React.Component {
     this.getTeamSuccessful = this.getTeamSuccessful.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updatePlayerSuccessful = this.updatePlayerSuccessful.bind(this);
+    this.onNameChange = this.onNameChange.bind(this);
   }
 
   getPlayerSuccessful(response) {
-    response.json(result => {
+    response.json().then(result => {
       if (result) {
-        this.setState({ player: result });
+        this.setState({ player: result, name: result.name });
       }
     });
   }
 
   getTeamSuccessful(response) {
-    response.json(result => {
+    response.json().then(result => {
       if (result) {
         this.setState({ teams: result });
       }
@@ -49,12 +50,18 @@ class PlayerEdit extends React.Component {
     }
   }
 
+  onNameChange(event) {
+    this.setState({ name: event.target.value });
+  }
+
   handleSubmit(event) {
     event.preventDefault();
-    const { name } = this.state.player;
+    const { id } = this.state.player;
+    const { name } = this.state;
     const teamName = event.target.teamName.value;
 
     apiPostRequest(`/api/players`, "PUT", this.updatePlayerSuccessful, {
+      id,
       name,
       teamName
     });
@@ -73,15 +80,13 @@ class PlayerEdit extends React.Component {
   }
 
   render() {
-    const name = this.state.player ? this.state.player.name : "";
-
     const teams =
       !this.state.teams || !this.state.player
         ? null
         : this.state.teams.map(team => {
             const selected = team.name === this.state.player.teamName;
             return (
-              <option value={team.name} selected={selected}>
+              <option key={team.name} value={team.name} selected={selected}>
                 {team.name}
               </option>
             );
@@ -95,8 +100,13 @@ class PlayerEdit extends React.Component {
         <Header isAdmin={false} admin={true} />
         <div className="page-outer-container">
           <div className="page-inner-container add-edit-container">
-            <h1> {name} </h1>
             <form onSubmit={this.handleSubmit}>
+              <input
+                type="text"
+                id="name"
+                value={this.state.name}
+                onChange={this.onNameChange}
+              />
               <select id="teamName">{teams}</select>
               <input type="submit" value="Save" />
             </form>

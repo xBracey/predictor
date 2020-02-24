@@ -67,7 +67,7 @@ class Header extends React.Component {
   }
 
   getUser() {
-    apiGetRequest("api/user/me", "GET", this.readUserResponse);
+    apiGetRequest("/api/user/me", "GET", this.readUserResponse);
   }
 
   onMenuClicked() {
@@ -93,15 +93,15 @@ class Header extends React.Component {
     });
 
     const adminMenu =
-      this.state.user && this.state.user.admin ? (
+      this.state.user && this.state.user.admin && !this.props.admin ? (
         <div className="singleMenu" key={"Admin"}>
-          <a href="/admin/players">Admin</a>
+          <a href="/admin/matches">Admin</a>
         </div>
       ) : null;
 
     const accountImage =
       this.state.width > 1200 ? (
-        <div class="logout" onClick={this.onLogout}>
+        <div className="logout" onClick={this.onLogout}>
           <img src="/static/account.svg" />
         </div>
       ) : null;

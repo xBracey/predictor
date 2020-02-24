@@ -4,6 +4,7 @@ import next from "next";
 import cookieParser from "cookie-parser";
 import { SECRET } from "../passport";
 import jwt from "jwt-simple";
+import { checkAdmin } from "./user";
 
 const router = Router();
 const outDirectoy = __dirname + "/../../out/";
@@ -13,10 +14,10 @@ const handle = nextApp.getRequestHandler();
 
 const pages = ["/login", "/register"];
 
-const userPages = ["/index", "/leagues", "/results", "/predictions"];
+const userPages = ["/leagues", "/results", "/predictions"];
 
 const adminPages = [
-  "/index",
+  "/",
   "/groups",
   "/groups/add",
   "/players",
@@ -29,6 +30,24 @@ const adminPages = [
   "/matches/add",
   "/matches/edit"
 ];
+
+const authentication = (req, res, next) => {
+  try {
+    const { username, date } = jwt.decode(req.cookies.token, SECRET);
+    const now = Date.now();
+
+    const tokenDate = date + 24 * 60 * 60 * 14 * 1000;
+
+    if (username && tokenDate > now) {
+      req.user = username;
+      next(null, username);
+      return;
+    }
+    res.redirect("/login");
+  } catch (error) {
+    res.redirect("/login");
+  }
+};
 
 nextApp.prepare().then(() => {
   // Serve static files from the React app
@@ -44,24 +63,20 @@ nextApp.prepare().then(() => {
     res.redirect("/login");
   });
 
+  router.use("/", (req, res, next) => {
+    if (req.url === "/") {
+      authentication(req, res, next);
+    } else {
+      next();
+    }
+  });
+
+  router.get("/", (req, res) => {
+    nextApp.render(req, res, "/buzz");
+  });
+
   userPages.forEach(page => {
-    router.use(page, (req, res, next) => {
-      try {
-        const { username, date } = jwt.decode(req.cookies.token, SECRET);
-        const now = Date.now();
-
-        const tokenDate = date + 24 * 60 * 60 * 14 * 1000;
-
-        if (username && tokenDate > now) {
-          req.user = username;
-          next(null, username);
-          return;
-        }
-        res.redirect("/login");
-      } catch (error) {
-        res.redirect("/login");
-      }
-    });
+    router.use(page, authentication);
 
     router.get(page, (req, res) => {
       nextApp.render(req, res, page);
@@ -74,56 +89,27 @@ nextApp.prepare().then(() => {
     });
   });
 
-  router.use("/league/:id", (req, res, next) => {
-    try {
-      const { username, date } = jwt.decode(req.cookies.token, SECRET);
-      const now = Date.now();
-
-      const tokenDate = date + 24 * 60 * 60 * 14 * 1000;
-
-      if (username && tokenDate > now) {
-        req.user = username;
-        next(null, username);
-      }
-      res.redirect("/login");
-    } catch (error) {
-      res.redirect("/login");
-    }
-  });
+  router.use("/league/:id", authentication);
 
   router.get("/league/:id", (req, res) => {
     nextApp.render(req, res, "/league", { id: req.params.id });
   });
 
-  router.use("/admin/*", async (req, res, next) => {
-    try {
-      const { username, date } = jwt.decode(req.cookies.token, SECRET);
-      const now = Date.now();
+  router.use("/admin", authentication);
 
-      const tokenDate = date + 24 * 60 * 60 * 14 * 1000;
+  router.use("/admin", async (req, res, next) => {
+    const admin = await checkAdmin(req.user);
 
-      if (username && tokenDate > now) {
-        req.user = username;
-
-        const admin = await checkAdmin(username);
-
-        if (admin) {
-          next(null, username);
-        } else {
-          res.redirect("/");
-        }
-
-        return;
-      }
-      res.redirect("/login");
-    } catch (error) {
-      res.redirect("/login");
+    if (admin) {
+      next(null, req.user);
+    } else {
+      res.redirect("/");
     }
   });
 
   adminPages.forEach(page => {
-    router.get(`admin${page}`, (req, res) => {
-      nextApp.render(req, res, page);
+    router.get(`/admin${page}`, (req, res) => {
+      nextApp.render(req, res, `/admin${page}`);
     });
   });
 

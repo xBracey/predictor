@@ -31,12 +31,12 @@ class AllLeagues extends React.Component {
 
   render() {
     const leaguesComponent = this.state.leagues.map(league => {
-      console.log(league);
       return (
         <LeagueStandingsSmall
           displayName={league.info.info.displayName}
           standings={league.standings}
           leagueName={league.info.info.leagueName}
+          key={league.info.info.leagueName}
         />
       );
     });

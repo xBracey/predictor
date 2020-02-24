@@ -42,18 +42,22 @@ class AdminItems extends React.Component {
   }
 
   renderTable() {
-    const headerComponent = this.props.fields.map(field => <th>{field}</th>);
+    const headerComponent = this.props.fields.map(field => (
+      <th key={field}>{field}</th>
+    ));
 
     const editComponent = this.props.noEdit ? null : <th>Edit</th>;
 
     return (
       <table>
-        <tr>
-          {headerComponent}
-          {editComponent}
-          <th>Delete</th>
-        </tr>
-        {this.renderItems()}
+        <thead>
+          <tr>
+            {headerComponent}
+            {editComponent}
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>{this.renderItems()}</tbody>
       </table>
     );
   }
@@ -64,7 +68,9 @@ class AdminItems extends React.Component {
     }
 
     const filterComponent = this.state.itemFilters.map(singleFilter => (
-      <option value={singleFilter}>{singleFilter}</option>
+      <option key={singleFilter} value={singleFilter}>
+        {singleFilter}
+      </option>
     ));
 
     return (
@@ -99,6 +105,7 @@ class AdminItems extends React.Component {
               fields={fields}
               idField={idField}
               noEdit={noEdit}
+              key={item[idField]}
             />
           ))
       : null;

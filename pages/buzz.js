@@ -25,7 +25,7 @@ class Buzz extends React.Component {
   }
 
   getUsername() {
-    apiGetRequest("api/user/me", "GET", this.setUsername);
+    apiGetRequest("/api/user/me", "GET", this.setUsername);
   }
 
   setUsername(response) {
