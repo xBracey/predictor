@@ -1,752 +1,1109 @@
 {
 	"info": {
-		"_postman_id": "aa114ef6-a6fe-4fcf-8253-b105f93c051b",
+		"_postman_id": "34348ffb-db9a-4dc4-bea3-a271d9a1fa4d",
 		"name": "Predictor",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Login",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"username\": \"{{username}}\",\n\t\"password\": \"{{password}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/api/user/login",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"user",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET User Me",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/api/user/me",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"user",
-						"me"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET user",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"predictions\": [\n\t\t{\n\t\t\t\"userUsername\": \"xbracey\",\n\t\t    \"groupMatchId\": \"1\",\n\t\t    \"homeGoals\": \"2\",\n\t\t    \"awayGoals\": \"2\"\n\t\t},\n\t\t{\n\t\t\t\"userUsername\": \"xbracey\",\n\t\t    \"groupMatchId\": \"2\",\n\t\t    \"homeGoals\": \"3\",\n\t\t    \"awayGoals\": \"3\"\n\t\t}\n\t]\n}"
-				},
-				"url": {
-					"raw": "{{host}}/api/predictions/group",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"predictions",
-						"group"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "PUT User",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InhCcmFjZXkiLCJpYXQiOjE1NjYyODMzMzl9.Waz1F-KcTPTSIRLLPdADbHo15uWMfFOXpQM4NkuqmGg",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/x-www-form-urlencoded",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "username",
-							"value": "xBracey2",
-							"type": "text",
-							"disabled": true
+			"name": "User",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
 						},
-						{
-							"key": "password",
-							"value": "Tommy.B22",
-							"type": "text",
-							"disabled": true
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "email",
-							"value": "tommy-brace-22@hotmail.com",
-							"type": "text",
-							"disabled": true
+						"url": {
+							"raw": "{{host}}/api/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET User Me",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/user/me",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "tommy-brace-22@hotmail.com",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Tom",
+									"type": "text"
+								}
+							]
 						},
-						{
-							"key": "name",
-							"value": "Tom",
-							"type": "text"
+						"url": {
+							"raw": "{{host}}/api/user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{host}}/api/user",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"user"
-					],
-					"query": [
-						{
-							"key": "",
-							"value": "",
-							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "POST User Register",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "username",
-							"value": "xBracey3",
-							"type": "text"
+				{
+					"name": "POST User Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "xBracey24",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "TestPassword",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "tommybrace+tes7@hotmail.co.uk",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Tom B",
+									"type": "text"
+								}
+							]
 						},
-						{
-							"key": "password",
-							"value": "Tommy.B2",
-							"type": "text"
+						"url": {
+							"raw": "{{host}}/api/user/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET User Leagues",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/user/leagues",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"leagues"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Teams",
+			"item": [
+				{
+					"name": "GET Teams",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/teams",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Teams",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "England3",
+									"type": "text"
+								},
+								{
+									"key": "groupNumber",
+									"value": "A",
+									"type": "text"
+								}
+							]
 						},
-						{
-							"key": "email",
-							"value": "tommybrace@hotmail.co.ukf",
-							"type": "text"
+						"url": {
+							"raw": "{{host}}/api/teams",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Team",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "England2",
+									"type": "text"
+								},
+								{
+									"key": "groupNumber",
+									"value": "B",
+									"type": "text"
+								}
+							]
 						},
-						{
-							"key": "name",
-							"value": "Tommy Brace",
-							"type": "text"
+						"url": {
+							"raw": "{{host}}/api/teams",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"teams"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{host}}/api/user/register",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"user",
-						"register"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "POST Create League",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"leagueName\": \"brace2\",\n    \"password\": \"1234\",\n    \"displayName\": \"Brace's Predictor\"\n}"
-				},
-				"url": {
-					"raw": "{{host}}/api/leagues/create",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"leagues",
-						"create"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "POST League Rule",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"leagueName\": \"brace\",\n    \"ruleId\": \"1\",\n    \"points\": \"50\"\n}"
-				},
-				"url": {
-					"raw": "{{host}}/api/leagues/add/rule",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"leagues",
-						"add",
-						"rule"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "POST Predictions",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"predictions\": [\n\t\t{\n\t\t\t\"userUsername\": \"xbracey\",\n\t\t    \"groupMatchId\": \"1\",\n\t\t    \"homeGoals\": \"2\",\n\t\t    \"awayGoals\": \"2\"\n\t\t},\n\t\t{\n\t\t\t\"userUsername\": \"xbracey\",\n\t\t    \"groupMatchId\": \"2\",\n\t\t    \"homeGoals\": \"3\",\n\t\t    \"awayGoals\": \"3\"\n\t\t}\n\t]\n}"
-				},
-				"url": {
-					"raw": "{{host}}/api/predictions/group",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"predictions",
-						"group"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET User Leagues",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/api/user/leagues",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"user",
-						"leagues"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "POST Add League",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"leagueName\": \"brace2\",\n    \"password\": \"1234\"\n}"
-				},
-				"url": {
-					"raw": "{{host}}/api/leagues/add",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"leagues",
-						"add"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET Groups",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/api/groups",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"groups"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET Group Standings",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/api/groups/standings/A",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"groups",
-						"standings",
-						"A"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "DELETE Groups",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/api/groups/Y",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"groups",
-						"Y"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "POST Groups",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"number\": \"Y\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "DELETE Team",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/teams/England2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"teams",
+								"England2"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{host}}/api/groups",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"groups"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET Match Group",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/api/match/group",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"match",
-						"group"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET League Standings",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/api/leagues/standings/brace",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"leagues",
-						"standings",
-						"brace"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET Leagues",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/api/leagues",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"leagues"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET League Info",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/api/leagues/info/brace",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"leagues",
-						"info",
-						"brace"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "POST Match Group",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"date\": \"2020-01-15 17:18:37\",\n    \"groupNumber\": \"A\",\n    \"homeTeamName\": \"Austria\",\n    \"awayTeamName\": \"England\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "GET Team Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/teams/England",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"teams",
+								"England"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/api/match/group",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"match",
-						"group"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "POST Predictions",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"predictions\": [\n    \t{\n    \t\t\"homeGoals\": null,\n    \t\t\"awayGoals\": null,\n    \t\t\"groupMatchId\": \"1\"\n    \t}\n    ]\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Predictions",
+			"item": [
+				{
+					"name": "POST Predictions",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"predictions\": [\n    \t{\n    \t\t\"homeGoals\": null,\n    \t\t\"awayGoals\": null,\n    \t\t\"groupMatchId\": \"1\"\n    \t}\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/predictions/group",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"predictions",
+								"group"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{host}}/api/predictions/group",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"predictions",
-						"group"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "POST Match Knockout",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"date\": \"2020-01-15 17:18:37\",\n    \"homeTeamName\": \"Austria\",\n    \"awayTeamName\": \"England\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "GET Predictions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/predictions/group",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"predictions",
+								"group"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/api/match/knockout",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"match",
-						"knockout"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "PUT Match Group",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"id\": \"1\",\n    \"date\": \"2020-01-15 17:18:37\",\n    \"groupNumber\": \"A\",\n    \"homeTeamName\": \"Austria\",\n    \"awayTeamName\": \"England\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Players",
+			"item": [
+				{
+					"name": "GET Players",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/players",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"players"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{host}}/api/match/group",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"match",
-						"group"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "PUT Match Knockout",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"id\": \"1\",\n    \"date\": \"2020-01-15 17:18:37\",\n    \"groupNumber\": \"A\",\n    \"homeTeamName\": \"Austria\",\n    \"awayTeamName\": \"England\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "POST Player",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Tom Brace",
+									"type": "text"
+								},
+								{
+									"key": "teamName",
+									"value": "England",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/api/players",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"players"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{host}}/api/match/knockout",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"match",
-						"knockout"
-					]
+				{
+					"name": "PUT Player",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Tom Brace",
+									"type": "text"
+								},
+								{
+									"key": "teamName",
+									"value": "Englande",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "11",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/api/players",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"players"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Player",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/players/10",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"players",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Player",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/players/Harry Kane",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"players",
+								"Harry Kane"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "GET Match Group ID",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/api/match/group",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"match",
-						"group"
-					]
+			"name": "Group",
+			"item": [
+				{
+					"name": "GET Groups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/groups",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Groups",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "number",
+									"value": "Y",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/groups",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Groups",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/groups/Y",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"groups",
+								"Y"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "GET Match Knockout",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/api/match/knockout",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"match",
-						"knockout"
-					]
+			"name": "Match",
+			"item": [
+				{
+					"name": "GET Match Group",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/match/group",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"match",
+								"group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Match Knockout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/match/knockout",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"match",
+								"knockout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Match Group ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/match/group/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"match",
+								"group",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Match Group ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/match/group/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"match",
+								"group",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Match Knockout ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/match/knockout/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"match",
+								"knockout",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Match Knockout ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/match/knockout/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"match",
+								"knockout",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Match Group",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"2020-01-15 17:18:37\",\n    \"groupNumber\": \"A\",\n    \"homeTeamName\": \"Austria\",\n    \"awayTeamName\": \"England\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/match/group",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"match",
+								"group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Match Knockout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"2020-01-15 17:18:37\",\n    \"homeTeamName\": \"Austria\",\n    \"awayTeamName\": \"England\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/match/knockout",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"match",
+								"knockout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Match Group",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"1\",\n    \"date\": \"2020-01-15 17:18:37\",\n    \"groupNumber\": \"A\",\n    \"homeTeamName\": \"Austria\",\n    \"awayTeamName\": \"England\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/match/group",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"match",
+								"group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Match Knockout",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"1\",\n    \"date\": \"2020-01-15 17:18:37\",\n    \"groupNumber\": \"A\",\n    \"homeTeamName\": \"Austria\",\n    \"awayTeamName\": \"England\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/match/knockout",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"match",
+								"knockout"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "GET Match Knockout ID",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/api/match/knockout/1",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"match",
-						"knockout",
-						"1"
-					]
+			"name": "Leagues",
+			"item": [
+				{
+					"name": "POST Create League",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"leagueName\": \"brace13\",\n    \"password\": \"1234\",\n    \"displayName\": \"Brace's Predictor\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/leagues/create",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"leagues",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Add League",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"leagueName\": \"brace11\",\n    \"password\": \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/leagues/add",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"leagues",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET League Standings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/leagues/standings/brace",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"leagues",
+								"standings",
+								"brace"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET League Info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/leagues/info/brace",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"leagues",
+								"info",
+								"brace"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Leagues",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/leagues",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"leagues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST League Rule",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"leagueName\": \"brace\",\n    \"ruleId\": \"1\",\n    \"points\": \"500\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/leagues/add/rule",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"leagues",
+								"add",
+								"rule"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -771,7 +1128,7 @@
 	],
 	"variable": [
 		{
-			"id": "7aeee818-7b0f-4f68-967b-19e9717e9c99",
+			"id": "733f3f94-55ef-4d9d-af31-a3e29c024cfa",
 			"key": "host",
 			"value": "http://localhost:3000",
 			"type": "string"
