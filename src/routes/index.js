@@ -1,7 +1,14 @@
 import { Router } from "express";
 import passport from "passport";
 const api = Router();
-const apiAuthExceptions = ["/user/login", "/user/register"];
+const apiAuthExceptions = [
+  "/user/login",
+  "/user/register",
+  "user/email-verify",
+  "user/password-verify",
+  "user/reset-password",
+  "user/forgot-password"
+];
 
 api.use(function(req, res, next) {
   passport.authenticate("bearer", { session: false }, function(

@@ -24,11 +24,17 @@ const user = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
-    verification_hash: {
+    verification_token: {
       type: DataTypes.STRING
     },
-    forgot_password_hash: {
+    verification_expiry: {
+      type: DataTypes.DATE
+    },
+    forgot_password_token: {
       type: DataTypes.STRING
+    },
+    forgot_password_expiry: {
+      type: DataTypes.DATE
     }
   });
 
