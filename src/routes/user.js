@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import models, { sequelize } from "../models";
 import passport from "passport";
 import { createPredictions } from "../seeds/group_prediction";
+import { sendMail } from "../../lib/email";
 
 const router = Router();
 const saltRounds = 10;
@@ -105,6 +106,13 @@ router.post("/register", async (req, res) => {
   await models.User.create(user);
 
   await createPredictions(username);
+
+  sendMail({
+    from: "hello@footybee.com",
+    to: email,
+    subject: "Sending Email using Node.js",
+    text: "That was easy!"
+  });
 
   return res.json({ username });
 });
