@@ -1,10 +1,11 @@
 import { Router } from "express";
 import bcrypt from "bcrypt";
 import models, { sequelize } from "../models";
-import passport from "passport";
 import { createPredictions } from "../seeds/group_prediction";
 import { sendMail } from "../../lib/email";
 import crypto from "crypto";
+import jwt from "jwt-simple";
+import { SECRET } from "../passport";
 
 const router = Router();
 const saltRounds = 10;
@@ -15,6 +16,14 @@ export const getUser = async username => {
   return await models.User.findOne({
     where: {
       username
+    }
+  });
+};
+
+export const getUserFromEmail = async email => {
+  return await models.User.findOne({
+    where: {
+      email
     }
   });
 };
@@ -92,11 +101,7 @@ router.post("/register", async (req, res) => {
     return res.status(403).send({ error: "Username already taken" });
   }
 
-  user = await models.User.findOne({
-    where: {
-      email
-    }
-  });
+  user = await getUserFromEmail(email);
 
   if (user) {
     return res.status(403).send({ error: "Email already taken" });
@@ -127,23 +132,49 @@ router.post("/register", async (req, res) => {
     text: `Verify your email here ${req.protocol}://${host}/verify?token=${verification_token}`
   });
 
-  return res.json({ username });
+  return res.json({
+    success: [
+      "Your account has been created succesfully.",
+      "To be able to login you must first verify your email within 5 days or your account will be deleted."
+    ]
+  });
 });
 
 // POST /user/login
-router.post(
-  "/login",
-  passport.authenticate("local", { session: false }),
-  (req, res) => {
-    res.cookie("token", req.user, {
+router.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  let user = await getUser(username);
+  if (!user) {
+    user = await getUserFromEmail(username);
+
+    if (!user) {
+      return res
+        .status(401)
+        .send({ error: "Username/Email or password is incorrect" });
+    }
+  }
+
+  const result = await bcrypt.compare(password, user.password);
+  if (result) {
+    const token = jwt.encode(
+      { username: user.username, date: Date.now() },
+      SECRET
+    );
+
+    res.cookie("token", token, {
       httpOnly: true,
       overwrite: true
     });
     res.send({
-      token: req.user
+      token
     });
+  } else {
+    return res
+      .status(401)
+      .send({ error: "Username/Email or password is incorrect" });
   }
-);
+});
 
 // POST /user/email-verify
 router.post("/email-verify", async (req, res) => {
@@ -156,7 +187,10 @@ router.post("/email-verify", async (req, res) => {
   });
 
   if (!user) {
-    return res.status(403).send({ error: "Token is not valid" });
+    return res.status(403).send({
+      error:
+        "Token is not valid or has expired. This means your account has been deleted and you need to re-register and verify your email within 5 days."
+    });
   }
 
   await models.User.update(
@@ -168,28 +202,7 @@ router.post("/email-verify", async (req, res) => {
     }
   );
 
-  return res.json({ username: user.username });
-});
-
-// POST /user/forgot-password-verify
-router.post("/forgot-password-verify", async (req, res) => {
-  const { token } = req.body;
-
-  const user = await models.User.findOne({
-    where: {
-      forgot_password_token: token
-    }
-  });
-
-  const now = Date.now();
-
-  if (!user) {
-    return res.status(403).send({ error: "Token is not valid" });
-  } else if (user.forgot_password_expiry < now) {
-    return res.status(403).send({ error: "Token has expired" });
-  }
-
-  return res.json({ success: "Token is valid" });
+  return res.json({ success: "Your email has been successfully verified!" });
 });
 
 // POST /user/forgot-password
@@ -216,7 +229,9 @@ router.post("/forgot-password", async (req, res) => {
     text: `Reset your password here ${req.protocol}://${host}/reset-password?token=${forgot_password_token}`
   });
 
-  return res.json({ success: "Forgot password email has been sent" });
+  return res.json({
+    success: "Forgot password email has been sent successfully"
+  });
 });
 
 // POST /user/reset-password
@@ -230,7 +245,12 @@ router.post("/reset-password", async (req, res) => {
   });
 
   if (!user) {
-    return res.status(403).send({ error: "Token is not valid" });
+    return res.status(403).send({
+      error: [
+        "Token is not valid or has expired.",
+        "Please resend the forgot password email from the login page to reset your password."
+      ]
+    });
   }
 
   const passwordHash = await bcrypt.hash(password, saltRounds);
@@ -248,7 +268,7 @@ router.post("/reset-password", async (req, res) => {
     }
   );
 
-  return res.json({ success: "Password has been reset" });
+  return res.json({ success: "Password has been reset successfully!" });
 });
 
 export default router;

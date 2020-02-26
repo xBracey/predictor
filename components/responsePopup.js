@@ -5,20 +5,28 @@ class ResponsePopup extends React.Component {
     super(props);
   }
 
-  renderError() {
+  convertMessage(rawMessage) {
+    if (typeof rawMessage === "string") {
+      return <p>{rawMessage}</p>;
+    } else {
+      return rawMessage.map(line => <p key={line}>{line}</p>);
+    }
+  }
+
+  renderError(message) {
     return (
       <div className="error">
         <img src="/static/error.svg" />
-        {this.props.error}
+        <div>{message}</div>
       </div>
     );
   }
 
-  renderSuccess() {
+  renderSuccess(message) {
     return (
       <div className="success">
         <img src="/static/confirm.svg" />
-        {this.props.success}
+        <div>{message}</div>
       </div>
     );
   }
@@ -28,9 +36,13 @@ class ResponsePopup extends React.Component {
       return null;
     }
 
+    const rawMessage = this.props.error ? this.props.error : this.props.success;
+
+    const message = this.convertMessage(rawMessage);
+
     const renderMethod = this.props.error
-      ? this.renderError()
-      : this.renderSuccess();
+      ? this.renderError(message)
+      : this.renderSuccess(message);
 
     return (
       <div onClick={this.props.onClose} className="response-popup-outer">

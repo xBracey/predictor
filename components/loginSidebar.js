@@ -34,7 +34,11 @@ class LoginSidebar extends React.Component {
         ? "static/footyBee-white.svg"
         : "static/footyBee.svg";
 
-    return <img className="logo" src={logo} />;
+    return (
+      <a href="/login">
+        <img className="logo" src={logo} />
+      </a>
+    );
   }
 
   renderInformation() {

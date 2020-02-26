@@ -36,17 +36,12 @@ input {
 }
 
 @mixin mobile {
-  @media (max-width: 599px) {
-    @content;
-  }
-}
-@mixin tablet {
-  @media (min-width: 900px) {
+  @media (max-width: 900px) {
     @content;
   }
 }
 @mixin desktop {
-  @media (min-width: 1200px) {
+  @media (min-width: 900px) {
     @content;
   }
 }

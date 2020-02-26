@@ -86,7 +86,11 @@ class Home extends React.Component {
             <h1> Login </h1>
             <form onSubmit={this.handleSubmit}>
               <div className="input-wrapper">
-                <input type="text" id="username" placeholder="Username" />
+                <input
+                  type="text"
+                  id="username"
+                  placeholder="Username or Email"
+                />
               </div>
               <div className="input-wrapper">
                 <input type="password" id="password" placeholder="Password" />

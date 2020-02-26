@@ -24,7 +24,7 @@ class Register extends React.Component {
     response.json().then(responseJson => {
       if (response.ok) {
         this.setState({
-          success: `${responseJson.username} has been successfully registered`
+          success: responseJson.success
         });
       } else {
         this.setState({ error: responseJson.error });

@@ -6,7 +6,7 @@ import LoginSidebar from "../components/loginSidebar";
 import LoginWrapper from "../components/loginWrapper";
 import ResponsePopup from "../components/responsePopup";
 
-class ForgotPassword extends React.Component {
+class ResetPassword extends React.Component {
   static getInitialProps({ query: { token } }) {
     return { token };
   }
@@ -93,7 +93,7 @@ class ForgotPassword extends React.Component {
                   placeholder="Confirm Password"
                 />
               </div>
-              <input type="submit" value="Register" />
+              <input type="submit" value="Reset" />
             </form>
           </LoginWrapper>
         </div>
@@ -107,4 +107,4 @@ class ForgotPassword extends React.Component {
   }
 }
 
-export default ForgotPassword;
+export default ResetPassword;

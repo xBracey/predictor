@@ -77,7 +77,7 @@ class ForgotPassword extends React.Component {
               <div className="input-wrapper">
                 <input type="email" id="email" placeholder="Email" />
               </div>
-              <input type="submit" value="Register" />
+              <input type="submit" value="Submit" />
             </form>
           </LoginWrapper>
         </div>

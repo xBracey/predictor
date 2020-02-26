@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import { Strategy } from "passport-local";
 import { Strategy as BearerStrategy } from "passport-http-bearer";
 
-import { getUser } from "./routes/user";
+import { getUser, getUserFromEmail } from "./routes/user";
 
 import jwt from "jwt-simple";
 export const SECRET = "pooliecrazy22";
@@ -14,14 +14,21 @@ export function passportConfiguration(app) {
 
   passport.use(
     new Strategy(async function(username, password, next) {
-      const user = await getUser(username);
+      let user = await getUser(username);
       if (!user) {
-        return next(null, false);
+        user = await getUserFromEmail(username);
+
+        if (!user) {
+          return next(null, false);
+        }
       }
 
       const result = await bcrypt.compare(password, user.password);
       if (result) {
-        return next(null, jwt.encode({ username, date: Date.now() }, SECRET));
+        return next(
+          null,
+          jwt.encode({ username: user.username, date: Date.now() }, SECRET)
+        );
       } else {
         return next(null, false);
       }
