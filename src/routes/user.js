@@ -171,8 +171,8 @@ router.post("/email-verify", async (req, res) => {
   return res.json({ username: user.username });
 });
 
-// POST /user/password-verify
-router.post("/password-verify", async (req, res) => {
+// POST /user/forgot-password-verify
+router.post("/forgot-password-verify", async (req, res) => {
   const { token } = req.body;
 
   const user = await models.User.findOne({
@@ -198,6 +198,7 @@ router.post("/forgot-password", async (req, res) => {
 
   const forgot_password_token = crypto.randomBytes(20).toString("hex");
   const forgot_password_expiry = Date.now() + 24 * 60 * 60 * 1 * 1000;
+  const host = req.get("host");
 
   await models.User.update(
     { forgot_password_token, forgot_password_expiry },
@@ -212,7 +213,7 @@ router.post("/forgot-password", async (req, res) => {
     from: "hello@footybee.com",
     to: email,
     subject: "Email Verification",
-    text: `Reset your password here ${req.protocol}://${host}/reset-password?token=${verification_token}`
+    text: `Reset your password here ${req.protocol}://${host}/reset-password?token=${forgot_password_token}`
   });
 
   return res.json({ success: "Forgot password email has been sent" });

@@ -4,10 +4,10 @@ const api = Router();
 const apiAuthExceptions = [
   "/user/login",
   "/user/register",
-  "user/email-verify",
-  "user/password-verify",
-  "user/reset-password",
-  "user/forgot-password"
+  "/user/email-verify",
+  "/user/forgot-password-verify",
+  "/user/reset-password",
+  "/user/forgot-password"
 ];
 
 api.use(function(req, res, next) {

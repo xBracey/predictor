@@ -12,7 +12,7 @@ const outDirectoy = __dirname + "/../../out/";
 const nextApp = next({ dev: process.env.ENV === "development" });
 const handle = nextApp.getRequestHandler();
 
-const pages = ["/login", "/register"];
+const pages = ["/login", "/register", "/forgot-password"];
 
 const userPages = ["/leagues", "/results", "/predictions"];
 
@@ -111,6 +111,14 @@ nextApp.prepare().then(() => {
     router.get(`/admin${page}`, (req, res) => {
       nextApp.render(req, res, `/admin${page}`);
     });
+  });
+
+  router.get("/reset-password", (req, res) => {
+    nextApp.render(req, res, "/reset-password", { token: req.query.token });
+  });
+
+  router.get("/verify", (req, res) => {
+    nextApp.render(req, res, "/verify", { token: req.query.token });
   });
 
   router.get("*", (req, res) => {
