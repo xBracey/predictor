@@ -59,6 +59,10 @@
           cursor: pointer;
         }
 
+        .terms-and-conditions {
+          margin: 15px 0px !important;
+        }
+
         .input-wrapper {
           position: relative;
           display: flex;
@@ -89,6 +93,47 @@
 
           input.error {
             border-color: $red;
+          }
+
+          label {
+            display: flex;
+            align-items: center;
+            font-weight: 400;
+            margin-bottom: 0px;
+
+            input {
+              height: 20px;
+              width: 20px;
+              margin-right: -27px;
+              min-width: 20px;
+            }
+
+            span {
+              height: 30px;
+              width: 30px;
+              background-color: $light-grey;
+              border: 2px solid $light-grey;
+              display: inline-block;
+              position: relative;
+              color: $green;
+              margin-right: 15px;
+              border-radius: 6px;
+              min-width: 30px;
+            }
+
+            [type="checkbox"]:checked + span:before {
+              content: "\2714";
+              position: absolute;
+              top: -3px;
+              left: 6px;
+              font-size: 30px;
+              border-radius: 6px;
+            }
+
+            a {
+              margin: 0 4px;
+              font-size: 16px;
+            }
           }
         }
 

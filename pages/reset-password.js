@@ -75,7 +75,7 @@ class ResetPassword extends React.Component {
     return (
       <div>
         <Head>
-          <title>Home</title>
+          <title>Reset Password</title>
         </Head>
         <HeadInfo />
         <div className="container">

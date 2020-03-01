@@ -67,7 +67,7 @@ class League extends React.Component {
     return (
       <div>
         <Head>
-          <title>League</title>
+          <title>{`League - ${this.state.leagueInfo.displayName}`}</title>
         </Head>
         <Header />
         <div className="league-subheader">

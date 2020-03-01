@@ -47,7 +47,7 @@ class Verify extends React.Component {
     return (
       <div>
         <Head>
-          <title>Home</title>
+          <title>Verify Email</title>
         </Head>
         <HeadInfo />
         <div className="container">

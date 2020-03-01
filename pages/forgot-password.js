@@ -66,7 +66,7 @@ class ForgotPassword extends React.Component {
     return (
       <div>
         <Head>
-          <title>Home</title>
+          <title>Forgot Password</title>
         </Head>
         <HeadInfo />
         <div className="container">

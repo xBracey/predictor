@@ -80,7 +80,7 @@ class Register extends React.Component {
     return (
       <div>
         <Head>
-          <title>Home</title>
+          <title>Register</title>
         </Head>
         <HeadInfo />
         <div className="container">
@@ -106,6 +106,15 @@ class Register extends React.Component {
                   id="confirmPassword"
                   placeholder="Confirm Password"
                 />
+              </div>
+              <div className="input-wrapper terms-and-conditions">
+                <label>
+                  <input type="checkbox" required />
+                  <span></span>I agree to the
+                  <a href="/terms-and-conditions" target="_blank">
+                    terms and conditions
+                  </a>
+                </label>
               </div>
               <input type="submit" value="Register" />
             </form>

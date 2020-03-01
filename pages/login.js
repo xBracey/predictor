@@ -74,7 +74,7 @@ class Home extends React.Component {
     return (
       <div>
         <Head>
-          <title>Home</title>
+          <title>Login</title>
         </Head>
         <HeadInfo />
         <div className="container">

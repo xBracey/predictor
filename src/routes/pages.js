@@ -12,7 +12,14 @@ const outDirectoy = __dirname + "/../../out/";
 const nextApp = next({ dev: process.env.ENV === "development" });
 const handle = nextApp.getRequestHandler();
 
-const pages = ["/login", "/register", "/forgot-password"];
+const pages = [
+  "/login",
+  "/register",
+  "/forgot-password",
+  "/terms-and-conditions",
+  "/privacy-policy",
+  "/about"
+];
 
 const userPages = ["/leagues", "/results", "/predictions"];
 

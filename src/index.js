@@ -15,6 +15,13 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/robots.txt", function(req, res, next) {
+  res.type("text/plain");
+  res.send(
+    "User-agent: *\nDisallow: \nSitemap: https://www.footybee.com/static/sitemap.xml"
+  );
+});
+
 app.use("/api", routes.api);
 app.use("/", routes.pages);
 

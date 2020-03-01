@@ -10,6 +10,36 @@
     max-width: 500px;
   }
 
+  .about-menu {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    @include mobile {
+      background-color: $green;
+    }
+
+    a {
+      color: black;
+      text-align: center;
+      padding: 20px 40px;
+
+      @include mobile {
+        color: white;
+        padding: 20px 30px;
+      }
+    }
+  }
+
+  h1 {
+    font-size: 24px;
+
+    @include mobile {
+      display: none;
+    }
+  }
+
   .logo {
     height: 100px;
     width: 100px;
@@ -26,7 +56,7 @@
   .sidebar-info {
     display: none;
     flex-direction: column;
-    margin: 50px auto auto auto;
+    margin: auto auto auto auto;
 
     @include desktop {
       display: flex;

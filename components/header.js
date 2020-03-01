@@ -13,6 +13,21 @@ class Header extends React.Component {
       width: 0
     };
 
+    this.aboutMenu = [
+      {
+        text: "About",
+        link: "/about"
+      },
+      {
+        text: "Terms and Conditions",
+        link: "/terms-and-conditions"
+      },
+      {
+        text: "Privacy Policy",
+        link: "/privacy-policy"
+      }
+    ];
+
     this.adminMenu = [
       {
         text: "Matches",
@@ -80,7 +95,11 @@ class Header extends React.Component {
   }
 
   renderMenu() {
-    const menu = this.props.admin ? this.adminMenu : this.menu;
+    const menu = this.props.admin
+      ? this.adminMenu
+      : this.props.about
+      ? this.aboutMenu
+      : this.menu;
 
     const menuComponent = menu.map(singleMenu => {
       const extraStyling =
@@ -100,7 +119,7 @@ class Header extends React.Component {
       ) : null;
 
     const accountImage =
-      this.state.width > 1200 ? (
+      this.state.width > 1200 && !this.props.about ? (
         <div className="logout" onClick={this.onLogout}>
           <img src="/static/account.svg" />
         </div>
@@ -127,7 +146,7 @@ class Header extends React.Component {
 
     return (
       <div className="logo-container">
-        <a href="/buzz">
+        <a href="/">
           <img className="logo" src="/static/footyBee-white.svg" />
         </a>
         {menuImage}

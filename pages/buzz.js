@@ -78,7 +78,7 @@ class Buzz extends React.Component {
     return (
       <div>
         <Head>
-          <title>Buzz</title>
+          <title>Home</title>
         </Head>
         <Header />
         <div className="subheader">{this.renderTodayMatches()}</div>
